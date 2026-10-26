@@ -1,0 +1,22 @@
+# Python dependencies for the console's document pipelines (deckgen/, source_to_docx.py,
+# export_doc.py, render_pdf.py). The console itself (server.js) needs none of this.
+#
+#   py -3.13 -m venv .venv
+#   .venv\Scripts\activate
+#   pip install -r requirements.txt
+#   python -m playwright install chromium      # browser used to render the whitepaper PDF
+#
+# Python 3.13 is the supported version. Also needed, outside pip: Node.js 18+ (the console and the
+# pptxgenjs decks) and Microsoft Edge (rasterises the brand icons for PPTX).
+
+python-pptx>=1.0.2        # PPTX generation (deckgen/build_pptx.py, presentations/)
+python-docx>=1.1          # DOCX in/out (source_to_docx.py, deckgen/text_to_content.py)
+PyMuPDF>=1.24             # PDF read/merge/render (whitepaper, source_to_docx.py, export_doc.py)
+pypdf>=4.0                # whitepaper PDF assembly (deckgen/whitepaper/generate_pdf.py)
+playwright>=1.45          # HTML -> PDF/PNG rendering
+Pillow>=10.0              # images
+
+
+# Optional: lets render_pdf.py use Microsoft PowerPoint (COM) as the reference PPTX -> PDF renderer when it is
+# installed. Without PowerPoint it falls back to LibreOffice. Windows only.
+pywin32>=306; sys_platform == "win32"

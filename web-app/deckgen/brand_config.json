@@ -1,0 +1,61 @@
+{
+  "company": {
+    "name": "Cybele Software, Inc.",
+    "year": 2026,
+    "website": "www.cybelesoft.com",
+    "email": "sales@cybelesoft.com",
+    "phone": "+1 302-892-9625",
+    "logo_text": "CYBELE",
+    "logo_sub": "software"
+  },
+  "colors": {
+    "primary": "#0A74D6",
+    "primary_dark": "#0862B0",
+    "accent_teal": "#2EC4B6",
+    "accent_teal_dark": "#21A397",
+    "accent_green": "#50C878",
+    "accent_green_dark": "#3DAF63",
+    "accent_red": "#E85D4A",
+    "accent_light_blue": "#8ECAE6",
+    "bg_light": "#F0F5FA",
+    "bg_card_blue": "#E8F1FB",
+    "bg_gradient_top": "#D6EBFA",
+    "bg_gradient_mid": "#EDF5FC",
+    "text_dark": "#373737",
+    "text_body": "#515151",
+    "text_muted": "#999999",
+    "border_light": "#E8E8E8",
+    "white": "#FFFFFF",
+    "dark_alt": "#515151"
+  },
+  "fonts": {
+    "family": "Inter",
+    "import_url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap",
+    "weights": {
+      "regular": 400,
+      "semibold": 600,
+      "bold": 700,
+      "extrabold": 800
+    }
+  },
+  "slide": {
+    "width": 1280,
+    "height": 720,
+    "pptx_width_inches": 13.333,
+    "pptx_height_inches": 7.5
+  },
+  "icons_dir": "icons_png",
+  "slide_types": {
+    "cover": "Full-screen cover slide with logo, title, subtitle, and wave background",
+    "section": "Content slide with top blue bar, title, and body content area",
+    "cards_grid": "Grid of cards (2-col or 3-col) with icons and text",
+    "pros_cons": "Two-column layout with green pros and red cons",
+    "table": "Styled data table with blue header row",
+    "comparison": "Side-by-side comparison cards (one highlighted)",
+    "bar_chart": "Horizontal bar chart visualization",
+    "formula": "Formula box with calculation breakdown",
+    "split": "Blue left panel (38%) with stats, right panel with pill items",
+    "stats_columns": "4 colored rounded-pill columns with big numbers",
+    "closing": "Cover-style closing slide with contact info"
+  }
+}

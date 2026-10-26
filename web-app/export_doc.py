@@ -181,30 +181,40 @@ def _setname(paths):
     return pre or 'designs'
 
 def export_pptx_from_svgs(svg_paths, out, base=None):
-    """Build an EDITABLE .pptx with one slide per SVG. Uses PowerPoint COM to insert each SVG as a
-    native Scalable Vector Graphic (right-click -> Convert to Shape = fully editable), NOT a raster."""
-    import win32com.client
+    """Build an EDITABLE .pptx with one slide per SVG. Each SVG is embedded as a native Scalable
+    Vector Graphic — the same package PowerPoint writes: a picture whose PNG fallback (rendered by
+    headless Chrome) is paired with the SVG through the `svgBlip` extension. In PowerPoint, right-click
+    -> Convert to Shape makes it fully editable. Needs neither PowerPoint nor Windows."""
+    from pptx import Presentation
+    from pptx.opc.constants import RELATIONSHIP_TYPE as RT
+    from pptx.opc.package import Part
+    from pptx.opc.packuri import PackURI
+    from pptx.util import Emu
+    from lxml import etree
     w, h = svg_dims(open(svg_paths[0], encoding='utf-8').read())
-    SW = 960.0                          # 13.333in in points
-    SH = round(SW * (h / w if w else 0.5625), 1)
-    tmp_pptx = os.path.join(out, '_deck.pptx')
-    pp = win32com.client.Dispatch("PowerPoint.Application")
-    try:
-        prs = pp.Presentations.Add(WithWindow=False)
-        prs.PageSetup.SlideWidth = SW
-        prs.PageSetup.SlideHeight = SH
-        for i, s in enumerate(svg_paths):
-            sl = prs.Slides.Add(i + 1, 12)   # 12 = ppLayoutBlank
-            sl.Shapes.AddPicture(FileName=os.path.abspath(s), LinkToFile=False,
-                                 SaveWithDocument=True, Left=0, Top=0, Width=SW, Height=SH)
-        prs.SaveAs(os.path.abspath(tmp_pptx), 24)   # 24 = ppSaveAsOpenXMLPresentation
-        prs.Close()
-    finally:
-        pp.Quit()
-    data = open(tmp_pptx, 'rb').read()
-    try: os.remove(tmp_pptx)
-    except Exception: pass
-    return ((base or _setname(svg_paths)) + '.pptx', data)
+    SW = 12192000                                   # 13.333 in, in EMU
+    SH = round(SW * (h / w if w else 0.5625))
+    prs = Presentation()
+    prs.slide_width, prs.slide_height = Emu(SW), Emu(SH)
+    blank = prs.slide_layouts[6]
+    A = 'http://schemas.openxmlformats.org/drawingml/2006/main'
+    R = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships'
+    ASVG = 'http://schemas.microsoft.com/office/drawing/2016/SVG/main'
+    for s in svg_paths:
+        slide = prs.slides.add_slide(blank)
+        fallback = chrome_png(s, 2, True, out)      # PNG for viewers that cannot draw SVG
+        pic = slide.shapes.add_picture(io.BytesIO(fallback), 0, 0, Emu(SW), Emu(SH))
+        pic.name = os.path.splitext(os.path.basename(s))[0]
+        svg_part = Part(prs.part.package.next_partname('/ppt/media/svg%d.svg'), 'image/svg+xml',
+                        prs.part.package, inline_svg(s).encode('utf-8'))
+        rid = slide.part.relate_to(svg_part, RT.IMAGE)
+        blip = pic._element.xpath('.//a:blip')[0]
+        ext_lst = etree.SubElement(blip, '{%s}extLst' % A)
+        ext = etree.SubElement(ext_lst, '{%s}ext' % A, uri='{96DAC541-7B7A-43D3-8B79-37D633B846F1}')
+        etree.SubElement(ext, '{%s}svgBlip' % ASVG, nsmap={'asvg': ASVG}).set('{%s}embed' % R, rid)
+    buf = io.BytesIO()
+    prs.save(buf)
+    return ((base or _setname(svg_paths)) + '.pptx', buf.getvalue())
 
 WORKERS = 4   # concurrent headless Chrome renders; keeps a 16-design set under a few seconds
 

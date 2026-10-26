@@ -20,15 +20,24 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 # The cache is keyed by name+colour only, so a new icon library needs its own
 # folder or stale shapes come back: CYBELE_ICON_CACHE points at a fresh one.
 CACHE = os.environ.get('CYBELE_ICON_CACHE') or os.path.join(HERE, '_icon_cache')
-EDGE = r"C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
+def _find_edge():
+    for p in (os.environ.get('CYBELE_EDGE'),
+              r"C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+              r"C:/Program Files/Microsoft/Edge/Application/msedge.exe"):
+        if p and os.path.exists(p):
+            return p
+    return r"C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
+
+
+EDGE = _find_edge()
 CELL = 256          # px per sprite cell
 COLS = 8
 PXE = 9525          # EMU per canvas pixel (1280x720 canvas on a 13.333x7.5in slide)
 
 LIB_CANDIDATES = [
     os.environ.get('CYBELE_ICON_LIB'),
-    r"C:/Users/NickCeraso/Documents/GitHub/ai-design-assistant-for-cybele-software/web-app/brand-icon-lib.js",
-    r"C:/Users/NickCeraso/Desktop/Claude Code App/brand-icon-lib.js",
+    # this file sits in <repo>/presentations/reference_builder/; the lib in <repo>/web-app/
+    os.path.join(HERE, '..', '..', 'web-app', 'brand-icon-lib.js'),
     os.path.join(HERE, 'brand-icon-lib.js'),
 ]
 

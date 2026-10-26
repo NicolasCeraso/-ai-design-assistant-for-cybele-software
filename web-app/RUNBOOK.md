@@ -63,16 +63,19 @@ screenshot). When a revision has **`attachments`**, treat them as part of the re
 
 ## 3. Execute per pipeline
 
-> **Paths outside this repo.** The document-pipeline sources below live on the original author's
-> machine and are **not** in this clone. If one is unreachable, **say which path failed and stop** —
-> never guess a path, insert a username, or substitute another document. Set `CYBELE_DECKGEN_DIR` if
-> you keep a local copy elsewhere.
+> **Pipeline sources are in this repo.** Everything the document pipelines need — scripts, brand
+> logos, icons, the closing-slide template — is versioned under `web-app/deckgen/` (and
+> `presentations/`). Setup is in `deckgen/README.md`. If a Python module or tool is missing, **say
+> which one and stop**; never guess a path, insert a username, or substitute another document. Set
+> `CYBELE_DECKGEN_DIR` only to point at a different copy of `deckgen/`.
 
-Working base for the document pipelines (Nick's machine): `C:/Users/NickCeraso/cybele_deckgen`.
+Working base for the document pipelines: `web-app/deckgen/` (the console passes its absolute path as
+`deckgenDir`; run the commands below from there).
 
-**Python.** Prefer `py -3.13`. If it is not installed on this machine, use `py -3` and state in the
-run which version you used. (3.14 is broken on the original author's machine — PyMuPDF/COM — so a
-build that fails there on 3.14 is that, not a bug in the script. `server.js` already calls `py -3`.)
+**Python.** Use the interpreter that `setup.ps1` built: `web-app/.venv/Scripts/python.exe` (it has every
+library in `requirements.txt`; `server.js` picks it first too). Without it, fall back to `py -3.13` and state
+in the run which interpreter you used. If a module is missing, say which one and tell the user to run
+`setup.ps1`. (A 3.14 launcher default may be broken — PyMuPDF/COM — so a failure there is not a bug in the script.)
 
 > **Output folder:** everywhere below, `jobs/<id>/output/` means the **versioned** folder for this
 > run — `jobs/<id>/output/v<N>/` (base = `v1`, revision N = `v<N+1>`). The dashboard's run prompt
@@ -80,7 +83,7 @@ build that fails there on 3.14 is that, not a bug in the script. `server.js` alr
 
 ### 3.1 pptx — PPTX deck
 - Text source (DOCX/MD/TXT) → from-scratch editorial generator (`build_pptx.py` pattern).
-- Rendered source (PDF/PPTX) → brand-a-source or the faithful pptxgenjs path.
+- Rendered source (PDF/PPTX) → the faithful pptxgenjs path (`deckgen/enterprise_vdi_oci_esp/`; `build_deck.js` is the reference). There is no 2-slide cover/closing template any more: build the cover in the deck and use `presentations/assets/cierre.pptx` for the closing.
 - Honor the job `prompt` (audience, language, emphasis). Put the `.pptx` in `jobs/<id>/output/`.
 - **Architecture diagrams inside a deck** (the source shows or describes a topology — an image, a
   diagram page, or prose about gateways, brokers, zones, clouds): draw each one with the
@@ -108,7 +111,7 @@ build that fails there on 3.14 is that, not a bug in the script. `server.js` alr
   the heuristics got wrong. The cover title comes from its first `Title`/`Heading 1` paragraph.
 - **Image-only sources (`.png .jpg .jpeg .svg`)** have no text to extract: the script prints a NOTE.
   View the picture, write what it says into the DOCX (same language, never translate), then build.
-- `cd C:/Users/NickCeraso/cybele_deckgen && py -3.13 whitepaper/build_whitepaper.py "<the DOCX>" "jobs/<id>/output/<name>.pdf"`
+- `cd web-app/deckgen && py -3.13 whitepaper/build_whitepaper.py "<the DOCX>" "<abs path>/jobs/<id>/output/<name>.pdf"` (give the output as an absolute path: the script runs from `deckgen/`)
 
 ### 3.3 blog — Blog visuals
 - Invoke the **`cybele-blog-visuals`** skill with the article (the `sourceFile` or the prompt).

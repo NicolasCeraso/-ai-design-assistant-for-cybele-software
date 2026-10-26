@@ -21,13 +21,14 @@ legacy ones `job-`). When the user asks to **"run task-XXXX"**, **"corré la tas
    (`POST http://localhost:3491/jobs/<id>` with `{status:"done", result, resultPath, previewPath}`
    pointing inside that `v<N>/`), and tell the user what was produced.
 
-**Python.** Prefer `py -3.13`. If it is not installed on this machine, use `py -3` and state in the
-run which version you used. (3.14 is broken on the original author's machine — PyMuPDF/COM — so a
-build that fails there on 3.14 is that, not a bug in the script. `server.js` already calls `py -3`.)
+**Python.** Use the interpreter that `setup.ps1` built: `web-app/.venv/Scripts/python.exe` (it has every
+library in `requirements.txt`; `server.js` picks it first too). Without it, fall back to `py -3.13` and state
+in the run which interpreter you used. If a module is missing, say which one and tell the user to run
+`setup.ps1`. (A 3.14 launcher default may be broken — PyMuPDF/COM — so a failure there is not a bug in the script.)
 
 The document pipelines (pptx, whitepaper, storyboard, carousel) live in
-`C:/Users/NickCeraso/cybele_deckgen` — **on Nick's machine, not in this clone**. If a run needs one
-and it is unreachable, say which path failed and stop. Blog and arch visuals need nothing external:
+`web-app/deckgen/` — versioned in this clone (setup: `deckgen/README.md`, Python deps:
+`requirements.txt`). If a run needs one and a dependency is missing, say which one and stop. Blog and arch visuals need nothing external:
 they are the `cybele-blog-visuals` and `thinfinity-architecture` skills, self-contained in
 `skills/`.
 

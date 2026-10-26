@@ -98,9 +98,10 @@ for how the pipeline surfaces a stronger cover *without* writing it.
   `270:9859` · regulatory post 2 `270:10155` · FortiOS `270:10404` · Section 1 / NOC `301:2598` ·
   DBIR 2026 `270:11587` · Citizens/Frost `287:823` · z/Scope `287:984` · desktop prices `287:1090` ·
   parallels `301:1789` · FSLogix `301:2232`.
-- **Reference implementation:** `C:/Users/NickCeraso/linkedin_carousel_proposal/build_svgs_v2.js`.
-- **Draft duplicate:** `C:/Users/NickCeraso/Downloads/linkedin-carousel-doctype.md` is the superseded
-  2026-07-27 draft. **This file is authoritative**; the Downloads copy is not maintained.
+- **Reference implementation:** `web-app/deckgen/linkedin_carousel/build_svgs_v2.js`
+  (`node build_svgs_v2.js [output-dir]`).
+- **Superseded draft:** an earlier 2026-07-27 draft of this spec existed outside the repo.
+  **This file is authoritative.**
 
 ---
 
@@ -575,7 +576,7 @@ Render headless, read the PNGs, and check. The numeric ones are measurable; do n
 
 **Editorial**
 - [ ] **Verbatim audit passes with zero unmatched words** — run it, do not eyeball it:
-      `node C:/Users/NickCeraso/cybele_deckgen/verbatim_check.js <script.txt> <output-dir>`
+      `node web-app/pipelines/verbatim_check.js <script.txt> <output-dir>`
       It extracts every `<text>`/`<tspan>` from the placas and reports any word absent from the
       script's `PLACA` blocks, plus any figure printed twice on one placa. **Exit code 1 = do not
       deliver.** See §1b / §3.7.
@@ -591,10 +592,10 @@ Render headless, read the PNGs, and check. The numeric ones are measurable; do n
 ## 12. Assets
 
 - **Local (Claude Code / Desktop):**
-  - `BRAND_DIR = cybele_deckgen/brand_assets` — `thinfinity_logo.svg`, `thinfinity_logo_white.svg`,
+  - `BRAND_DIR = web-app/deckgen/brand_assets` — `thinfinity_logo.svg`, `thinfinity_logo_white.svg`,
     `cybele_logo.svg`, `cybele_logo_white.svg`. Prefer the **`.svg` white variants** on navy — the
     `_white.png` rasters are legacy and actually blue.
-  - `ICONS = cybele_deckgen/icons`, plus **`brand-icon-lib.js`** in the web app (131 icons, one JSON
+  - **`brand-icon-lib.js`** in the web app (131 icons, one JSON
     map, `currentColor`) — the richest source. See §7.6 for the coverage gap.
   - **Icon fill note:** brand icons use `fill="#0A74D6"`; some are outline-style with a secondary
     `<path>` inheriting `fill="none"` → **force the fill** when embedding or the shape renders empty.

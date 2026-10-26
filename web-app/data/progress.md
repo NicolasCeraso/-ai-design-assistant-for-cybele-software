@@ -186,9 +186,9 @@ What the console's **Brand assets** view shows. It is separate from the `cybele_
 > **Two paradigms of this pipeline coexist by design**, chosen by **source-document format**:
 >
 > - **Source is a text format** (DOCX / TXT / MD / Google Docs / etc.) → use the **from-scratch generator** (`python-pptx`, one builder function per slide).
-> - **Source is a rendered artifact** (PDF / PPTX / image) → use the **brand-a-source pipeline** (ingest the source PPTX or convert PDF/image to a content PPTX, then apply branding).
+> - **Source is a rendered artifact** (PDF / PPTX / image) → use the **faithful pipeline** (Node / pptxgenjs, `enterprise_vdi_oci_esp/`, see below). The older python-pptx "brand-a-source" route with a 2-slide cover/closing template was retired (2026-10-26) and its template no longer exists.
 >
-> Slide count is dynamic, dictated by source content. Closing-slide language always matches the source — the from-scratch transplant preserves the closing's visual structure byte-for-byte but translates its text content; the brand-a-source pipeline does the same on its template's closing.
+> Slide count is dynamic, dictated by source content. Closing-slide language always matches the source — the closing is `cierre.pptx`, transplanted byte-for-byte in structure with its text translated.
 
 ### Architecture diagrams in a deck (all three paths, 2026-09-28)
 
@@ -306,39 +306,9 @@ pdftoppm -jpeg -r 80 <deck>_v3_with_cierre.pdf slide
 
 **Assets** (in `assets/`): `lockup_thinfinity_oracle.png`, `cybele_isologo.png` (white, cover), `bg_navy_cover.jpg`, `bg_navy_closing.jpg`, and `cybele_icons/` (63 PNGs = 21 Figma icons × 3 variants, consumed by `add_icon(name, variant=...)`).
 
-### Brand-a-Source Pipeline — `build_ciso_pptx.py` (reference impl)
-
-Used when the source is a rendered artifact (PDF / PPTX / image). The pipeline ingests the source PPTX, swaps the cover/closing for a standard 2-slide template, and applies branding/cleanup passes.
-
-**Standard 2-slide template (`Copy of VDI_VDA_Universidades_Editable.pptx`):**
-- Cover: blue wave bg, Thinfinity + Oracle logos, white title + subtitle. Title + subtitle updated per document; tagline blanked.
-- Closing: "Thanks for watching!" + contact info + social icons + animated GIF. Hyperlinks stripped from contact runs (XML `<a:hlinkClick>` overrides theme blue otherwise); contact text forced white. "Thanks for watching!" stays blue (`#0A74D6`); copyright stays gray.
-- **Always use this template** — never preserve the source file's own cover/closing.
-- **Language-coherence rule:** closing text content is translated to match the source-document language (same rule as the from-scratch transplant — see §6 above).
-
-**Pipeline steps:**
-1. Open the 2-slide template.
-2. Insert N content slides between cover and closing via `python-pptx`.
-3. Reorder XML `sldIdLst` so closing is last.
-4. Apply branding pass to content slides: layouts (`two_card_slide`, `content_with_items`, `icon_content_slide`, `add_section_divider`), section dividers (navy bg, number, accent line, white title), Inter SemiBold 18pt headers / Inter Regular body, flat fills, logos in footer, single-digit numbered circles (0.35", 12pt).
-5. **Nuclear shadow removal** via `_nuke_effects_from_xml()` — cleans shapes, layouts, masters, AND theme XML (the theme's `effectStyleLst` is what makes per-shape cleanup insufficient).
-6. Typography enforcement pass: no italics, no Thin/Light/ExtraLight variants; blue text capped at 18pt.
-7. Hyperlink color fix on closing: strip all `<a:hlinkClick>` + clean `endParaRPr` colors.
-
-**Dimensions:** output at 10"×5.625" (Google Slides compatible). Source typically at 13.33"×7.5", converted at branding time.
-
-**Helper functions:** `add_header_bar`, `add_section_divider`, `add_textbox`, `add_multiline_textbox`, `add_box`, `add_icon`, `add_footer_logos`, `two_card_slide`, `content_with_items`, `icon_content_slide`, `_nuke_effects_from_xml`, `remove_shadow`.
-
-**Known constraints:**
-- Cybfont as a true font is not installed locally → use PNG icons from `icons_png/` as substitute.
-- Templates with >2 slides cause orphaned ZIP entries when slides are removed from `sldIdLst` — always start from a clean 2-slide template.
-- Output should be tested in Google Slides for each new slide type.
-
-**Tested deliverables:** "VDI & VDA Para Instituciones Educativas" v1 (442 shapes, `build_final_pptx.py`); "CISO Risk Lens: Thinfinity vs Citrix" v2 (`build_ciso_pptx.py`). Slide count for each is dictated by the source PPTX, not by the pipeline.
-
 ### Faithful Brand-a-Source Reproduction (Node / pptxgenjs) — `enterprise_vdi_oci_esp/` (2026-06-10)
 
-A **third PPTX path**, in **Node.js + `pptxgenjs`** (not python-pptx). Use it when the source is a rendered artifact (PDF) that must be reproduced **faithfully** — verbatim copy, same structure — **and** its architecture diagrams must become **native editable shapes**. (The from-scratch generator authors copy editorially; the python-pptx brand-a-source path swaps a cover/closing template; this path transcribes the source 1:1 and draws the diagrams natively.) Deliverable: *Enterprise VDI on OCI · Discovery Demo (ESP)* — 39-page source PDF → **40-slide** Google-Slides `.pptx`. Working dir `cybele_deckgen/enterprise_vdi_oci_esp/`; build: `node build_deck.js` → `python swap_closing_slide.py` → `python render_for_critique.py`.
+A **second PPTX path**, in **Node.js + `pptxgenjs`** (not python-pptx). Use it when the source is a rendered artifact (PDF) that must be reproduced **faithfully** — verbatim copy, same structure — **and** its architecture diagrams must become **native editable shapes**. (The from-scratch generator authors copy editorially; the python-pptx brand-a-source path swaps a cover/closing template; this path transcribes the source 1:1 and draws the diagrams natively.) Deliverable: *Enterprise VDI on OCI · Discovery Demo (ESP)* — 39-page source PDF → **40-slide** Google-Slides `.pptx`. Working dir `cybele_deckgen/enterprise_vdi_oci_esp/`; build: `node build_deck.js` → `python swap_closing_slide.py` → `python render_for_critique.py`.
 
 - **Verbatim copy** — every title/bullet/table transcribed from the source; source language preserved (English cover tagline stays English, Spanish body stays Spanish) per the preserve-source-language rule. No editorial rewriting.
 - **Inter rendering fix (root cause of "washed-out" text):** only the *variable* Inter font was installed locally, which PowerPoint/LibreOffice render hairline-thin. Fix = install Inter **static** weights (Regular/Medium/SemiBold/Bold) to user fonts (`%LOCALAPPDATA%\Microsoft\Windows\Fonts` + HKCU `Fonts` registry). Google Slides resolves Inter weights natively regardless, so it only affected local renders/desktop PowerPoint.
@@ -360,7 +330,7 @@ Converts a DOCX with long-form content into a branded multi-page PDF. Stable sin
 
 **Single-command invocation:**
 ```bash
-cd C:/Users/NickCeraso/cybele_deckgen
+cd web-app/deckgen
 python whitepaper/build_whitepaper.py <input.docx> [output.pdf]
 ```
 

@@ -116,10 +116,9 @@ function sourceInfo() {
   const gitDir = s.repoDir || BASE;
   let remoteUrl = null;
   try { remoteUrl = git(['remote', 'get-url', s.remote], gitDir).toString().trim(); } catch (e) {}
-  // Where the shell document pipelines (pptx, whitepaper) live. Machine-specific: set
-  // CYBELE_DECKGEN_DIR to point the console at your own copy. The default is the original
-  // author's path, so his setup keeps working untouched.
-  const deckgenDir = process.env.CYBELE_DECKGEN_DIR || 'C:/Users/NickCeraso/cybele_deckgen';
+  // Where the shell document pipelines (pptx, whitepaper) live: <this folder>/deckgen, versioned
+  // with the console. Set CYBELE_DECKGEN_DIR only to point the console at a different copy.
+  const deckgenDir = process.env.CYBELE_DECKGEN_DIR || path.join(BASE, 'deckgen').replace(/\\/g, '/');
   return Object.assign({}, s, { branch: resolveBranch(s, gitDir), remoteUrl, lastSync, deckgenDir });
 }
 
@@ -686,6 +685,11 @@ const PY_PREFERRED = 'pymupdf, pptx';    // export_doc.py also builds editable d
 function pyCandidates() {
   const list = [];
   if (process.env.CYBELE_PYTHON) list.push({ cmd: process.env.CYBELE_PYTHON, prefix: [] });
+  // the virtual environment that setup.ps1 builds next to this file, when it exists
+  for (const rel of [['.venv', 'Scripts', 'python.exe'], ['.venv', 'bin', 'python']]) {
+    const venvPy = path.join(BASE, ...rel);
+    if (fs.existsSync(venvPy)) list.push({ cmd: venvPy, prefix: [] });
+  }
   for (const v of ['-3.13', '-3.12', '-3.11', '-3']) list.push({ cmd: 'py', prefix: [v] });
   list.push({ cmd: 'python3', prefix: [] }, { cmd: 'python', prefix: [] });
   return list;
@@ -2030,6 +2034,27 @@ http.createServer(async (req, res) => {
       res.end(JSON.stringify({ ok: false, error: e.message }));
     }
     return;
+  }
+
+  // GET /whoami — who is using this console. Per instance, never shared: a name saved in Settings
+  // (data/user.json, gitignored) wins; otherwise the git identity of the clone it runs from, so each
+  // teammate sees their own name without anyone editing code. POST sets or clears the saved name.
+  if (req.url.split('?')[0] === '/whoami' && (req.method === 'GET' || req.method === 'POST')) {
+    const uf = path.join(DATA_DIR, 'user.json');
+    const send = (code, obj) => { res.writeHead(code, { 'Content-Type': 'application/json' }); res.end(JSON.stringify(obj)); };
+    try {
+      if (req.method === 'POST') {
+        const parsed = JSON.parse(await readBody(req));
+        const name = String(parsed.name || '').replace(/\s+/g, ' ').trim().slice(0, 80);
+        if (name) fs.writeFileSync(uf, JSON.stringify({ name }, null, 2));
+        else if (fs.existsSync(uf)) fs.unlinkSync(uf);
+      }
+      let saved = '';
+      try { if (fs.existsSync(uf)) saved = String(readJSON(uf).name || '').trim(); } catch (e) {}
+      let fromGit = '';
+      if (!saved) { try { const s = loadSource(); fromGit = git(['config', 'user.name'], s.repoDir || BASE).toString().trim(); } catch (e) {} }
+      return send(200, { ok: true, name: saved || fromGit, saved: !!saved });
+    } catch (e) { return send(400, { ok: false, error: e.message }); }
   }
 
   // GET /deleted-tasks — the pending deletion log (tasks removed via Delete since the last push).

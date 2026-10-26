@@ -1,0 +1,106 @@
+{
+  "title": "Example_Presentation",
+  "slides": [
+    {
+      "type": "cover",
+      "title": "Product Overview",
+      "subtitle": "A Branded Cybele Presentation",
+      "sub2": "Generated automatically from structured content"
+    },
+    {
+      "type": "cards_grid",
+      "section_label": "Features",
+      "section_title": "Key Capabilities",
+      "slide_num": 2,
+      "title": "What Makes Us Different",
+      "cols": 3,
+      "cards": [
+        {"icon": "shield", "title": "Enterprise Security", "text": "Multi-factor authentication and zero-trust architecture built in."},
+        {"icon": "cloud", "title": "Cloud Native", "text": "Deploy anywhere — AWS, Azure, GCP, or on-premises."},
+        {"icon": "scale", "title": "Scalable", "text": "From 10 to 100,000 users with the same architecture."},
+        {"icon": "pc", "title": "Multi-Platform", "text": "Windows, Linux, macOS — no client software required."},
+        {"icon": "dollar-sign", "title": "Cost Effective", "text": "70% lower TCO compared to traditional VDI solutions."},
+        {"icon": "stats", "title": "Analytics", "text": "Built-in usage analytics and compliance reporting."}
+      ]
+    },
+    {
+      "type": "pros_cons",
+      "section_label": "Comparison",
+      "section_title": "Our Solution vs. Legacy",
+      "slide_num": 3,
+      "title": "Advantages & Trade-offs",
+      "pros": [
+        "Lower licensing costs per user",
+        "No client installation required",
+        "HTML5 browser-based access",
+        "Multi-platform compatibility"
+      ],
+      "cons": [
+        "Requires modern browser (Chrome, Edge, Firefox)",
+        "GPU-intensive apps need specific configuration"
+      ]
+    },
+    {
+      "type": "table",
+      "section_label": "Data",
+      "section_title": "Feature Comparison",
+      "slide_num": 4,
+      "title": "Head-to-Head",
+      "headers": ["Feature", "Our Solution", "Competitor"],
+      "rows": [
+        ["Cost per User", "$69/year", "$120/year"],
+        ["Platform Support", "Win/Mac/Linux", "Win/Mac only"],
+        ["Access Method", "Browser (HTML5)", "Client app required"],
+        ["Security", "MFA + ZTNA", "MFA only"]
+      ],
+      "highlight_col": 1
+    },
+    {
+      "type": "bullets",
+      "section_label": "Summary",
+      "section_title": "Key Points",
+      "slide_num": 5,
+      "title": "Why Choose Thinfinity?",
+      "intro": "Based on a comprehensive 3-year analysis of 3,000 users:",
+      "bullets": [
+        "78% lower total cost of ownership",
+        "3x broader platform support",
+        "Zero client deployment overhead",
+        "Built-in enterprise security features",
+        "Proven ROI exceeding 200%"
+      ]
+    },
+    {
+      "type": "split",
+      "section_label": "Analysis",
+      "slide_num": 6,
+      "left_title": "3-Year TCO Analysis",
+      "left_text": "Our solution delivers dramatic cost savings while maintaining enterprise-grade features.",
+      "left_stat": "78%",
+      "left_stat_label": "lower total cost vs. legacy VDI",
+      "pills": [
+        {"title": "Licensing Savings", "text": "70% lower per-user cost translates to $153K saved over 3 years at 3,000 users."},
+        {"title": "Infrastructure Savings", "text": "No dedicated client software reduces deployment and support costs significantly."},
+        {"title": "The Bottom Line", "text": "For organizations prioritizing cost efficiency without sacrificing security, the choice is clear."}
+      ]
+    },
+    {
+      "type": "stats_columns",
+      "section_label": "Impact",
+      "section_title": "By The Numbers",
+      "slide_num": 7,
+      "title": "Key Metrics",
+      "stats": [
+        {"value": "78%", "label": "Cost Savings", "text": "vs. legacy solutions over 3 years", "color": "primary"},
+        {"value": "3x", "label": "Platform Reach", "text": "Windows + Linux + macOS support", "color": "teal"},
+        {"value": "HTML5", "label": "Zero Install", "text": "Browser-based, no client needed", "color": "primary"},
+        {"value": "205%+", "label": "ROI", "text": "Minimum return on investment", "color": "green"}
+      ]
+    },
+    {
+      "type": "closing",
+      "tagline": "Ready to Transform Your Workspace?",
+      "subtitle": "Contact us for a personalized demo and ROI analysis"
+    }
+  ]
+}

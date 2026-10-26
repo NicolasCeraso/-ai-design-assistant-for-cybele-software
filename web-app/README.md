@@ -45,9 +45,30 @@ Claude** (or ask in a session: *"run task‑XXXX"*), Claude reads `jobs/<id>/job
 [`RUNBOOK.md`](RUNBOOK.md) / [`CLAUDE.md`](CLAUDE.md): runs the pipeline, writes output to
 `jobs/<id>/output/`, renders a PDF preview, and marks the task done.
 
-> Document pipelines live in `C:/Users/NickCeraso/cybele_deckgen`; blog/arch are the
+> Document pipelines live in [`deckgen/`](deckgen/README.md) (versioned here); blog/arch are the
 > `cybele-blog-visuals` and `thinfinity-architecture` skills. Use **`py -3.13`** (or `py -3` if 3.13 is not installed) for Python
 > (system 3.14 is broken).
+
+## Setting up the document pipelines (to reproduce the PPTX / whitepaper results)
+
+The console itself needs only Node. The pipelines that **Claude runs for a task** need Python
+libraries, a headless browser, the brand icons rendered to PNG and the Inter font. One command does it
+all (Windows, PowerShell, from `web-app/`):
+
+```powershell
+.\setup.ps1
+```
+
+It checks Python 3.13 and Node 18+ (install them first), builds `.venv` from `requirements.txt`,
+installs Chromium for Playwright and `pptxgenjs`, renders the whole icon library (`brand-icon-lib.js`,
+575 icons) to PNG, and installs **Inter** (static weights, current user, downloaded from its official
+release — nothing is bundled). It is safe to re-run. `server.js` uses the `.venv` automatically.
+
+Not installable by script: **Microsoft Edge** (rasterises icons for `presentations/reference_builder`; included in
+Windows 11). PPTX → PDF previews use **PowerPoint** if present and otherwise **LibreOffice**, which the script
+installs when neither exists. The editable-PPTX download works without PowerPoint. The script warns when
+something is missing. Details and one command per pipeline:
+[`deckgen/README.md`](deckgen/README.md).
 
 ## Key files
 

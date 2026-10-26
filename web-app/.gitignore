@@ -32,3 +32,13 @@ article_clean.txt
 article_extracted.txt
 article_layout.txt
 article.txt
+
+# per-instance display name (Settings, or the clone's git identity)
+data/user.json
+
+# document pipelines (deckgen/): generated output and caches
+deckgen/**/output/
+_icon_cache/
+.venv/
+deckgen/icons_png/
+deckgen/enterprise_vdi_oci_esp/diagram_icons/

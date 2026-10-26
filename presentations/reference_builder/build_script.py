@@ -82,7 +82,9 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
 import _cybele_icons as bi
 
-DECKGEN = os.environ.get('CYBELE_DECKGEN_DIR') or r"C:/Users/NickCeraso/cybele_deckgen"
+# <repo>/presentations/reference_builder/ -> <repo>/web-app/deckgen/ (brand_assets, icons, ...)
+DECKGEN = os.environ.get('CYBELE_DECKGEN_DIR') or os.path.normpath(
+    os.path.join(SCRIPT_DIR, '..', '..', 'web-app', 'deckgen'))
 OUT_DIR = sys.argv[1] if len(sys.argv) > 1 else SCRIPT_DIR
 os.makedirs(OUT_DIR, exist_ok=True)
 NAME = "Thinfinity_Demo_Call_2026_Branded"

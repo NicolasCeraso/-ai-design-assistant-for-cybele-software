@@ -140,10 +140,12 @@
   .nav-item.active .nav-icon { opacity: 1; }
   .nav-badge { margin-left: auto; background: var(--brand); color: #fff; font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 600; }
 
-  .sidebar-user { padding: 16px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 12px; cursor: pointer; transition: background 0.18s ease; }
-  .sidebar-user:hover { background: var(--hover-fill); }
+  /* Who is using the console. Informational only: no pointer, no hover, because nothing happens on click. */
+  .sidebar-user { padding: 16px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
   .user-avatar { width: 38px; height: 38px; border-radius: 10px; background: var(--brand-strong); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #fff; }
-  .user-info { flex: 1; }
+  .user-info { flex: 1; min-width: 0; }
+  .set-name { display: inline-flex; align-items: center; gap: 8px; }
+  .set-name input { width: 200px; }
   .user-name { font-size: 13px; font-weight: 600; }
   .user-role { font-size: 11px; color: var(--text-muted); }
 
@@ -1042,10 +1044,9 @@
   </nav>
 
   <div class="sidebar-user">
-    <div class="user-avatar">NC</div>
+    <div class="user-avatar" id="userAvatar"></div>
     <div class="user-info">
-      <div class="user-name">Nick Ceraso</div>
-      <div class="user-role">Design Team · Admin</div>
+      <div class="user-name" id="userName"></div>
     </div>
     <div class="pulse-dot"></div>
   </div>
@@ -1688,6 +1689,8 @@ const I18N = {
     'designs — all exported unless you pick a selection.': 'diseños — se exportan todos salvo que elijas una selección.',
     'Delete': 'Borrar', 'Delete task': 'Borrar tarea', 'Starting…': 'Iniciando…',
     'Delete this task and its files? This cannot be undone.': '¿Borrar esta tarea y sus archivos? No se puede deshacer.',
+    'Your name': 'Tu nombre', 'Shown at the bottom of the menu': 'Se muestra al pie del menú', 'Save': 'Guardar',
+    'Set your name in Settings': 'Poné tu nombre en Configuración', 'Could not save': 'No se pudo guardar',
     'Task deleted': 'Tarea borrada', 'Could not delete': 'No se pudo borrar',
     'Select': 'Seleccionar', 'Select all': 'Seleccionar todas', 'Clear selection': 'Quitar selección', 'selected': 'seleccionadas',
     'Select tasks to delete': 'Elegí las tareas a borrar', 'Tasks deleted': 'Tareas borradas',
@@ -1781,11 +1784,11 @@ const projIcon = k => {
 };
 
 // ── Pipelines (status + apply command) ──
-// Working dir of the shell document pipelines. The server sends it (CYBELE_DECKGEN_DIR, else the
-// original author's path); this literal is only the value used before /source answers.
-let DECKGEN = 'C:/Users/NickCeraso/cybele_deckgen';
+// Working dir of the shell document pipelines. The server sends it (CYBELE_DECKGEN_DIR, else
+// <this folder>/deckgen); this literal is only the value used before /source answers.
+let DECKGEN = 'deckgen';
 const pipelines = [
-  { key:'pptx',   name:'PPTX Generation', status:'live',     kind:'shell', cwd:DECKGEN, deckgen:true, cmd:'py -3.13 build_pptx.py', desc:'3 paths — from-scratch editorial, brand-a-source, faithful (Node/pptxgenjs). Palette 06/26.' },
+  { key:'pptx',   name:'PPTX Generation', status:'live',     kind:'shell', cwd:DECKGEN, deckgen:true, cmd:'py -3.13 build_pptx.py', desc:'2 paths — from-scratch editorial, faithful (Node/pptxgenjs). Palette 06/26.' },
   { key:'wp',     name:'Whitepaper PDF',  status:'stable',   kind:'shell', cwd:DECKGEN, deckgen:true, cmd:'py -3.13 whitepaper/build_whitepaper.py <input.docx>', desc:'DOCX → paginated, branded multi-page PDF. Other sources (PDF, PPTX, images, MD, TXT) are converted to DOCX first.' },
   { key:'blog',   name:'Blog Visuals',    status:'live',     kind:'skill', cmd:'cybele-blog-visuals', desc:'Cover + in-article illustrations, native Figma-safe SVG. You choose how many of each.' },
   { key:'arch',   name:'Arch Diagrams',   status:'live',     kind:'skill', cmd:'thinfinity-architecture', desc:'Thinfinity "pill" system, 131-icon set, capability → topology.' },
@@ -4978,6 +4981,10 @@ async function renderSettings() {
           <option value="es"${LANG === 'es' ? ' selected' : ''}>Español</option>
         </select>
       </div>
+      <div class="set-row">
+        <span class="k">${t('Your name')}</span>
+        <span class="v set-name"><input type="text" id="userNameInput" maxlength="80" value="${escapeHtml(userName)}" placeholder="${t('Shown at the bottom of the menu')}" /><button class="btn btn-ghost btn-sm" id="userNameSave">${t('Save')}</button></span>
+      </div>
       <div class="set-row"><span class="k">Server</span><span class="v">http://localhost:3491</span></div>
       <div class="set-row"><span class="k">Tasks folder</span><span class="v">jobs/</span></div>
       <div class="set-row"><span class="k">Theme</span><span class="v">${document.documentElement.getAttribute('data-theme')}</span></div>
@@ -4995,6 +5002,17 @@ async function renderSettings() {
       <div class="set-note">${t('GitHub is the shared source: progress.md and brand are mirrored into the local cache so the whole team starts from the same content. Reads work offline; local brand edits are replaced on the next sync.')}</div>
     </div>`;
   document.getElementById('langSelect').addEventListener('change', e => setLang(e.target.value));
+  const saveName = async () => {
+    const btn = document.getElementById('userNameSave'); btn.disabled = true;
+    try {
+      const r = await (await fetch('/whoami', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: document.getElementById('userNameInput').value }) })).json();
+      if (r.ok) { paintUser(r.name); document.getElementById('userNameInput').value = r.name; showToast(t('Saved'), r.name); }
+      else showToast(t('Could not save'), r.error || '');
+    } catch (e) { showToast(t('Could not save'), e.message); }
+    btn.disabled = false;
+  };
+  document.getElementById('userNameSave').addEventListener('click', saveName);
+  document.getElementById('userNameInput').addEventListener('keydown', e => { if (e.key === 'Enter') saveName(); });
   enhanceAllSelects(document.getElementById('settingsView'));  // style the language select's dropdown
   document.getElementById('syncNow').addEventListener('click', async (e) => {
     const btn = e.currentTarget; btn.disabled = true; const old = btn.textContent; btn.textContent = t('Syncing…');
@@ -5145,6 +5163,21 @@ function updateOverviewSub(jobs) {
   el.textContent = d ? (base + ' · ' + t('last updated') + ' ' + d.toLocaleDateString(LANG === 'es' ? 'es-ES' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' })) : base;
 }
 
+// ── Who is using this console (bottom of the sidebar) ──
+// The name is per instance: saved in Settings, or the clone's git identity. Never a name in the code.
+let userName = '';
+function paintUser(name) {
+  userName = name || '';
+  const initials = userName.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join('');
+  document.getElementById('userAvatar').textContent = initials || '?';
+  const el = document.getElementById('userName');
+  el.textContent = userName || t('Set your name in Settings');
+  el.style.color = userName ? '' : 'var(--text-muted)';
+}
+async function loadUser() {
+  try { paintUser((await (await fetch('/whoami')).json()).name); } catch (e) { paintUser(''); }
+}
+
 // ── Init ──
 async function init() {
   document.getElementById('brandLogo').innerHTML = window.BRAND_LOGO || '';
@@ -5154,6 +5187,7 @@ async function init() {
   renderPipelines();
   loadCustomPipelines();       // team-shared custom document types (async; re-renders)
   loadDeckgenDir();            // machine-specific working dir for the shell pipelines
+  loadUser();                  // who is using this console (git identity, or the name saved in Settings)
   setView('overview');
   startTaskWatch();            // resume watching if a task is mid-run / awaiting a decision
 }

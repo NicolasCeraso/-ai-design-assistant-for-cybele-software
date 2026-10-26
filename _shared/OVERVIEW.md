@@ -19,7 +19,7 @@ Shared: [`BRAND.md`](BRAND.md) · [`SKILLS.md`](SKILLS.md).
 - **Python:** use **3.13** (`%LOCALAPPDATA%\Programs\Python\Python313\python.exe`). ⚠ The default `C:\Python314` is broken (missing stdlib `encodings`). Key libs: `python‑pptx`, `PyMuPDF (fitz)`, `Pillow`, `Playwright`, `pywin32` (PowerPoint COM).
 - **Node:** `pptxgenjs` (faithful presentation path).
 - **Fonts:** install Inter **static** weights locally (variable‑only renders thin) — see `BRAND.md §2`.
-- **Working trees (outside this repo):** `C:/Users/NickCeraso/cybele_deckgen/` (assets, pipelines), `~/.claude/skills/` (live skills).
+- **Pipelines and brand assets:** `web-app/deckgen/` (in this repo; setup in its README). Live skills: `~/.claude/skills/` is only a mirror of `skills/`.
 
 ## Timeline (master log)
 

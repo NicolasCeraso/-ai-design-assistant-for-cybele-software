@@ -19,7 +19,6 @@ Editable `.pptx` decks for Google Slides. Brand basics (palette 06/26, Inter, lo
 | Source | Path | Tool | Where |
 |---|---|---|---|
 | **Text** (DOCX/MD/Docs) | From‑scratch **editorial** generator (authors copy) | python‑pptx | `cybele_deckgen/pptx_work/build_pptx.py` |
-| **Rendered artifact**, brand‑a‑source template | Insert N content slides between a 2‑slide template; brand/cleanup passes | python‑pptx | `cybele_deckgen/build_ciso_pptx.py` |
 | **Rendered artifact**, faithful 1:1 + native diagrams | **Verbatim** transcription + native diagrams | Node `pptxgenjs` | `cybele_deckgen/enterprise_vdi_oci_esp/` |
 
 Common: closing via `cierre.pptx` XML swap; nuclear shadow removal; Inter‑only typography; slide count is dynamic per source.
