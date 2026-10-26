@@ -1,0 +1,3222 @@
+{
+  "source": "https://www.figma.com/design/x0HMD1pXkcYdFM7NSaBvb4/?node-id=8120-7263",
+  "syncedAt": "2026-09-28T14:41:15.405Z",
+  "icons": [
+    {
+      "name": "app-group-ok",
+      "group": "apps",
+      "variant": "light",
+      "fp": "98jaie"
+    },
+    {
+      "name": "app-group",
+      "group": "apps",
+      "variant": "light",
+      "fp": "7vnfsy"
+    },
+    {
+      "name": "app-access",
+      "group": "apps",
+      "variant": "light",
+      "fp": "17sxxjo"
+    },
+    {
+      "name": "app-alert",
+      "group": "apps",
+      "variant": "light",
+      "fp": "1cit8vh"
+    },
+    {
+      "name": "app-play",
+      "group": "apps",
+      "variant": "light",
+      "fp": "15gbsrr"
+    },
+    {
+      "name": "control-panel",
+      "group": "apps",
+      "variant": "light",
+      "fp": "g8hnin"
+    },
+    {
+      "name": "win-app",
+      "group": "apps",
+      "variant": "light",
+      "fp": "13818wh"
+    },
+    {
+      "name": "app",
+      "group": "apps",
+      "variant": "light",
+      "fp": "1hhlic4"
+    },
+    {
+      "name": "no-app",
+      "group": "apps",
+      "variant": "light",
+      "fp": "q2z26b"
+    },
+    {
+      "name": "web-app",
+      "group": "apps",
+      "variant": "light",
+      "fp": "jfsuhm"
+    },
+    {
+      "name": "remote-app",
+      "group": "apps",
+      "variant": "light",
+      "fp": "qnosxi"
+    },
+    {
+      "name": "virtual-ui-app",
+      "group": "apps",
+      "variant": "light",
+      "fp": "fcqq7v"
+    },
+    {
+      "name": "cloud-app",
+      "group": "apps",
+      "variant": "light",
+      "fp": "uhomsj"
+    },
+    {
+      "name": "new-app",
+      "group": "apps",
+      "variant": "light",
+      "fp": "17r87yi"
+    },
+    {
+      "name": "term-emul",
+      "group": "apps",
+      "variant": "light",
+      "fp": "11y4fux"
+    },
+    {
+      "name": "app-virt",
+      "group": "apps",
+      "variant": "light",
+      "fp": "1r3j9av"
+    },
+    {
+      "name": "usability-bad",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "19px8i9"
+    },
+    {
+      "name": "group-access",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "1cm4bpe"
+    },
+    {
+      "name": "user-vm",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "1ahvadv"
+    },
+    {
+      "name": "user-guest",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "1q3oyvc"
+    },
+    {
+      "name": "user-dotted",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "s9ed34"
+    },
+    {
+      "name": "anonym",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "1nklxgl"
+    },
+    {
+      "name": "config-options",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "wzv0z0"
+    },
+    {
+      "name": "user-transf",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "1afts5b"
+    },
+    {
+      "name": "identity-providers",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "n5mir9"
+    },
+    {
+      "name": "hacker",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "1we3w3r"
+    },
+    {
+      "name": "no-hacker",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "giuevn"
+    },
+    {
+      "name": "id-federation",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "18h33qu"
+    },
+    {
+      "name": "assign-vm",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "1qyulr3"
+    },
+    {
+      "name": "mission",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "2nvh3j"
+    },
+    {
+      "name": "danger",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "u89t2k"
+    },
+    {
+      "name": "user-contract",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "145h4pe"
+    },
+    {
+      "name": "user-time",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "1v0361b"
+    },
+    {
+      "name": "phishing",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "ao42o8"
+    },
+    {
+      "name": "deal",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "18trbyo"
+    },
+    {
+      "name": "user-cost",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "xhu5r1"
+    },
+    {
+      "name": "group-cost",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "nqtgkc"
+    },
+    {
+      "name": "audit-log",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "ixehk"
+    },
+    {
+      "name": "hand",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "q2edsl"
+    },
+    {
+      "name": "limited-options",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "11cbas2"
+    },
+    {
+      "name": "granular-access",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "1mq8j3o"
+    },
+    {
+      "name": "slides",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "1qrjpxm"
+    },
+    {
+      "name": "presentation",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "trnq44"
+    },
+    {
+      "name": "user-power",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "iqrn75"
+    },
+    {
+      "name": "user-corp",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "pwokd0"
+    },
+    {
+      "name": "user-tool",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "174thz8"
+    },
+    {
+      "name": "leads",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "huod0u"
+    },
+    {
+      "name": "user-alert",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "8035vo"
+    },
+    {
+      "name": "thumbs-up",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "ue1qh"
+    },
+    {
+      "name": "thumbs-down",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "4b4ynn"
+    },
+    {
+      "name": "admin",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "5dr79z"
+    },
+    {
+      "name": "user",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "cizkpu"
+    },
+    {
+      "name": "doctor",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "11z4qqf"
+    },
+    {
+      "name": "user-config",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "1ujit8n"
+    },
+    {
+      "name": "members",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "g06ehz"
+    },
+    {
+      "name": "usability",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "wf77s1"
+    },
+    {
+      "name": "user-group",
+      "group": "con figura humana",
+      "variant": "light",
+      "fp": "wu5cuk"
+    },
+    {
+      "name": "chat",
+      "group": "comunicacion",
+      "variant": "light",
+      "fp": "wcdv03"
+    },
+    {
+      "name": "text-msg",
+      "group": "comunicacion",
+      "variant": "light",
+      "fp": "ryhvum"
+    },
+    {
+      "name": "lock-blank",
+      "group": "candado",
+      "variant": "light",
+      "fp": "83rm7j"
+    },
+    {
+      "name": "lock-ok-unlocked",
+      "group": "candado",
+      "variant": "light",
+      "fp": "bb8ek4"
+    },
+    {
+      "name": "SSH-connect",
+      "group": "candado",
+      "variant": "light",
+      "fp": "19rwh2l"
+    },
+    {
+      "name": "unlocked",
+      "group": "candado",
+      "variant": "light",
+      "fp": "1xeniqy"
+    },
+    {
+      "name": "message-lock",
+      "group": "candado",
+      "variant": "light",
+      "fp": "jjscm6"
+    },
+    {
+      "name": "lock-check",
+      "group": "candado",
+      "variant": "light",
+      "fp": "1cpglzd"
+    },
+    {
+      "name": "lock-closed",
+      "group": "candado",
+      "variant": "light",
+      "fp": "z1u9p5"
+    },
+    {
+      "name": "not-locked",
+      "group": "candado",
+      "variant": "light",
+      "fp": "1gm41th"
+    },
+    {
+      "name": "firewall",
+      "group": "candado",
+      "variant": "light",
+      "fp": "fqvibw"
+    },
+    {
+      "name": "fingerprint",
+      "group": "identidad",
+      "variant": "light",
+      "fp": "1946ufw"
+    },
+    {
+      "name": "id-integration",
+      "group": "identidad",
+      "variant": "light",
+      "fp": "1bkajvj"
+    },
+    {
+      "name": "no-identity-integration",
+      "group": "identidad",
+      "variant": "light",
+      "fp": "13h3ig"
+    },
+    {
+      "name": "duplicated-credentials",
+      "group": "identidad",
+      "variant": "light",
+      "fp": "19b5u32"
+    },
+    {
+      "name": "thinfinity-idp",
+      "group": "identidad",
+      "variant": "light",
+      "fp": "1he7ekc"
+    },
+    {
+      "name": "acc-control",
+      "group": "identidad",
+      "variant": "light",
+      "fp": "1mrzvnt"
+    },
+    {
+      "name": "no-vpn",
+      "group": "escudo",
+      "variant": "light",
+      "fp": "18g1zc8"
+    },
+    {
+      "name": "shield",
+      "group": "escudo",
+      "variant": "light",
+      "fp": "1vhvw8y"
+    },
+    {
+      "name": "vpn-alert",
+      "group": "escudo",
+      "variant": "light",
+      "fp": "gqzihn"
+    },
+    {
+      "name": "shield-ok",
+      "group": "escudo",
+      "variant": "light",
+      "fp": "1ot0m7q"
+    },
+    {
+      "name": "perim-based",
+      "group": "escudo",
+      "variant": "light",
+      "fp": "evbwkq"
+    },
+    {
+      "name": "vulnerab",
+      "group": "escudo",
+      "variant": "light",
+      "fp": "gfm3wx"
+    },
+    {
+      "name": "rev-tunnel",
+      "group": "escudo",
+      "variant": "light",
+      "fp": "1x7syid"
+    },
+    {
+      "name": "secure-link",
+      "group": "escudo",
+      "variant": "light",
+      "fp": "dgfays"
+    },
+    {
+      "name": "layered-security",
+      "group": "escudo",
+      "variant": "light",
+      "fp": "1be66hr"
+    },
+    {
+      "name": "vpn",
+      "group": "escudo",
+      "variant": "light",
+      "fp": "dwpfu5"
+    },
+    {
+      "name": "vpn2",
+      "group": "escudo",
+      "variant": "light",
+      "fp": "pa3om"
+    },
+    {
+      "name": "enterprise-ZTNA",
+      "group": "escudo",
+      "variant": "light",
+      "fp": "hilqau"
+    },
+    {
+      "name": "2fa",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "jgs8x9"
+    },
+    {
+      "name": "no-2fa",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1kpj56b"
+    },
+    {
+      "name": "no-attack",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1qk38sx"
+    },
+    {
+      "name": "target",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1mr1zqm"
+    },
+    {
+      "name": "daas",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "10b22uk"
+    },
+    {
+      "name": "return",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1jgi19h"
+    },
+    {
+      "name": "pc-unknown",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1wa48z3"
+    },
+    {
+      "name": "no-install",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1tbk2l9"
+    },
+    {
+      "name": "remote-work",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "gmnsma"
+    },
+    {
+      "name": "multi-monitor",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1wtwq0j"
+    },
+    {
+      "name": "remote-app-mode",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1m9p3xz"
+    },
+    {
+      "name": "remote-access",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "9nj0ng"
+    },
+    {
+      "name": "session-restriction",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "vs59pl"
+    },
+    {
+      "name": "bitrate",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "133a3o7"
+    },
+    {
+      "name": "ai-assist",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1na5nn2"
+    },
+    {
+      "name": "app-ok",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "qjrb2y"
+    },
+    {
+      "name": "full-desk",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1cikcmj"
+    },
+    {
+      "name": "pc-user-location",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "ycqmpx"
+    },
+    {
+      "name": "microsegmentation",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1e0eoj5"
+    },
+    {
+      "name": "remote-win",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "ivvutb"
+    },
+    {
+      "name": "watermark",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "gkazcq"
+    },
+    {
+      "name": "s-log",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1e6ih4w"
+    },
+    {
+      "name": "tablet",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "c0ccor"
+    },
+    {
+      "name": "remote-call",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "eb2f2v"
+    },
+    {
+      "name": "pc-star",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1471u4b"
+    },
+    {
+      "name": "medical-app",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "ddgqqn"
+    },
+    {
+      "name": "share-session",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "ujpxli"
+    },
+    {
+      "name": "pc",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1trmow4"
+    },
+    {
+      "name": "work-monitor",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1nowj73"
+    },
+    {
+      "name": "vnc",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "shiaeh"
+    },
+    {
+      "name": "thin-vnc",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "gvp5w0"
+    },
+    {
+      "name": "system-config",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1uwvnvl"
+    },
+    {
+      "name": "win-desktop",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1at8kir"
+    },
+    {
+      "name": "unlocked-pc",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "2ve8aq"
+    },
+    {
+      "name": "pc-ok",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "lw6se9"
+    },
+    {
+      "name": "locked-pc",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "tino53"
+    },
+    {
+      "name": "multi-platform",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1r6kv3k"
+    },
+    {
+      "name": "monitor-VM",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "1nn6yy0"
+    },
+    {
+      "name": "laptop",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "p4lo0s"
+    },
+    {
+      "name": "mobile",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "szle71"
+    },
+    {
+      "name": "3D-model",
+      "group": "dispositivos",
+      "variant": "light",
+      "fp": "mzjzjb"
+    },
+    {
+      "name": "calen-user",
+      "group": "Tiempo",
+      "variant": "light",
+      "fp": "seye5q"
+    },
+    {
+      "name": "calen-time",
+      "group": "Tiempo",
+      "variant": "light",
+      "fp": "z0tlii"
+    },
+    {
+      "name": "calendar",
+      "group": "Tiempo",
+      "variant": "light",
+      "fp": "14tjt5z"
+    },
+    {
+      "name": "year",
+      "group": "Tiempo",
+      "variant": "light",
+      "fp": "6diedm"
+    },
+    {
+      "name": "priv-folder",
+      "group": "carpetas",
+      "variant": "light",
+      "fp": "3aojke"
+    },
+    {
+      "name": "op-folder",
+      "group": "carpetas",
+      "variant": "light",
+      "fp": "cjqxk4"
+    },
+    {
+      "name": "file-manager",
+      "group": "carpetas",
+      "variant": "light",
+      "fp": "1w6ox60"
+    },
+    {
+      "name": "new-folder",
+      "group": "carpetas",
+      "variant": "light",
+      "fp": "bs5asn"
+    },
+    {
+      "name": "super-folder",
+      "group": "carpetas",
+      "variant": "light",
+      "fp": "ms49md"
+    },
+    {
+      "name": "share-folder",
+      "group": "carpetas",
+      "variant": "light",
+      "fp": "1t9h083"
+    },
+    {
+      "name": "web-folder",
+      "group": "carpetas",
+      "variant": "light",
+      "fp": "1frcmt9"
+    },
+    {
+      "name": "web-folder-2",
+      "group": "carpetas",
+      "variant": "light",
+      "fp": "2r6bbf"
+    },
+    {
+      "name": "folder-ok",
+      "group": "carpetas",
+      "variant": "light",
+      "fp": "1fq7332"
+    },
+    {
+      "name": "folder",
+      "group": "carpetas",
+      "variant": "light",
+      "fp": "179viey"
+    },
+    {
+      "name": "dollar-sign",
+      "group": "dinero y costos",
+      "variant": "light",
+      "fp": "a2i7o"
+    },
+    {
+      "name": "cost-analysis",
+      "group": "dinero y costos",
+      "variant": "light",
+      "fp": "rwmvha"
+    },
+    {
+      "name": "cost-control",
+      "group": "dinero y costos",
+      "variant": "light",
+      "fp": "qykbhw"
+    },
+    {
+      "name": "it-overhead",
+      "group": "dinero y costos",
+      "variant": "light",
+      "fp": "1huoduv"
+    },
+    {
+      "name": "higher-cost",
+      "group": "dinero y costos",
+      "variant": "light",
+      "fp": "1nxcjvt"
+    },
+    {
+      "name": "lower-cost",
+      "group": "dinero y costos",
+      "variant": "light",
+      "fp": "8mnmtt"
+    },
+    {
+      "name": "complex-pricing",
+      "group": "dinero y costos",
+      "variant": "light",
+      "fp": "krntci"
+    },
+    {
+      "name": "billing",
+      "group": "dinero y costos",
+      "variant": "light",
+      "fp": "19m3dij"
+    },
+    {
+      "name": "no-pricing",
+      "group": "dinero y costos",
+      "variant": "light",
+      "fp": "f6f9pl"
+    },
+    {
+      "name": "money-return",
+      "group": "dinero y costos",
+      "variant": "light",
+      "fp": "1ddg8kn"
+    },
+    {
+      "name": "all-prof",
+      "group": "cuadrados",
+      "variant": "light",
+      "fp": "1s8xhho"
+    },
+    {
+      "name": "profile",
+      "group": "cuadrados",
+      "variant": "light",
+      "fp": "178j56b"
+    },
+    {
+      "name": "profile-set",
+      "group": "cuadrados",
+      "variant": "light",
+      "fp": "1wv3ogt"
+    },
+    {
+      "name": "profile-alert",
+      "group": "cuadrados",
+      "variant": "light",
+      "fp": "1o4p43v"
+    },
+    {
+      "name": "form",
+      "group": "cuadrados",
+      "variant": "light",
+      "fp": "1gidmld"
+    },
+    {
+      "name": "show-sidebar",
+      "group": "cuadrados",
+      "variant": "light",
+      "fp": "mq916v"
+    },
+    {
+      "name": "hide-sidebar",
+      "group": "cuadrados",
+      "variant": "light",
+      "fp": "1qymeia"
+    },
+    {
+      "name": "copy",
+      "group": "cuadrados",
+      "variant": "light",
+      "fp": "1iw91ey"
+    },
+    {
+      "name": "coverflow",
+      "group": "cuadrados",
+      "variant": "light",
+      "fp": "t9ceaw"
+    },
+    {
+      "name": "save",
+      "group": "cuadrados",
+      "variant": "light",
+      "fp": "1eg7dzw"
+    },
+    {
+      "name": "function",
+      "group": "cuadrados",
+      "variant": "light",
+      "fp": "at1bwx"
+    },
+    {
+      "name": "image",
+      "group": "cuadrados",
+      "variant": "light",
+      "fp": "m9pcdo"
+    },
+    {
+      "name": "menu",
+      "group": "cuadrados",
+      "variant": "light",
+      "fp": "rzqyhc"
+    },
+    {
+      "name": "license",
+      "group": "cuadrados",
+      "variant": "light",
+      "fp": "1o34khx"
+    },
+    {
+      "name": "table",
+      "group": "cuadrados",
+      "variant": "light",
+      "fp": "19brqo7"
+    },
+    {
+      "name": "package",
+      "group": "cuadrados",
+      "variant": "light",
+      "fp": "1e0xdsv"
+    },
+    {
+      "name": "dialog",
+      "group": "cuadrados",
+      "variant": "light",
+      "fp": "1bu6rh3"
+    },
+    {
+      "name": "cloud-scale",
+      "group": "nube",
+      "variant": "light",
+      "fp": "mxivli"
+    },
+    {
+      "name": "cloud-auth",
+      "group": "nube",
+      "variant": "light",
+      "fp": "1jcwhar"
+    },
+    {
+      "name": "multi-cloud",
+      "group": "nube",
+      "variant": "light",
+      "fp": "3w34q9"
+    },
+    {
+      "name": "fin-ops",
+      "group": "nube",
+      "variant": "light",
+      "fp": "3dxp1h"
+    },
+    {
+      "name": "iaas",
+      "group": "nube",
+      "variant": "light",
+      "fp": "15bpf1g"
+    },
+    {
+      "name": "cloud-price",
+      "group": "nube",
+      "variant": "light",
+      "fp": "6hew09"
+    },
+    {
+      "name": "cloud-ok",
+      "group": "nube",
+      "variant": "light",
+      "fp": "1jpv6yc"
+    },
+    {
+      "name": "saas-integ",
+      "group": "nube",
+      "variant": "light",
+      "fp": "1yq82uh"
+    },
+    {
+      "name": "web-cloud",
+      "group": "nube",
+      "variant": "light",
+      "fp": "1m76viy"
+    },
+    {
+      "name": "cloud-lock",
+      "group": "nube",
+      "variant": "light",
+      "fp": "160bepc"
+    },
+    {
+      "name": "cloud-lock-in-2",
+      "group": "nube",
+      "variant": "light",
+      "fp": "1l6npwl"
+    },
+    {
+      "name": "vdi",
+      "group": "nube",
+      "variant": "light",
+      "fp": "8w8515"
+    },
+    {
+      "name": "deploy",
+      "group": "nube",
+      "variant": "light",
+      "fp": "6ujrms"
+    },
+    {
+      "name": "cloud",
+      "group": "nube",
+      "variant": "light",
+      "fp": "we9159"
+    },
+    {
+      "name": "cloud-down",
+      "group": "nube",
+      "variant": "light",
+      "fp": "238it0"
+    },
+    {
+      "name": "cloud-up",
+      "group": "nube",
+      "variant": "light",
+      "fp": "1b67qzz"
+    },
+    {
+      "name": "sd-wan",
+      "group": "nube",
+      "variant": "light",
+      "fp": "1n1eq27"
+    },
+    {
+      "name": "healthcare",
+      "group": "edificios y rubros",
+      "variant": "light",
+      "fp": "2b91b1"
+    },
+    {
+      "name": "banking",
+      "group": "edificios y rubros",
+      "variant": "light",
+      "fp": "xe3nwv"
+    },
+    {
+      "name": "education",
+      "group": "edificios y rubros",
+      "variant": "light",
+      "fp": "122ymdc"
+    },
+    {
+      "name": "gov",
+      "group": "edificios y rubros",
+      "variant": "light",
+      "fp": "1lo1aff"
+    },
+    {
+      "name": "education-person",
+      "group": "edificios y rubros",
+      "variant": "light",
+      "fp": "13ly9qu"
+    },
+    {
+      "name": "bank",
+      "group": "edificios y rubros",
+      "variant": "light",
+      "fp": "1fb1dbc"
+    },
+    {
+      "name": "bank-2",
+      "group": "edificios y rubros",
+      "variant": "light",
+      "fp": "wogc7w"
+    },
+    {
+      "name": "hospital",
+      "group": "edificios y rubros",
+      "variant": "light",
+      "fp": "908ztg"
+    },
+    {
+      "name": "premises",
+      "group": "edificios y rubros",
+      "variant": "light",
+      "fp": "1gj8st1"
+    },
+    {
+      "name": "manufacture",
+      "group": "edificios y rubros",
+      "variant": "light",
+      "fp": "rdooc4"
+    },
+    {
+      "name": "on-prem-mng",
+      "group": "edificios y rubros",
+      "variant": "light",
+      "fp": "151bu7m"
+    },
+    {
+      "name": "insecure-transfer",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "1yfuipo"
+    },
+    {
+      "name": "secure-transfer",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "uj322h"
+    },
+    {
+      "name": "lateral-attack",
+      "group": "flechas",
+      "variant": "Default",
+      "fp": "5fur8v"
+    },
+    {
+      "name": "transf-lag",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "56kbub"
+    },
+    {
+      "name": "vpn-tunnels",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "1h9t0a3"
+    },
+    {
+      "name": "simple",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "9ecb8i"
+    },
+    {
+      "name": "cloud-lock-in",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "ns9t5v"
+    },
+    {
+      "name": "proxy",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "t1ntfx"
+    },
+    {
+      "name": "context",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "10fr0zc"
+    },
+    {
+      "name": "no-scaling",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "1g794kz"
+    },
+    {
+      "name": "over-prov",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "zm8e2m"
+    },
+    {
+      "name": "infrastructure",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "fkah6b"
+    },
+    {
+      "name": "cloud-inf",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "1xlt8d3"
+    },
+    {
+      "name": "workload",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "1r6rkse"
+    },
+    {
+      "name": "hybrid",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "158bsdz"
+    },
+    {
+      "name": "session-broker",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "k6fv6k"
+    },
+    {
+      "name": "app-pooling",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "1eqnh1i"
+    },
+    {
+      "name": "complexity",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "ev143j"
+    },
+    {
+      "name": "earnings-loss",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "a73nko"
+    },
+    {
+      "name": "earnings-profit",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "kjd4kn"
+    },
+    {
+      "name": "roadmap",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "13nhvrg"
+    },
+    {
+      "name": "exit-full-screen",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "1ajqars"
+    },
+    {
+      "name": "full-screen",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "1k5wtrc"
+    },
+    {
+      "name": "expand",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "1ul2atn"
+    },
+    {
+      "name": "resize",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "9wq9xx"
+    },
+    {
+      "name": "new-window",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "1mr395y"
+    },
+    {
+      "name": "login",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "br5vrp"
+    },
+    {
+      "name": "logout",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "vtktl2"
+    },
+    {
+      "name": "refresh",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "1clbqgs"
+    },
+    {
+      "name": "scale",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "50srxt"
+    },
+    {
+      "name": "scale-d",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "133ua7c"
+    },
+    {
+      "name": "scale-time",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "1q55aut"
+    },
+    {
+      "name": "recurrent",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "p0pfrl"
+    },
+    {
+      "name": "download",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "12vvt6d"
+    },
+    {
+      "name": "download-all",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "70td67"
+    },
+    {
+      "name": "stats",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "7eoqxu"
+    },
+    {
+      "name": "back",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "1f5d5j5"
+    },
+    {
+      "name": "rollback",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "4bzbne"
+    },
+    {
+      "name": "sort-high-to-low",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "1vsf4om"
+    },
+    {
+      "name": "sort-low-to-high",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "6ma6gr"
+    },
+    {
+      "name": "sort-custom",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "6zr0rq"
+    },
+    {
+      "name": "sort-a-to-z",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "2y0lqm"
+    },
+    {
+      "name": "sort-z-to-a",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "mbue4j"
+    },
+    {
+      "name": "upload",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "1ahumi6"
+    },
+    {
+      "name": "run-imp-exp",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "h7xry0"
+    },
+    {
+      "name": "import-export",
+      "group": "flechas",
+      "variant": "light",
+      "fp": "1sxr3gb"
+    },
+    {
+      "name": "a-down",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "1a23yt9"
+    },
+    {
+      "name": "bxd-lyout",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "1du64u5"
+    },
+    {
+      "name": "wide-lyout",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "1ozbthl"
+    },
+    {
+      "name": "x-wide-lyout",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "gtjs9d"
+    },
+    {
+      "name": "isolated-app",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "wups88"
+    },
+    {
+      "name": "a-left",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "mp6tqy"
+    },
+    {
+      "name": "a-right",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "1rq7wsx"
+    },
+    {
+      "name": "a-up",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "wxpwqr"
+    },
+    {
+      "name": "double-left",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "1xlh7uj"
+    },
+    {
+      "name": "forbidden",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "v42kjp"
+    },
+    {
+      "name": "share-2",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "10g9mi4"
+    },
+    {
+      "name": "hamburger",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "33qii4"
+    },
+    {
+      "name": "double-right",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "mdoiam"
+    },
+    {
+      "name": "coll-list",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "s1picp"
+    },
+    {
+      "name": "exp-list",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "1dowjv6"
+    },
+    {
+      "name": "exp-w",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "evtkkq"
+    },
+    {
+      "name": "coll-w",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "97mg5h"
+    },
+    {
+      "name": "v-ellipsis",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "kmjfpt"
+    },
+    {
+      "name": "drag-ell",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "cowgm7"
+    },
+    {
+      "name": "h-ellipsis",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "9nz9qx"
+    },
+    {
+      "name": "checklist",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "ga6ys"
+    },
+    {
+      "name": "options",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "15vz4ah"
+    },
+    {
+      "name": "wifi",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "1svgusj"
+    },
+    {
+      "name": "graph",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "1hmxm9w"
+    },
+    {
+      "name": "grid",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "1rbjzcu"
+    },
+    {
+      "name": "add-item",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "1tfdcn"
+    },
+    {
+      "name": "c-list",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "1vysqr4"
+    },
+    {
+      "name": "tiles",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "1xvcspz"
+    },
+    {
+      "name": "connect",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "157pcqq"
+    },
+    {
+      "name": "list",
+      "group": "lineas",
+      "variant": "light",
+      "fp": "1vixo0v"
+    },
+    {
+      "name": "tri-up",
+      "group": "controles",
+      "variant": "light",
+      "fp": "tjyvi2"
+    },
+    {
+      "name": "tri-down",
+      "group": "controles",
+      "variant": "light",
+      "fp": "om5sgi"
+    },
+    {
+      "name": "minus",
+      "group": "controles",
+      "variant": "light",
+      "fp": "1o4i0f2"
+    },
+    {
+      "name": "play",
+      "group": "controles",
+      "variant": "light",
+      "fp": "t9zz6z"
+    },
+    {
+      "name": "stop",
+      "group": "controles",
+      "variant": "light",
+      "fp": "11jomp0"
+    },
+    {
+      "name": "forward",
+      "group": "controles",
+      "variant": "light",
+      "fp": "g3efya"
+    },
+    {
+      "name": "rewind",
+      "group": "controles",
+      "variant": "light",
+      "fp": "1ev6d83"
+    },
+    {
+      "name": "tri-left",
+      "group": "controles",
+      "variant": "light",
+      "fp": "5ih9if"
+    },
+    {
+      "name": "tri-right",
+      "group": "controles",
+      "variant": "light",
+      "fp": "490vtf"
+    },
+    {
+      "name": "plus",
+      "group": "controles",
+      "variant": "light",
+      "fp": "k86tze"
+    },
+    {
+      "name": "pause",
+      "group": "controles",
+      "variant": "light",
+      "fp": "1wfcu51"
+    },
+    {
+      "name": "cancel",
+      "group": "controles",
+      "variant": "light",
+      "fp": "10gaosz"
+    },
+    {
+      "name": "rec-active",
+      "group": "controles",
+      "variant": "light",
+      "fp": "1y4yv0n"
+    },
+    {
+      "name": "alert",
+      "group": "controles",
+      "variant": "light",
+      "fp": "1buec2x"
+    },
+    {
+      "name": "question",
+      "group": "controles",
+      "variant": "light",
+      "fp": "15dj675"
+    },
+    {
+      "name": "info",
+      "group": "controles",
+      "variant": "light",
+      "fp": "cysseu"
+    },
+    {
+      "name": "check",
+      "group": "controles",
+      "variant": "light",
+      "fp": "l6m6ub"
+    },
+    {
+      "name": "arr-up",
+      "group": "controles",
+      "variant": "light",
+      "fp": "9mw1jy"
+    },
+    {
+      "name": "arr-right",
+      "group": "controles",
+      "variant": "light",
+      "fp": "xb2rqp"
+    },
+    {
+      "name": "arr-left",
+      "group": "controles",
+      "variant": "light",
+      "fp": "ddvnxw"
+    },
+    {
+      "name": "arr-down",
+      "group": "controles",
+      "variant": "light",
+      "fp": "kb0rm6"
+    },
+    {
+      "name": "audio-file",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "fra69k"
+    },
+    {
+      "name": "img-file",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "oon85x"
+    },
+    {
+      "name": "doc-user",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "n7lb1j"
+    },
+    {
+      "name": "doc-options",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "1144z8c"
+    },
+    {
+      "name": "doc-no",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "1xzs7l7"
+    },
+    {
+      "name": "file-compress",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "473geu"
+    },
+    {
+      "name": "file-alert",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "x456mw"
+    },
+    {
+      "name": "doc-hidden",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "yppp4m"
+    },
+    {
+      "name": "doc-check",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "19zqdf9"
+    },
+    {
+      "name": "doc-complex",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "1l4ztfo"
+    },
+    {
+      "name": "doc",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "g3ffr4"
+    },
+    {
+      "name": "drag",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "1qk8xvm"
+    },
+    {
+      "name": "file",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "wk2vr"
+    },
+    {
+      "name": "download-file",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "tiydcl"
+    },
+    {
+      "name": "upload-file",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "16i3dtj"
+    },
+    {
+      "name": "dl-files",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "12p11bq"
+    },
+    {
+      "name": "template",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "y50tib"
+    },
+    {
+      "name": "reports",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "b5fhcv"
+    },
+    {
+      "name": "import-export-file",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "o0ljtr"
+    },
+    {
+      "name": "save-macro",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "1s2zh13"
+    },
+    {
+      "name": "macros-manage",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "ttaxsa"
+    },
+    {
+      "name": "run-macro",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "1amymke"
+    },
+    {
+      "name": "video-file",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "tmtnul"
+    },
+    {
+      "name": "zip-file",
+      "group": "archivos",
+      "variant": "light",
+      "fp": "12caqvf"
+    },
+    {
+      "name": "licensing-costs",
+      "group": "licencias",
+      "variant": "light",
+      "fp": "13piay"
+    },
+    {
+      "name": "licensing-complex",
+      "group": "licencias",
+      "variant": "light",
+      "fp": "1etby6g"
+    },
+    {
+      "name": "licensing-ok",
+      "group": "licencias",
+      "variant": "light",
+      "fp": "1erp5sg"
+    },
+    {
+      "name": "usb",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "ktibvd"
+    },
+    {
+      "name": "barcode",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "25m0zh"
+    },
+    {
+      "name": "coffee",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "120zelx"
+    },
+    {
+      "name": "color-picker",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "mne4th"
+    },
+    {
+      "name": "server-config",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "dpjf3d"
+    },
+    {
+      "name": "bug",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1w7qr7g"
+    },
+    {
+      "name": "oil",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "q7jlq6"
+    },
+    {
+      "name": "legal",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1ht7znc"
+    },
+    {
+      "name": "support-tickets",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "3qft2x"
+    },
+    {
+      "name": "support-ticket",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "vwcrxu"
+    },
+    {
+      "name": "less-tickets",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1r9zhu0"
+    },
+    {
+      "name": "rocket",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "mbyxnw"
+    },
+    {
+      "name": "patch",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1duswf2"
+    },
+    {
+      "name": "plane",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "16lu0lo"
+    },
+    {
+      "name": "brief",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "90wyug"
+    },
+    {
+      "name": "key",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "czvgdt"
+    },
+    {
+      "name": "premium",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "l4vr8e"
+    },
+    {
+      "name": "hourglass",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1sbk9nz"
+    },
+    {
+      "name": "z-printer",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "sgwhws"
+    },
+    {
+      "name": "installer",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "9xok26"
+    },
+    {
+      "name": "CAD",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "rktd2o"
+    },
+    {
+      "name": "bridge",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1tbt0av"
+    },
+    {
+      "name": "HMI",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "to3yqt"
+    },
+    {
+      "name": "telecom",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "12nsi2n"
+    },
+    {
+      "name": "hist-buff",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1trkfrd"
+    },
+    {
+      "name": "hard-drive",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1yiquv3"
+    },
+    {
+      "name": "switch",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "y7gmbb"
+    },
+    {
+      "name": "truck",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1lmxir6"
+    },
+    {
+      "name": "bundle-alert",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1txw1d"
+    },
+    {
+      "name": "calling",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "arf6pl"
+    },
+    {
+      "name": "shopping-cart",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "zbvdxy"
+    },
+    {
+      "name": "marketing",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "oaxit8"
+    },
+    {
+      "name": "moon",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1cmt416"
+    },
+    {
+      "name": "sun",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1o6pw9b"
+    },
+    {
+      "name": "lightning",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1q6bsl8"
+    },
+    {
+      "name": "email",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "3l6o0l"
+    },
+    {
+      "name": "bookmark",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1kna50q"
+    },
+    {
+      "name": "wrench",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "7sj7xp"
+    },
+    {
+      "name": "filter",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "n1ibok"
+    },
+    {
+      "name": "dial-down",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "10nceck"
+    },
+    {
+      "name": "dial-up",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "14m1q3r"
+    },
+    {
+      "name": "cut",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "sko1ki"
+    },
+    {
+      "name": "support",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "19aar50"
+    },
+    {
+      "name": "launch",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1j5vu3p"
+    },
+    {
+      "name": "connect-print",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "iw7a3w"
+    },
+    {
+      "name": "printer",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "mefgso"
+    },
+    {
+      "name": "call-start",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1mgtnui"
+    },
+    {
+      "name": "call-end",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "hpfq2t"
+    },
+    {
+      "name": "tag",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "qlyygb"
+    },
+    {
+      "name": "binoc",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "w6tti7"
+    },
+    {
+      "name": "home",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "ze0cxt"
+    },
+    {
+      "name": "server",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "19dtplu"
+    },
+    {
+      "name": "search",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "pu4svh"
+    },
+    {
+      "name": "search-plus",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1q64eol"
+    },
+    {
+      "name": "search-minus",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "g61psh"
+    },
+    {
+      "name": "mouse",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "renh3o"
+    },
+    {
+      "name": "right-click",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "4tc4nr"
+    },
+    {
+      "name": "camera",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "104ft5m"
+    },
+    {
+      "name": "id",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "l1ot77"
+    },
+    {
+      "name": "db",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "bwyidl"
+    },
+    {
+      "name": "credit-card",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1b7ud5i"
+    },
+    {
+      "name": "pin",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "lsbnng"
+    },
+    {
+      "name": "unpin",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "19j3f0q"
+    },
+    {
+      "name": "gallery",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "ft11h"
+    },
+    {
+      "name": "eye",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "tusyb0"
+    },
+    {
+      "name": "eye-off",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "19fsjz8"
+    },
+    {
+      "name": "microphone",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "ruxeo8"
+    },
+    {
+      "name": "audio",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1s7nxyw"
+    },
+    {
+      "name": "trash",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1p1ed6h"
+    },
+    {
+      "name": "webcam",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "w49c9s"
+    },
+    {
+      "name": "plc",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1ybzhgd"
+    },
+    {
+      "name": "plc-scada",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1hx76fs"
+    },
+    {
+      "name": "pump",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1kddjii"
+    },
+    {
+      "name": "motor",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1ovhf87"
+    },
+    {
+      "name": "router",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "t40zde"
+    },
+    {
+      "name": "book",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "j8plib"
+    },
+    {
+      "name": "dbs",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "fuvk53"
+    },
+    {
+      "name": "keyboard",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "mdfx7n"
+    },
+    {
+      "name": "keypad",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1vbvkeu"
+    },
+    {
+      "name": "cpu",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1wmcrc0"
+    },
+    {
+      "name": "dll",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "8y7jf5"
+    },
+    {
+      "name": "terminal",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1mdgol2"
+    },
+    {
+      "name": "multi-terminal",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1uisxfz"
+    },
+    {
+      "name": "star",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "b9xdez"
+    },
+    {
+      "name": "bell",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "126bh7c"
+    },
+    {
+      "name": "link",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "1oq7o17"
+    },
+    {
+      "name": "unlink",
+      "group": "objetos",
+      "variant": "light",
+      "fp": "y9o3wu"
+    },
+    {
+      "name": "closed",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "lrb7ie"
+    },
+    {
+      "name": "idea",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1ygi4j4"
+    },
+    {
+      "name": "options-ok",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1xnp93w"
+    },
+    {
+      "name": "gldn-img",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "4r4bh8"
+    },
+    {
+      "name": "alert-s",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "tce8ud"
+    },
+    {
+      "name": "ad-forest",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1iqnbf4"
+    },
+    {
+      "name": "location-ok",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "9tvt91"
+    },
+    {
+      "name": "IP",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1petbzt"
+    },
+    {
+      "name": "orch",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "oc4t5o"
+    },
+    {
+      "name": "objectives",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1gu3pdr"
+    },
+    {
+      "name": "gpu-fast",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1i1njt4"
+    },
+    {
+      "name": "view-data",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "10vxjqy"
+    },
+    {
+      "name": "growth",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1463881"
+    },
+    {
+      "name": "code-alert",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "5dj7l3"
+    },
+    {
+      "name": "churn-down",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "t4m5ov"
+    },
+    {
+      "name": "latency",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "18jh9pu"
+    },
+    {
+      "name": "vm-schedule",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1209v06"
+    },
+    {
+      "name": "vm-stopped",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "64qw99"
+    },
+    {
+      "name": "vm-manage",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "hu24vj"
+    },
+    {
+      "name": "no-listener",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1s80uh3"
+    },
+    {
+      "name": "ISV",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1r4vf7z"
+    },
+    {
+      "name": "video-quality",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1nmbtmq"
+    },
+    {
+      "name": "multi-ten",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "fpglcj"
+    },
+    {
+      "name": "no-pass",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "18s5jv4"
+    },
+    {
+      "name": "churn-up",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "tk4gge"
+    },
+    {
+      "name": "churn",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1givvnn"
+    },
+    {
+      "name": "launch-alert",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1kgiumb"
+    },
+    {
+      "name": "deploy-sett",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "479wbz"
+    },
+    {
+      "name": "pass-alert",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "sjo3xq"
+    },
+    {
+      "name": "arch",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1lfigrk"
+    },
+    {
+      "name": "workflow",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "cwy0mp"
+    },
+    {
+      "name": "api",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "23a54x"
+    },
+    {
+      "name": "limited-control",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "oc7gz4"
+    },
+    {
+      "name": "milestones",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1uuxn8d"
+    },
+    {
+      "name": "monitor-use",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1flbncl"
+    },
+    {
+      "name": "analytics-op",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "amu55g"
+    },
+    {
+      "name": "secure-server",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "vg0g6v"
+    },
+    {
+      "name": "app-server",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "5fvp31"
+    },
+    {
+      "name": "secure-pass",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1kgb1d8"
+    },
+    {
+      "name": "secure-access",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1up5unn"
+    },
+    {
+      "name": "EC2-down",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "7oov5s"
+    },
+    {
+      "name": "complex",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1osboen"
+    },
+    {
+      "name": "remote-app-mark",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "10klzfk"
+    },
+    {
+      "name": "location",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "32trsi"
+    },
+    {
+      "name": "send-keys",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1wuey52"
+    },
+    {
+      "name": "unplugged",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "atresq"
+    },
+    {
+      "name": "share",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1rdk0e5"
+    },
+    {
+      "name": "recordings",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1y2xemj"
+    },
+    {
+      "name": "group",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "166fn5z"
+    },
+    {
+      "name": "bell-off",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1fjkrn9"
+    },
+    {
+      "name": "fav-not-found",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "qbvi8i"
+    },
+    {
+      "name": "screen-sharing",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "ztwk3i"
+    },
+    {
+      "name": "instance",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "j86wrc"
+    },
+    {
+      "name": "gateway",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1vjvd9b"
+    },
+    {
+      "name": "thin-gateway",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1c94oc"
+    },
+    {
+      "name": "load-bal",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "oil4dk"
+    },
+    {
+      "name": "isolation",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "tymbta"
+    },
+    {
+      "name": "isolated",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "6tgx88"
+    },
+    {
+      "name": "broker",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "gz57qz"
+    },
+    {
+      "name": "HD",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "ismmuw"
+    },
+    {
+      "name": "code",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "rlaiv3"
+    },
+    {
+      "name": "eco",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "v1pxqx"
+    },
+    {
+      "name": "paste",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "e8k50y"
+    },
+    {
+      "name": "relative-touch",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "11zj3we"
+    },
+    {
+      "name": "abs-tch",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "zz8roj"
+    },
+    {
+      "name": "absolute-touch-⚠️-no-se-usa",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "9n50hc"
+    },
+    {
+      "name": "inspector",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "v4nnq2"
+    },
+    {
+      "name": "savings",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "13ac53q"
+    },
+    {
+      "name": "publishing",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1ono4dc"
+    },
+    {
+      "name": "vm",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1p3uos4"
+    },
+    {
+      "name": "network",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1s9zxqv"
+    },
+    {
+      "name": "edit",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1mrd37o"
+    },
+    {
+      "name": "read-only",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "1qd1yrp"
+    },
+    {
+      "name": "web",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "4ehi1a"
+    },
+    {
+      "name": "provisioning",
+      "group": "conceptos",
+      "variant": "light",
+      "fp": "mvtw8x"
+    },
+    {
+      "name": "kubernetes",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1tnzvuu"
+    },
+    {
+      "name": "zebra",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "18hdfa2"
+    },
+    {
+      "name": "ad",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1b656w8"
+    },
+    {
+      "name": "chrome",
+      "group": "logo",
+      "variant": "bold",
+      "fp": "dxlbv7"
+    },
+    {
+      "name": "iso",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1gyt2w1"
+    },
+    {
+      "name": "cybele",
+      "group": "logo",
+      "variant": "light",
+      "fp": "5i3eay"
+    },
+    {
+      "name": "oracle",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1k4c550"
+    },
+    {
+      "name": "thinfinity",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "f66g02"
+    },
+    {
+      "name": "aws",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1nw9jjj"
+    },
+    {
+      "name": "instagram",
+      "group": "logo",
+      "variant": "bold",
+      "fp": "1hw4wqj"
+    },
+    {
+      "name": "hyper-v",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1ilbw73"
+    },
+    {
+      "name": "vmware",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1arzerx"
+    },
+    {
+      "name": "azure",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "rppzpp"
+    },
+    {
+      "name": "ionos",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "rlrfny"
+    },
+    {
+      "name": "forgerock",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1bmpvfi"
+    },
+    {
+      "name": "office",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "19vm3u3"
+    },
+    {
+      "name": "okta",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "jfjqjo"
+    },
+    {
+      "name": "saml",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1qh1ndl"
+    },
+    {
+      "name": "loginradius",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "syt1ky"
+    },
+    {
+      "name": "oauth",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "efsp17"
+    },
+    {
+      "name": "win",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "52u7zw"
+    },
+    {
+      "name": "java",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "17pdxpg"
+    },
+    {
+      "name": "visa",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1x473cp"
+    },
+    {
+      "name": "master",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "70nxzu"
+    },
+    {
+      "name": "amex",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "xqbkkl"
+    },
+    {
+      "name": "linkedin",
+      "group": "logo",
+      "variant": "bold",
+      "fp": "liy93x"
+    },
+    {
+      "name": "jumpcloud",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "80r0ay"
+    },
+    {
+      "name": "entra-id",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "4x5xa"
+    },
+    {
+      "name": "oci",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "7tp8c8"
+    },
+    {
+      "name": "facebook",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "3b09bb"
+    },
+    {
+      "name": "x",
+      "group": "logo",
+      "variant": "bold",
+      "fp": "1jjjqm3"
+    },
+    {
+      "name": "youtube",
+      "group": "logo",
+      "variant": "bold",
+      "fp": "mnl8mx"
+    },
+    {
+      "name": "dropbox",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1vzhyzq"
+    },
+    {
+      "name": "duo",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1tvbpze"
+    },
+    {
+      "name": "gcp",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1thq8cx"
+    },
+    {
+      "name": "google",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1qt85vk"
+    },
+    {
+      "name": "html5",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "100s8iz"
+    },
+    {
+      "name": "linux",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "uppuq8"
+    },
+    {
+      "name": "oauth2",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1bza5p5"
+    },
+    {
+      "name": "android",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "bepvpl"
+    },
+    {
+      "name": "fslogix",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1r63mxz"
+    },
+    {
+      "name": "pingid",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1dwtfde"
+    },
+    {
+      "name": "nutanix",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "f7gge0"
+    },
+    {
+      "name": "auth0",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1rynysk"
+    },
+    {
+      "name": "onelogin",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "1llwtcq"
+    },
+    {
+      "name": "mac-os",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "dc20q4"
+    },
+    {
+      "name": "proxmox",
+      "group": "logo",
+      "variant": "filled-bold",
+      "fp": "r41mcp"
+    },
+    {
+      "name": "dollar",
+      "group": "circulares",
+      "variant": "light",
+      "fp": "1bmhxop"
+    },
+    {
+      "name": "history",
+      "group": "circulares",
+      "variant": "light",
+      "fp": "11ikg5x"
+    },
+    {
+      "name": "gear",
+      "group": "circulares",
+      "variant": "light",
+      "fp": "1do9xvg"
+    },
+    {
+      "name": "globe",
+      "group": "circulares",
+      "variant": "light",
+      "fp": "qjly7j"
+    },
+    {
+      "name": "off",
+      "group": "circulares",
+      "variant": "light",
+      "fp": "6npwot"
+    },
+    {
+      "name": "clock",
+      "group": "circulares",
+      "variant": "light",
+      "fp": "1wt7kuh"
+    },
+    {
+      "name": "normal-size",
+      "group": "circulares",
+      "variant": "light",
+      "fp": "1iu8548"
+    }
+  ]
+}

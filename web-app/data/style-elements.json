@@ -1,0 +1,100 @@
+{
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|safe margin": {
+    "name": "Safe margin",
+    "description": "The margin the composition is laid out to: content begins here, and nothing crosses it — no text, no card, no connector. Given as a percent of the canvas WIDTH on all four sides, so the same number reads as the same distance top, bottom and sides. Separate per side, so the top can breathe more without touching the rest."
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|body text title body text": {
+    "name": "Body text title → Body text",
+    "description": "The vertical distance between a body-text block's title and its text. Think of the pair as one auto-layout frame: this is the gap between them. In Figma it is the frame's itemSpacing; on the SVG route the generator converts it into baseline positions."
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|connector": {
+    "name": "Connector",
+    "description": "The lines that join elements: the stroke width, and the size of the arrowhead. The head is wider than deep, which is what the two numbers say."
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|icon": {
+    "name": "Icons",
+    "description": "An icon style, decided per mode from end to end: its size range, how much padding a background adds around it, and the two colours. The icon is the measurement -- a background is optional, and when a mode wants one it is padding around the icon, so a mode with no background reserves no space for one. 'no fill' turns a mode's background off; 'add fill' gives it one. A new style is a new row, and it starts with a size and colours for every mode."
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|central hub": {
+    "name": "Central hub",
+    "description": "The large icon a hub-and-spoke layout is built around -- a style for a specific occasion, with its own values. Like any style, each mode sets its size, its padding and its colours independently."
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|hub its description": {
+    "name": "Central hub → description",
+    "description": "How far the hub's label sits below it. The label itself is centred under the hub, always — that part is a rule, not a value."
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|card": {
+    "name": "Card",
+    "description": "The panel a body-text block sits in: its corner radius, and its fill in each mode. Flat, no gradients, no border."
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|pill or chip": {
+    "name": "Pill or chip",
+    "description": "The small label used for a tag or a category: its radius, its typography, and per mode both the background it sits on and the colour of its text. A label, not a button — no border, no shadow, no icon inside."
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|central hub description": {
+    "name": "Central hub description",
+    "description": "The short label under the central hub. It belongs to the hub rather than to the reading hierarchy, so it lives here and not among the three text levels. Its distance from the hub is the gap in Margins and spacing."
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|diagram pill": {
+    "name": "Diagram pill",
+    "description": "The one atom of the Architecture / flow pattern: every concrete component is this pill, at this size. It never varies -- a label that needs two lines breaks instead. Category is said by the border and the text on it, in the rows below, never by tinting the fill."
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|zone": {
+    "name": "Zone",
+    "description": "The dashed container that groups pills sharing a context: a network, a DMZ, a tier. Transparent, never filled. Its label sits top-left inside it, and the pills start below."
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|diagram connector": {
+    "name": "Diagram connector",
+    "description": "The arrow of an architecture diagram: thin, with a chevron head, sized to stay legible beside a diagram label. Not the same element as Connector, which is the thick editorial arrow the other patterns use."
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|diagram label": {
+    "name": "Diagram label",
+    "description": "The text inside a pill or on a zone. Smaller than any of the three reading levels, because a topology has to fit many of them."
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|pill thinfinity": {
+    "name": "Pill · Thinfinity",
+    "description": "A Thinfinity component: Gateway, Broker, Agent, IDP. Category is the border and the text, never a tinted fill."
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|pill user": {
+    "name": "Pill · User",
+    "description": "A human actor or endpoint: user, remote user, browser, client."
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|pill secondary": {
+    "name": "Pill · Secondary",
+    "description": "Peripheral infrastructure: firewall, tunnel, database, target servers and resources."
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|between container": {
+    "name": "Between containers",
+    "description": "The distance between two adjacent containers in an architecture diagram. Keep it tight: a long arrow across empty canvas is a defect, not breathing room."
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|title": {
+    "description": "The main title of the Section image, the H1"
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|body text title": {
+    "description": "The title of each text block"
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|body text": {
+    "description": "The body text of the text block"
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|stat number": {
+    "description": "Statistics, an important number"
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|step number": {
+    "description": "The number of a numbered list"
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|column title": {
+    "description": "The title of the column header"
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|column block bg": {
+    "description": "The background of a column or a table"
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|header block to body block": {
+    "description": "Column header to body gap"
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|page surface": {
+    "description": "The bg color of a slide"
+  },
+  "blog|../skills/cybele-blog-visuals/SECTION_RULES.md|list icon": {
+    "description": "the check symbol color of a list item"
+  }
+}

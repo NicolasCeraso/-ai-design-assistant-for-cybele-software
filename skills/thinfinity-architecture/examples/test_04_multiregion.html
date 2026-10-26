@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Thinfinity arch — Test 04 (multi-region, dual flow)</title>
+<style>
+  body { background:#f5f5f5; padding:40px; margin:0; font-family:'Inter',system-ui,sans-serif; color:#666; font-size:13px; }
+  h2 { font-weight:500; font-size:13px; margin:0 0 16px; letter-spacing:0.05em; text-transform:uppercase; color:#888; }
+  .frame { background:#fff; border-radius:14px; box-shadow:0 2px 18px rgba(0,0,0,0.06); overflow:hidden; max-width:1600px; }
+  .frame svg { display:block; width:100%; height:auto; }
+</style>
+</head>
+<body>
+
+<h2>Test 04 — Multi-region (special case: blue control flow + colored session flows · wide distribution channel)</h2>
+
+<div class="frame">
+<svg viewBox="0 0 1600 620" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <marker id="tip-b" viewBox="0 0 14 18" refX="11.5" refY="9" markerWidth="14" markerHeight="18" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M2 2 L11.5 9 L2 16" fill="none" stroke="#0AA9FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="tip-g" viewBox="0 0 14 18" refX="11.5" refY="9" markerWidth="14" markerHeight="18" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M2 2 L11.5 9 L2 16" fill="none" stroke="#43A047" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="tip-o" viewBox="0 0 14 18" refX="11.5" refY="9" markerWidth="14" markerHeight="18" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M2 2 L11.5 9 L2 16" fill="none" stroke="#FAA928" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="tip-r" viewBox="0 0 14 18" refX="11.5" refY="9" markerWidth="14" markerHeight="18" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M2 2 L11.5 9 L2 16" fill="none" stroke="#E5352B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <!-- globe (currentColor so it can be tinted per region) -->
+    <symbol id="globe" viewBox="0 0 35.5826 35.4857">
+      <path d="M35.5826 17.6307C35.5826 17.2484 35.536 16.8733 35.4444 16.5072C34.8091 7.28451 27.128 0 17.7455 0C8.36309 0 0 7.94315 0 17.742C0 27.5408 7.94314 35.4857 17.7438 35.4857C27.5444 35.4857 34.9832 28.0361 35.4624 18.6662C35.5396 18.327 35.5808 17.9806 35.5808 17.6307H35.5826ZM33.8149 16.9164H31.4083C31.3777 15.7983 31.2647 14.7072 31.0744 13.6537C32.5084 14.5672 33.4739 15.6279 33.8041 16.7639C33.8077 16.8141 33.8113 16.8662 33.8131 16.9164H33.8149ZM25.502 16.9164C25.4733 14.9692 25.3118 13.0794 25.0283 11.3081C26.5627 11.6563 27.9643 12.1103 29.1775 12.6487C29.5131 14.0001 29.7141 15.4322 29.759 16.9164H25.502ZM18.9821 2.20025C20.495 2.89837 21.9971 5.44498 22.9267 9.2335C21.6687 9.05404 20.3478 8.93918 18.9821 8.89969V2.20025ZM17.331 2.20025V8.88354C15.976 8.90149 14.6641 8.99122 13.4097 9.14377C14.3411 5.4055 15.8307 2.89119 17.331 2.20025ZM17.331 16.9164H12.4621C12.4962 14.7108 12.7044 12.6792 13.0382 10.8666C14.4057 10.671 15.8468 10.5562 17.331 10.5346V16.9164ZM17.331 18.5675V24.725C15.8594 24.7034 14.429 24.5904 13.0705 24.3983C12.7367 22.6503 12.5231 20.6924 12.4711 18.5675H17.331ZM17.331 26.376V32.8906C15.854 32.2105 14.3877 29.7626 13.4545 26.1212C14.6964 26.272 15.9922 26.3581 17.331 26.376ZM18.9821 32.8906V26.3617C20.3316 26.3204 21.6364 26.2091 22.8818 26.0333C21.9504 29.7231 20.4716 32.2033 18.9821 32.8888V32.8906ZM18.9821 24.7106V18.5675H23.842C23.7899 20.6511 23.5818 22.575 23.2605 24.296C21.9038 24.5186 20.4662 24.6604 18.9821 24.7088V24.7106ZM18.9821 16.9164V10.5508C20.4788 10.5992 21.9271 10.7446 23.2928 10.9689C23.6159 12.7546 23.8169 14.7521 23.8492 16.9164H18.9803H18.9821ZM24.6945 9.5368C24.3894 8.13517 24.0017 6.83225 23.5369 5.66752C23.1134 4.60688 22.6396 3.6952 22.1227 2.93965C24.9224 4.30538 27.2213 7.07453 28.544 10.6082C27.3703 10.1757 26.0781 9.81497 24.6945 9.5368ZM14.1885 2.93965C13.6717 3.6952 13.1961 4.60688 12.7744 5.66752C12.3239 6.79636 11.947 8.05621 11.6473 9.40758C10.2995 9.64807 9.0325 9.96392 7.86777 10.348C9.20478 6.93993 11.4589 4.27307 14.1885 2.93965ZM11.3063 11.1645C11.0084 12.9754 10.8397 14.9172 10.811 16.9164H6.55587C6.60433 15.3192 6.83225 13.7847 7.21451 12.3472C8.43488 11.8681 9.81317 11.4678 11.3081 11.1663L11.3063 11.1645ZM4.903 16.9164H1.81799C2.14641 15.5399 3.41164 14.2657 5.31756 13.2248C5.07887 14.4111 4.93889 15.6476 4.903 16.9164ZM4.91735 18.5675C4.97119 19.7681 5.12195 20.9364 5.35704 22.0581C3.53188 21.0675 2.28818 19.8668 1.8808 18.5675H4.91735ZM6.57023 18.5675H10.8182C10.8648 20.4932 11.0407 22.3596 11.3368 24.1022C9.85265 23.8043 8.47974 23.4077 7.26476 22.9339C6.8843 21.5592 6.64381 20.093 6.57023 18.5675ZM11.6868 25.861C11.9811 27.146 12.3436 28.3466 12.7744 29.4252C13.1979 30.4858 13.6717 31.3975 14.1885 32.153C11.5109 30.8465 9.28913 28.255 7.94494 24.9385C9.10069 25.3136 10.3552 25.6259 11.6868 25.861ZM22.1227 32.1512C22.6396 31.3957 23.1152 30.484 23.5369 29.4234C23.982 28.3089 24.3535 27.0652 24.6532 25.7318C26.0225 25.459 27.3021 25.1036 28.4686 24.6801C27.1352 28.1187 24.8703 30.8106 22.1227 32.1512ZM24.9995 23.9586C25.2813 22.2573 25.4482 20.4393 25.4931 18.5675H29.741C29.6728 19.9835 29.4611 21.3474 29.1272 22.6342C27.9177 23.1654 26.525 23.6141 24.9995 23.9586ZM31.3939 18.5675H33.7826C33.4308 19.6856 32.4617 20.7301 31.0386 21.6292C31.2252 20.6385 31.3454 19.6156 31.3939 18.5675ZM33.1706 13.1656C32.442 12.55 31.5662 11.9847 30.5648 11.4786C29.7464 8.67715 28.3807 6.22207 26.6345 4.33589C29.7374 6.40153 32.0866 9.51347 33.1706 13.1656ZM10.8541 3.20166C8.62691 5.11297 6.86814 7.87135 5.85596 11.1197C4.41485 11.7622 3.19628 12.5231 2.25409 13.3738C3.52291 8.87816 6.70124 5.17758 10.8541 3.20166ZM2.17333 21.814C3.13885 22.706 4.40767 23.501 5.91698 24.1668C7.11581 27.8728 9.28734 30.9237 12.0152 32.7794C7.20374 30.9398 3.4924 26.8552 2.17333 21.814ZM25.5541 31.8067C27.7723 29.8666 29.5149 27.0813 30.5055 23.8097C31.5716 23.2785 32.4976 22.6791 33.255 22.0222C32.0956 26.2163 29.2762 29.7285 25.5523 31.8049L25.5541 31.8067Z" fill="currentColor"/>
+    </symbol>
+  </defs>
+
+  <!-- ================= LAYER 1: ZONES ================= -->
+  <rect x="40" y="70" width="200" height="469" rx="10" fill="none" stroke="#BDBDBD" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <image href="icons/remote-access.svg" x="58" y="85" width="22" height="22"/>
+  <text x="87" y="101" font-size="13" font-weight="500" fill="#373737">Remote Access</text>
+
+  <rect x="746" y="70" width="809" height="136" rx="10" fill="none" stroke="#43A047" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <use href="#globe" x="764" y="85" width="22" height="22" color="#43A047"/>
+  <text x="793" y="101" font-size="13" font-weight="500" fill="#43A047">Americas</text>
+
+  <rect x="746" y="249" width="809" height="136" rx="10" fill="none" stroke="#FAA928" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <use href="#globe" x="764" y="264" width="22" height="22" color="#FAA928"/>
+  <text x="793" y="280" font-size="13" font-weight="500" fill="#FAA928">Europe</text>
+
+  <rect x="746" y="428" width="809" height="136" rx="10" fill="none" stroke="#E5352B" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <use href="#globe" x="764" y="443" width="22" height="22" color="#E5352B"/>
+  <text x="793" y="459" font-size="13" font-weight="500" fill="#E5352B">Asia</text>
+
+  <!-- ================= LAYER 2: CONNECTORS =================
+       Rules: >=14px straight run before any arrowhead; arrowheads into same element >=14px apart.
+       Gateway→CommGateway distribution channel is widened (~100px) so the blue bus and the colored
+       session lines get separate parallel lanes instead of overlapping. -->
+  <!-- ===== BLUE control flow ===== -->
+  <path d="M220 152 H250" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M220 330 H250" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M220 510 H250" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M250 152 V510" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M250 318.5 H279" fill="none" stroke="#0AA9FF" stroke-width="2" marker-end="url(#tip-b)"/>
+  <path d="M363 383 V343" fill="none" stroke="#0AA9FF" stroke-width="2" marker-end="url(#tip-b)"/>
+  <path d="M443 318.5 H490" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M490 153 V511" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M490 153 H539" fill="none" stroke="#0AA9FF" stroke-width="2" marker-end="url(#tip-b)"/>
+  <path d="M490 332 H539" fill="none" stroke="#0AA9FF" stroke-width="2" marker-end="url(#tip-b)"/>
+  <path d="M490 511 H539" fill="none" stroke="#0AA9FF" stroke-width="2" marker-end="url(#tip-b)"/>
+
+  <!-- ===== GREEN — Americas session ===== -->
+  <path d="M220 127 H539" fill="none" stroke="#43A047" stroke-width="2" marker-end="url(#tip-g)"/>
+  <path d="M766 139.5 H707" fill="none" stroke="#43A047" stroke-width="2" marker-end="url(#tip-g)"/>
+  <path d="M846 161 V191" fill="none" stroke="#43A047" stroke-width="2"/>
+  <path d="M846 191 H1455" fill="none" stroke="#43A047" stroke-width="2"/>
+  <path d="M1049 191 V164" fill="none" stroke="#43A047" stroke-width="2" marker-end="url(#tip-g)"/>
+  <path d="M1252 191 V164" fill="none" stroke="#43A047" stroke-width="2" marker-end="url(#tip-g)"/>
+  <path d="M1455 191 V164" fill="none" stroke="#43A047" stroke-width="2" marker-end="url(#tip-g)"/>
+
+  <!-- ===== ORANGE — Europe session (own lane through the gateway/broker gap) ===== -->
+  <path d="M220 306 H265 V361 H515 V306 H539" fill="none" stroke="#FAA928" stroke-width="2" marker-end="url(#tip-o)"/>
+  <path d="M766 318.5 H707" fill="none" stroke="#FAA928" stroke-width="2" marker-end="url(#tip-o)"/>
+  <path d="M846 340 V370" fill="none" stroke="#FAA928" stroke-width="2"/>
+  <path d="M846 370 H1455" fill="none" stroke="#FAA928" stroke-width="2"/>
+  <path d="M1049 370 V343" fill="none" stroke="#FAA928" stroke-width="2" marker-end="url(#tip-o)"/>
+  <path d="M1252 370 V343" fill="none" stroke="#FAA928" stroke-width="2" marker-end="url(#tip-o)"/>
+  <path d="M1455 370 V343" fill="none" stroke="#FAA928" stroke-width="2" marker-end="url(#tip-o)"/>
+
+  <!-- ===== RED — Asia session ===== -->
+  <path d="M220 485 H539" fill="none" stroke="#E5352B" stroke-width="2" marker-end="url(#tip-r)"/>
+  <path d="M766 497.5 H707" fill="none" stroke="#E5352B" stroke-width="2" marker-end="url(#tip-r)"/>
+  <path d="M846 519 V549" fill="none" stroke="#E5352B" stroke-width="2"/>
+  <path d="M846 549 H1455" fill="none" stroke="#E5352B" stroke-width="2"/>
+  <path d="M1049 549 V522" fill="none" stroke="#E5352B" stroke-width="2" marker-end="url(#tip-r)"/>
+  <path d="M1252 549 V522" fill="none" stroke="#E5352B" stroke-width="2" marker-end="url(#tip-r)"/>
+  <path d="M1455 549 V522" fill="none" stroke="#E5352B" stroke-width="2" marker-end="url(#tip-r)"/>
+
+  <!-- ================= LAYER 3: PILLS ================= -->
+  <!-- Browsers -->
+  <g transform="translate(60,118)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#373737" stroke-width="1.5"/>
+    <image href="icons/html5.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#373737">Browser</text>
+    <text x="39" y="35" font-size="12" fill="#373737">Americas</text>
+  </g>
+  <g transform="translate(60,297)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#373737" stroke-width="1.5"/>
+    <image href="icons/html5.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#373737">Browser</text>
+    <text x="39" y="35" font-size="12" fill="#373737">Europe</text>
+  </g>
+  <g transform="translate(60,476)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#373737" stroke-width="1.5"/>
+    <image href="icons/html5.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#373737">Browser</text>
+    <text x="39" y="35" font-size="12" fill="#373737">Asia</text>
+  </g>
+
+  <!-- Central Gateway + Primary Broker -->
+  <g transform="translate(283,297)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#0A74D6" stroke-width="1.5"/>
+    <image href="icons/gateway.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#0A74D6">Thinfinity</text>
+    <text x="39" y="35" font-size="12" fill="#0A74D6">Gateway</text>
+  </g>
+  <g transform="translate(283,383)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#0A74D6" stroke-width="1.5"/>
+    <image href="icons/broker.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#0A74D6">Thinfinity</text>
+    <text x="39" y="35" font-size="12" fill="#0A74D6">Prim. Broker</text>
+  </g>
+
+  <!-- Communication Gateways -->
+  <g transform="translate(543,118)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#0A74D6" stroke-width="1.5"/>
+    <image href="icons/gateway.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#0A74D6">Comm Gateway</text>
+    <text x="39" y="35" font-size="12" fill="#0A74D6">Americas</text>
+  </g>
+  <g transform="translate(543,297)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#0A74D6" stroke-width="1.5"/>
+    <image href="icons/gateway.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#0A74D6">Comm Gateway</text>
+    <text x="39" y="35" font-size="12" fill="#0A74D6">Europe</text>
+  </g>
+  <g transform="translate(543,476)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#0A74D6" stroke-width="1.5"/>
+    <image href="icons/gateway.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#0A74D6">Comm Gateway</text>
+    <text x="39" y="35" font-size="12" fill="#0A74D6">Asia</text>
+  </g>
+
+  <!-- Secondary Brokers (inside region) -->
+  <g transform="translate(766,118)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#0A74D6" stroke-width="1.5"/>
+    <image href="icons/broker.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#0A74D6">Thinfinity</text>
+    <text x="39" y="35" font-size="12" fill="#0A74D6">Sec. Broker</text>
+  </g>
+  <g transform="translate(766,297)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#0A74D6" stroke-width="1.5"/>
+    <image href="icons/broker.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#0A74D6">Thinfinity</text>
+    <text x="39" y="35" font-size="12" fill="#0A74D6">Sec. Broker</text>
+  </g>
+  <g transform="translate(766,476)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#0A74D6" stroke-width="1.5"/>
+    <image href="icons/broker.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#0A74D6">Thinfinity</text>
+    <text x="39" y="35" font-size="12" fill="#0A74D6">Sec. Broker</text>
+  </g>
+
+  <!-- Resources — Americas -->
+  <g transform="translate(969,118)"><rect width="160" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5"/><image href="icons/terminal.svg" x="10" y="10" width="23" height="23"/><text x="39" y="22" font-size="12" fill="#373737">Terminal</text><text x="39" y="35" font-size="12" fill="#373737">Services</text></g>
+  <g transform="translate(1172,118)"><rect width="160" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5"/><image href="icons/vm.svg" x="10" y="10" width="23" height="23"/><text x="39" y="22" font-size="12" fill="#373737">Virtual</text><text x="39" y="35" font-size="12" fill="#373737">Machines</text></g>
+  <g transform="translate(1375,118)"><rect width="160" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5"/><image href="icons/desktop.svg" x="10" y="10" width="23" height="23"/><text x="39" y="22" font-size="12" fill="#373737">Physical</text><text x="39" y="35" font-size="12" fill="#373737">Desktops</text></g>
+
+  <!-- Resources — Europe -->
+  <g transform="translate(969,297)"><rect width="160" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5"/><image href="icons/terminal.svg" x="10" y="10" width="23" height="23"/><text x="39" y="22" font-size="12" fill="#373737">Terminal</text><text x="39" y="35" font-size="12" fill="#373737">Services</text></g>
+  <g transform="translate(1172,297)"><rect width="160" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5"/><image href="icons/vm.svg" x="10" y="10" width="23" height="23"/><text x="39" y="22" font-size="12" fill="#373737">Virtual</text><text x="39" y="35" font-size="12" fill="#373737">Machines</text></g>
+  <g transform="translate(1375,297)"><rect width="160" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5"/><image href="icons/desktop.svg" x="10" y="10" width="23" height="23"/><text x="39" y="22" font-size="12" fill="#373737">Physical</text><text x="39" y="35" font-size="12" fill="#373737">Desktops</text></g>
+
+  <!-- Resources — Asia -->
+  <g transform="translate(969,476)"><rect width="160" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5"/><image href="icons/terminal.svg" x="10" y="10" width="23" height="23"/><text x="39" y="22" font-size="12" fill="#373737">Terminal</text><text x="39" y="35" font-size="12" fill="#373737">Services</text></g>
+  <g transform="translate(1172,476)"><rect width="160" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5"/><image href="icons/vm.svg" x="10" y="10" width="23" height="23"/><text x="39" y="22" font-size="12" fill="#373737">Virtual</text><text x="39" y="35" font-size="12" fill="#373737">Machines</text></g>
+  <g transform="translate(1375,476)"><rect width="160" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5"/><image href="icons/desktop.svg" x="10" y="10" width="23" height="23"/><text x="39" y="22" font-size="12" fill="#373737">Physical</text><text x="39" y="35" font-size="12" fill="#373737">Desktops</text></g>
+
+</svg>
+</div>
+
+</body>
+</html>

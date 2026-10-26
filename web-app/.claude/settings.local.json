@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/NickCeraso/cybele_deckgen/**)",
+      "Bash(python blog_illustrations/build_edge_crisis_illustrations.py)",
+      "Bash(python blog_illustrations/build_edge_crisis_v2.py)",
+      "Bash(npx http-server:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8092/preview_edge_crisis.html)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8093/preview_edge_crisis.html)",
+      "Bash(start \"\" \"C:/Users/NickCeraso/cybele_deckgen/blog_illustrations/preview_edge_crisis.html\")",
+      "Bash(start msedge:*)",
+      "Bash(wc -c C:/Users/NickCeraso/cybele_deckgen/blog_illustrations/*_v2.svg)",
+      "Bash(python -c ':*)",
+      "mcp__28f0c37d-b8e5-4da8-b05f-97fbddf74fab__use_figma",
+      "Skill(impeccable)",
+      "Skill(impeccable:*)",
+      "Bash(node .claude/skills/impeccable/scripts/context.mjs)",
+      "Bash(node server.js)",
+      "mcp__Claude_Preview__preview_start"
+    ]
+  }
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Thinfinity arch — spec preview</title>
+<style>
+  body { background:#f5f5f5; color:#373737; font-family:'Inter',system-ui,sans-serif; padding:32px; margin:0; }
+  h1 { font-weight:600; font-size:22px; margin:0 0 4px; }
+  h2 { font-weight:500; font-size:13px; margin:32px 0 12px; color:#777; letter-spacing:0.06em; text-transform:uppercase; }
+  .lead { color:#666; margin:0 0 8px; font-size:13px; }
+  .pillrow { display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start; }
+  .col { display:flex; flex-direction:column; gap:14px; align-items:flex-start; }
+  .label-block { font-size:11px; color:#888; font-family:monospace; max-width:130px; }
+  .label-block strong { display:block; color:#373737; font-family:'Inter',sans-serif; font-size:12px; font-weight:600; margin-bottom:2px; }
+
+  /* pill base — exact spec: 110×43, 1.5px border, radius 7, p 10, gap 6, Inter 12 */
+  .pill {
+    width:110px; height:43px; border-radius:7px;
+    background:#fff; border:1.5px solid #0A74D6;
+    display:flex; align-items:center; gap:6px;
+    padding:10px; box-sizing:border-box;
+    font:normal 12px/normal 'Inter',sans-serif; color:#0A74D6;
+    word-break:break-word;
+  }
+  .pill img { width:23px; height:23px; flex:none; }
+  .pill .txt { white-space:nowrap; }
+  .pill .txt p { margin:0; line-height:normal; }
+
+  /* category variants */
+  .pill--thinfinity { border-color:#0A74D6; color:#0A74D6; }
+  .pill--user       { border-color:#373737; color:#373737; }
+  .pill--secondary  { border-color:#BDBDBD; color:#373737; }
+
+  /* dashed zone variants */
+  .zone { border-style:dashed; }
+  .zone--cloud   { border-color:#2FB18A; background:#E2F7F1; color:#2FB18A; }
+  .zone--onprem  { border-color:#8878ED; background:#EDEBFC; color:#8878ED; }
+  .zone--hybrid  { border-color:#0A74D6; background:#CDDDFA; color:#0A74D6; }
+  .zone--dmz     { border-color:#BDBDBD; background:#FFFFFF; color:#373737; }
+  .zone--network { border-color:#BDBDBD; background:#FFFFFF; color:#373737; }
+
+  /* connector */
+  .arrow { display:flex; align-items:center; gap:0; }
+  .arrow svg { display:block; }
+
+  .swatch { display:inline-block; width:14px; height:14px; border-radius:2px; vertical-align:middle; margin-right:6px; border:1px solid rgba(0,0,0,0.06); }
+  .palette { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:6px 16px; font-size:12px; color:#444; }
+  .palette code { font-family:monospace; color:#666; }
+</style>
+</head>
+<body>
+
+<h1>Thinfinity Architecture — atom spec preview</h1>
+<p class="lead">Materialized from <code>STYLE_SPEC.md</code> using the real icon set. Use this to validate against the canonical frames in Figma.</p>
+
+<h2>Solid pills — Thinfinity (border + text #0A74D6)</h2>
+<div class="pillrow">
+  <div class="pill pill--thinfinity"><img src="icons/gateway.svg"><div class="txt"><p>Thinfinity</p><p>Gateway</p></div></div>
+  <div class="pill pill--thinfinity"><img src="icons/broker.svg"><div class="txt"><p>Thinfinity</p><p>Broker</p></div></div>
+  <div class="pill pill--thinfinity"><img src="icons/broker.svg"><div class="txt"><p>Thinfinity</p><p>Prim Broker</p></div></div>
+  <div class="pill pill--thinfinity"><img src="icons/broker.svg"><div class="txt"><p>Thinfinity</p><p>Sec. Broker</p></div></div>
+  <div class="pill pill--thinfinity"><img src="icons/thinfinity.svg"><div class="txt"><p>Thinfinity</p><p>Agent</p></div></div>
+</div>
+
+<h2>Solid pills — User (border + text #373737)</h2>
+<div class="pillrow">
+  <div class="pill pill--user"><img src="icons/user.svg"><div class="txt"><p>User</p></div></div>
+  <div class="pill pill--user"><img src="icons/remote.svg"><div class="txt"><p>Remote</p><p>User</p></div></div>
+  <div class="pill pill--user"><img src="icons/html5.svg"><div class="txt"><p>Browser</p><p>Client</p></div></div>
+  <div class="pill pill--user"><img src="icons/pc-user-location.svg"><div class="txt"><p>Local</p><p>User</p></div></div>
+</div>
+
+<h2>Solid pills — Secondary (border #BDBDBD, text #373737)</h2>
+<div class="pillrow">
+  <div class="pill pill--secondary"><img src="icons/database.svg"><div class="txt"><p>MySQL</p><p>Data Base</p></div></div>
+  <div class="pill pill--secondary"><img src="icons/firewall.svg"><div class="txt"><p>Firewall</p></div></div>
+  <div class="pill pill--secondary"><img src="icons/vpn-tunnels.svg"><div class="txt"><p>Tunnel</p></div></div>
+</div>
+
+<h2>Dashed pills — zones / subnets</h2>
+<div class="pillrow">
+  <div class="pill zone zone--cloud"><img src="icons/cloud.svg"><div class="txt"><p>Cloud</p></div></div>
+  <div class="pill zone zone--onprem"><img src="icons/premises.svg"><div class="txt"><p>On-Prem</p></div></div>
+  <div class="pill zone zone--hybrid"><img src="icons/hybrid.svg"><div class="txt"><p>Hybrid</p></div></div>
+  <div class="pill zone zone--dmz"><img src="icons/connect.svg"><div class="txt"><p>DMZ</p></div></div>
+  <div class="pill zone zone--network"><img src="icons/network.svg"><div class="txt"><p>Network</p></div></div>
+</div>
+
+<h2>Connection vector (canonical asset — stroke #0AA9FF)</h2>
+<div class="arrow">
+  <img src="icons/_arrow.svg" width="99" height="31" alt="connection arrow">
+</div>
+
+<h2>Color palette</h2>
+<div class="palette">
+  <div><span class="swatch" style="background:#0A74D6"></span>colors/main <code>#0A74D6</code></div>
+  <div><span class="swatch" style="background:#007DC1"></span>Thinfinity/500 <code>#007DC1</code></div>
+  <div><span class="swatch" style="background:#373737"></span>typography/title <code>#373737</code></div>
+  <div><span class="swatch" style="background:#515151"></span>typography/paragraph <code>#515151</code></div>
+  <div><span class="swatch" style="background:#BDBDBD"></span>Grey/300 <code>#BDBDBD</code></div>
+  <div><span class="swatch" style="background:#CDDDFA"></span>blue/100 <code>#CDDDFA</code></div>
+  <div><span class="swatch" style="background:#2FB18A"></span>water-green/600 <code>#2FB18A</code></div>
+  <div><span class="swatch" style="background:#E2F7F1"></span>water-green/100 <code>#E2F7F1</code></div>
+  <div><span class="swatch" style="background:#8878ED"></span>blue-violet/500 <code>#8878ED</code></div>
+  <div><span class="swatch" style="background:#EDEBFC"></span>blue-violet/100 <code>#EDEBFC</code></div>
+  <div><span class="swatch" style="background:#0AA9FF"></span>arrow blue <code>#0AA9FF</code></div>
+  <div><span class="swatch" style="background:#3DCCA1"></span>water-green/500 <code>#3DCCA1</code></div>
+  <div><span class="swatch" style="background:#649B1F"></span>green/600 <code>#649B1F</code></div>
+  <div><span class="swatch" style="background:#FAA928"></span>orange-cybele/500 <code>#FAA928</code></div>
+</div>
+
+</body>
+</html>

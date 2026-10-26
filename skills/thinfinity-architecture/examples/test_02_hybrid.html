@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Thinfinity arch — Test 02 (Hybrid)</title>
+<style>
+  body { background:#f5f5f5; padding:40px; margin:0; font-family:'Inter',system-ui,sans-serif; color:#666; font-size:13px; }
+  h2 { font-weight:500; font-size:13px; margin:0 0 16px; letter-spacing:0.05em; text-transform:uppercase; color:#888; }
+  .frame { background:#fff; border-radius:14px; box-shadow:0 2px 18px rgba(0,0,0,0.06); overflow:hidden; max-width:1140px; }
+  .frame svg { display:block; width:100%; height:auto; }
+</style>
+</head>
+<body>
+
+<h2>Test 02 — Hybrid Thinfinity architecture (n Users · Cloud Gateway · On-Prem Broker · Windows Server)</h2>
+
+<div class="frame">
+<svg viewBox="0 0 1140 470" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <!-- Open chevron arrowhead (stroke, not filled) — matches the canonical connection vector -->
+    <marker id="tip" viewBox="0 0 14 18" refX="11.5" refY="9" markerWidth="14" markerHeight="18" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M2 2 L11.5 9 L2 16" fill="none" stroke="#0AA9FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- ============ LAYER 1: ZONES (background) ============ -->
+  <!-- Cloud zone (wraps gateway) -->
+  <rect x="380" y="105" width="250" height="200" rx="10" fill="#E2F7F1" stroke="#2FB18A" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <image href="icons/cloud.svg" x="398" y="120" width="23" height="23"/>
+  <text x="428" y="136" font-size="13" font-weight="500" fill="#2FB18A">Cloud</text>
+
+  <!-- On-Prem zone (wraps broker + windows server) -->
+  <rect x="740" y="90" width="350" height="300" rx="10" fill="#EDEBFC" stroke="#8878ED" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <image href="icons/premises.svg" x="758" y="105" width="23" height="23"/>
+  <text x="788" y="121" font-size="13" font-weight="500" fill="#8878ED">On-Prem</text>
+
+  <!-- ============ LAYER 2: CONNECTORS ============ -->
+  <!-- Users bus → Gateway (single arrow toward gateway) -->
+  <path d="M160 141.5 H240" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M160 206.5 H240" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M160 271.5 H240" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M240 141.5 V271.5" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M240 206.5 H434" fill="none" stroke="#0AA9FF" stroke-width="2" marker-end="url(#tip)"/>
+
+  <!-- Broker → Gateway (outbound, no inbound port — toward gateway) -->
+  <path d="M800 206.5 H558" fill="none" stroke="#0AA9FF" stroke-width="2" marker-end="url(#tip)"/>
+
+  <!-- Windows Server → Broker (agent reaches broker — toward broker) -->
+  <path d="M855 310 V236" fill="none" stroke="#0AA9FF" stroke-width="2" marker-end="url(#tip)"/>
+
+  <!-- ============ LAYER 3: PILLS (atoms, on top) ============ -->
+  <!-- Users (n) -->
+  <g transform="translate(50,120)">
+    <rect width="110" height="43" rx="7" fill="#fff" stroke="#373737" stroke-width="1.5"/>
+    <image href="icons/user.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="27" font-size="12" fill="#373737">User 1</text>
+  </g>
+  <g transform="translate(50,185)">
+    <rect width="110" height="43" rx="7" fill="#fff" stroke="#373737" stroke-width="1.5"/>
+    <image href="icons/user.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="27" font-size="12" fill="#373737">User 2</text>
+  </g>
+  <g transform="translate(50,250)">
+    <rect width="110" height="43" rx="7" fill="#fff" stroke="#373737" stroke-width="1.5"/>
+    <image href="icons/user.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="27" font-size="12" fill="#373737">User n</text>
+  </g>
+
+  <!-- Thinfinity Gateway (inside Cloud) -->
+  <g transform="translate(440,185)">
+    <rect width="110" height="43" rx="7" fill="#fff" stroke="#0A74D6" stroke-width="1.5"/>
+    <image href="icons/gateway.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#0A74D6">Thinfinity</text>
+    <text x="39" y="35" font-size="12" fill="#0A74D6">Gateway</text>
+  </g>
+
+  <!-- Thinfinity Broker (inside On-Prem) -->
+  <g transform="translate(800,185)">
+    <rect width="110" height="43" rx="7" fill="#fff" stroke="#0A74D6" stroke-width="1.5"/>
+    <image href="icons/broker.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#0A74D6">Thinfinity</text>
+    <text x="39" y="35" font-size="12" fill="#0A74D6">Broker</text>
+  </g>
+
+  <!-- Windows Server (inside On-Prem) -->
+  <g transform="translate(800,310)">
+    <rect width="110" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5"/>
+    <image href="icons/windows.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#373737">Windows</text>
+    <text x="39" y="35" font-size="12" fill="#373737">Server</text>
+  </g>
+
+</svg>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cybele AI Design Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+    :root {
+      --navy: #0B1A3B;
+      --navy-deep: #060e1f;
+      --navy-mid: #0f2347;
+      --blue: #0A74D6;
+      --blue-glow: rgba(10, 116, 214, 0.15);
+      --blue-glow-strong: rgba(10, 116, 214, 0.35);
+      --green: #3DCCA1;
+      --green-glow: rgba(61, 204, 161, 0.12);
+      --light-bg: #F0F4F8;
+      --text-dark: #373737;
+      --text-body: #515151;
+      --text-muted: #8a9bb5;
+      --text-light: #c4d4e8;
+      --surface: rgba(15, 35, 71, 0.6);
+      --surface-hover: rgba(20, 45, 85, 0.8);
+      --border: rgba(10, 116, 214, 0.12);
+      --border-hover: rgba(10, 116, 214, 0.3);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--navy-deep);
+      color: var(--text-light);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Atmospheric background ── */
+    .atmosphere {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .atmosphere::before {
+      content: '';
+      position: absolute;
+      width: 900px;
+      height: 900px;
+      top: -300px;
+      right: -200px;
+      background: radial-gradient(circle, rgba(10, 116, 214, 0.08) 0%, transparent 70%);
+      animation: drift 20s ease-in-out infinite alternate;
+    }
+
+    .atmosphere::after {
+      content: '';
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      bottom: -200px;
+      left: -150px;
+      background: radial-gradient(circle, rgba(61, 204, 161, 0.06) 0%, transparent 70%);
+      animation: drift 25s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes drift {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(60px, 40px) scale(1.1); }
+    }
+
+    /* ── Grid noise overlay ── */
+    .noise {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 256px;
+    }
+
+    /* ── Layout ── */
+    .shell {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 48px);
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 40px 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--blue), #3DCCA1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 24px rgba(10, 116, 214, 0.3);
+    }
+
+    .brand-mark svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .brand-text h1 {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-weight: 400;
+      font-size: 1.5rem;
+      letter-spacing: -0.01em;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .brand-text span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    nav {
+      display: flex;
+      gap: 6px;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    nav a:hover, nav a.active {
+      color: #fff;
+      background: var(--surface);
+    }
+
+    /* ── Hero section ── */
+    .hero {
+      padding: 48px 0 40px;
+      max-width: 600px;
+    }
+
+    .hero h2 {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-weight: 400;
+      font-style: italic;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.15;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .hero h2 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      max-width: 480px;
+    }
+
+    /* ── Stat bar ── */
+    .stats {
+      display: flex;
+      gap: 32px;
+      padding: 24px 0 48px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .stat-value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    /* ── Pipeline cards grid ── */
+    .pipelines {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      padding-bottom: 80px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      opacity: 0;
+      transition: opacity 0.4s;
+      background: radial-gradient(ellipse at 50% 0%, var(--card-glow, var(--blue-glow)) 0%, transparent 70%);
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 0 1px var(--border-hover);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--icon-bg, rgba(10, 116, 214, 0.1));
+      border: 1px solid var(--icon-border, rgba(10, 116, 214, 0.15));
+      flex-shrink: 0;
+    }
+
+    .card-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke-width: 1.8;
+      fill: none;
+      stroke: var(--icon-color, var(--blue));
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 5px;
+      background: var(--badge-bg, rgba(10, 116, 214, 0.12));
+      color: var(--badge-color, var(--blue));
+    }
+
+    .card h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+
+    .card p {
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--text-muted);
+      flex: 1;
+    }
+
+    .card-io {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .io-tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: var(--text-muted);
+    }
+
+    .io-tag .arrow {
+      color: var(--green);
+      margin: 0 2px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 12px 24px;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      text-decoration: none;
+      width: 100%;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 2px 12px rgba(10, 116, 214, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: #0b82ef;
+      box-shadow: 0 4px 20px rgba(10, 116, 214, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    /* ── Card color variants ── */
+    .card--pdf {
+      --icon-bg: rgba(10, 116, 214, 0.1);
+      --icon-border: rgba(10, 116, 214, 0.18);
+      --icon-color: #4d9ee8;
+      --card-glow: rgba(10, 116, 214, 0.12);
+      --badge-bg: rgba(10, 116, 214, 0.12);
+      --badge-color: #4d9ee8;
+    }
+
+    .card--pptx {
+      --icon-bg: rgba(61, 204, 161, 0.08);
+      --icon-border: rgba(61, 204, 161, 0.15);
+      --icon-color: #3DCCA1;
+      --card-glow: rgba(61, 204, 161, 0.1);
+      --badge-bg: rgba(61, 204, 161, 0.1);
+      --badge-color: #3DCCA1;
+    }
+
+    .card--illust {
+      --icon-bg: rgba(168, 130, 255, 0.08);
+      --icon-border: rgba(168, 130, 255, 0.15);
+      --icon-color: #a882ff;
+      --card-glow: rgba(168, 130, 255, 0.1);
+      --badge-bg: rgba(168, 130, 255, 0.1);
+      --badge-color: #a882ff;
+    }
+
+    .card--cover {
+      --icon-bg: rgba(242, 193, 78, 0.08);
+      --icon-border: rgba(242, 193, 78, 0.15);
+      --icon-color: #f2c14e;
+      --card-glow: rgba(242, 193, 78, 0.1);
+      --badge-bg: rgba(242, 193, 78, 0.1);
+      --badge-color: #f2c14e;
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    footer a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── Entrance animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero { animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both; }
+    .stats { animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both; }
+    .card:nth-child(1) { animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both; }
+    .card:nth-child(2) { animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both; }
+    .card:nth-child(3) { animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both; }
+    .card:nth-child(4) { animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      header { padding: 24px 0 16px; }
+      .hero { padding: 32px 0 24px; }
+      .stats { gap: 24px; padding: 16px 0 32px; }
+      .pipelines { grid-template-columns: 1fr; }
+      nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="atmosphere"></div>
+  <div class="noise"></div>
+
+  <div class="shell">
+
+    <header>
+      <div class="brand">
+        <div class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>Cybele Design Assistant</h1>
+          <span>AI-Powered Brand Automation</span>
+        </div>
+      </div>
+      <nav>
+        <a href="#" class="active">Pipelines</a>
+        <a href="#">Assets</a>
+        <a href="#">Brand Guide</a>
+        <a href="#">History</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h2>Branded content,<br><em>generated in seconds</em></h2>
+      <p>Select a pipeline below to transform raw content into polished, on-brand deliverables. Each tool follows the Cybele design system automatically.</p>
+    </section>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value">4</div>
+        <div class="stat-label">Pipelines</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">21+</div>
+        <div class="stat-label">Brand Tokens</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">17</div>
+        <div class="stat-label">Icon Set</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">6</div>
+        <div class="stat-label">Cover Archetypes</div>
+      </div>
+    </div>
+
+    <section class="pipelines">
+
+      <!-- Whitepaper PDF -->
+      <div class="card card--pdf">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+        </div>
+        <div class="card-meta">
+          <span class="badge">PDF</span>
+        </div>
+        <h3>Whitepaper Generator</h3>
+        <p>Transform any DOCX into a fully branded whitepaper with cover, table of contents, styled chapters, and contact closing page.</p>
+        <div class="card-io">
+          <span class="io-tag">DOCX <span class="arrow">&rarr;</span> Branded PDF</span>
+          <span class="io-tag">~45 pages</span>
+        </div>
+        <button class="btn btn-primary" onclick="alert('Pipeline: Whitepaper PDF\n\nRun:\npython whitepaper/build_whitepaper.py input.docx output.pdf')">
+          <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Generate
+        </button>
+      </div>
+
+      <!-- Presentation PPTX -->
+      <div class="card card--pptx">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div class="card-meta">
+          <span class="badge">PPTX</span>
+        </div>
+        <h3>Presentation Generator</h3>
+        <p>Build branded slide decks with section dividers, icon cards, comparison layouts, and the standard Cybele cover and closing.</p>
+        <div class="card-io">
+          <span class="io-tag">Content <span class="arrow">&rarr;</span> Branded PPTX</span>
+          <span class="io-tag">Google Slides ready</span>
+        </div>
+        <button class="btn btn-primary" onclick="alert('Pipeline: Presentation PPTX\n\nRun:\npython build_ciso_pptx.py')">
+          <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Generate
+        </button>
+      </div>
+
+      <!-- Blog Illustrations -->
+      <div class="card card--illust">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+            <line x1="9" y1="9" x2="9.01" y2="9"/>
+            <line x1="15" y1="9" x2="15.01" y2="9"/>
+          </svg>
+        </div>
+        <div class="card-meta">
+          <span class="badge">SVG</span>
+        </div>
+        <h3>Blog Illustrations</h3>
+        <p>Generate in-article illustrations with Cybfont icons, hub-and-spoke layouts, and dark/light mode alternation. Figma-importable SVGs.</p>
+        <div class="card-io">
+          <span class="io-tag">Article <span class="arrow">&rarr;</span> 1920&times;1080 SVG</span>
+          <span class="io-tag">Figma native</span>
+        </div>
+        <button class="btn btn-primary" onclick="alert('Pipeline: Blog Illustrations\n\nRun:\npython build_blog_svgs.py')">
+          <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Generate
+        </button>
+      </div>
+
+      <!-- Blog Cover -->
+      <div class="card card--cover">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+        </div>
+        <div class="card-meta">
+          <span class="badge">Cover</span>
+        </div>
+        <h3>Blog Cover Generator</h3>
+        <p>Produce 6 hero image variants using the visual archetype system (A1&ndash;A6). Pick one, export to Figma. Same concept, six compositions.</p>
+        <div class="card-io">
+          <span class="io-tag">Article <span class="arrow">&rarr;</span> 6 &times; 1920&times;1080</span>
+          <span class="io-tag">HTML preview</span>
+        </div>
+        <button class="btn btn-primary" onclick="alert('Pipeline: Blog Cover Generator\n\nRun:\npython blog_covers/build_telecom_cx_covers.py')">
+          <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Generate
+        </button>
+      </div>
+
+    </section>
+
+    <footer>
+      <span>&copy; 2026 Cybele Software &mdash; AI Design Assistant</span>
+      <a href="#">Brand Design Rules</a>
+    </footer>
+
+  </div>
+
+</body>
+</html>

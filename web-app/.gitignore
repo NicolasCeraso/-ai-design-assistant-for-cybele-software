@@ -1,0 +1,34 @@
+# dependencies (restore with: npm install)
+node_modules/
+
+# generated/runtime outputs
+jobs/
+
+# local screenshots & captures
+dashboard-capture.png
+dashboard-*.png
+*.log
+.claude/settings.local.json
+
+# machine-specific content-source config (repo dir / branch); defaults live in server.js
+data/source.json
+# per-instance operational state (not shared): pending task-deletion log + export scratch
+data/deleted-tasks.json
+data/export-tmp/
+# personal Figma access token used by the icon sync (each person keeps their own)
+data/figma-token.txt
+
+# python bytecode cache
+__pycache__/
+*.pyc
+
+# hand-made backups before a risky edit — git history already keeps the old version
+*.bak
+*.bak-*
+
+# scratch space used while building blog visuals / extracting an article
+.tmp-blog/
+article_clean.txt
+article_extracted.txt
+article_layout.txt
+article.txt

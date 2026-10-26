@@ -1,0 +1,84 @@
+{
+  "colors": [
+    {
+      "name": "Primary (brandbook)",
+      "hex": "#0A74D6"
+    },
+    {
+      "name": "Brand blue (06/26)",
+      "hex": "#0F7FE0"
+    },
+    {
+      "name": "Thinfinity",
+      "hex": "#007DC1"
+    },
+    {
+      "name": "Blue",
+      "hex": "#0D3886"
+    },
+    {
+      "name": "Blue Cybele 800",
+      "hex": "#032748"
+    },
+    {
+      "name": "Blue Cybele 600",
+      "hex": "#074F91"
+    },
+    {
+      "name": "Blue Cybele 300",
+      "hex": "#5DADF7"
+    },
+    {
+      "name": "Blue Cybele 200",
+      "hex": "#99CBFA"
+    },
+    {
+      "name": "Blue Cybele 50",
+      "hex": "#EFF7FE"
+    },
+    {
+      "name": "Water Green",
+      "hex": "#3DCCA1"
+    },
+    {
+      "name": "Blue Violet",
+      "hex": "#8878ED"
+    },
+    {
+      "name": "Pink",
+      "hex": "#EC49A0"
+    },
+    {
+      "name": "Red Cybele",
+      "hex": "#F3371A"
+    },
+    {
+      "name": "Orange Cybele",
+      "hex": "#FAA928"
+    },
+    {
+      "name": "Yellow",
+      "hex": "#F5DD08"
+    },
+    {
+      "name": "Green",
+      "hex": "#76B825"
+    },
+    {
+      "name": "Title text",
+      "hex": "#373737"
+    },
+    {
+      "name": "Body text",
+      "hex": "#515151"
+    },
+    {
+      "name": "Border light",
+      "hex": "#DBDBDB"
+    },
+    {
+      "name": "White",
+      "hex": "#FFFFFF"
+    }
+  ]
+}

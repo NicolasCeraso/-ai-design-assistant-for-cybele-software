@@ -1,0 +1,13 @@
+{
+  "name": "cybele-design-console",
+  "version": "1.0.0",
+  "description": "Cybele Design Console — local web app (Node built-ins only, no dependencies).",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

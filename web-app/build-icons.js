@@ -1,0 +1,101 @@
+// Processes Cybele brand SVG icons into a recolorable (currentColor) map for the dashboard.
+// Output: brand-icons.js  ->  window.BRAND_ICONS = { key: '<svg…>' } + window.BRAND_LOGO
+//
+// Rebuilds ALL SEVEN pipeline glyphs. It used to rebuild only five: `storyboard` and
+// `linkedin-carousel` had been appended to brand-icons.js by hand when those document types
+// shipped, with no source file here, so running this script silently deleted them and left their
+// pipeline pills empty. Both now have a source SVG under assets/figicons/ like every other icon.
+// If you add a document type, add its icon here in the same move — the rule is that this script
+// alone can reproduce brand-icons.js from scratch.
+const fs = require('fs');
+const path = require('path');
+
+const os = require('os');
+
+// The official Cybele/Thinfinity SVG set. Resolved in order so this runs on any machine: the copy
+// vendored in this repo, an explicit override, then the installed skill folder.
+function iconsDir() {
+  const tried = [
+    path.join(__dirname, '..', 'skills', 'thinfinity-architecture', 'icons'),
+    globalThis.process.env.CYBELE_ICONS_DIR,   // `process` is a local helper here
+    path.join(os.homedir(), '.claude', 'skills', 'thinfinity-architecture', 'icons'),
+  ].filter(Boolean);
+  for (const d of tried) { if (fs.existsSync(d)) return d; }
+  console.error('Icon set not found. Tried:');
+  tried.forEach(d => console.error('  ' + d));
+  console.error('Set CYBELE_ICONS_DIR to the folder holding the Thinfinity icon SVGs.');
+  globalThis.process.exit(1);
+}
+
+const SKILL = iconsDir();
+const FIG = path.join(__dirname, 'assets', 'figicons'); // concept icons pulled from the Cybfont Design System
+
+// pipeline key -> source SVG, chosen to match each concept
+// Four use the Cybfont **light** variant (re-exported from the Design System, file
+// x0HMD1pXkcYdFM7NSaBvb4) so the dashboard's pipeline icons match the light default.
+const ICON_FILES = {
+  pptx:   path.join(FIG, 'pptx.svg'),        // Cybfont "slides" (light)
+  wp:     path.join(FIG, 'wp.svg'),          // Cybfont "doc" (light)
+  blog:   path.join(FIG, 'blog.svg'),        // Cybfont "image" (light)
+  // Cybfont "load-balancer", from the 131-icon lib in brand-icon-lib.js — Nick's pick (2026-08-10).
+  // It used to be Cybfont "network", which is byte-identical to the lib's `network` glyph and
+  // dissolved into an unreadable cluster of dots at the 16px the card pill actually renders; a
+  // hand-drawn pill topology was tried in between and rejected.
+  arch:   path.join(FIG, 'arch.svg'),
+  webapp: path.join(FIG, 'webapp.svg'),      // Cybfont "web-app" (light)
+  // Also drawn for the console, on the 24-unit / 1.7-stroke grid, when those document types shipped.
+  storyboard:          path.join(FIG, 'storyboard.svg'),           // filmstrip
+  'linkedin-carousel': path.join(FIG, 'linkedin-carousel.svg'),    // phone + dots
+};
+
+function process(svg) {
+  return svg
+    .replace(/^﻿/, '')
+    // Normalise newlines so the output does not depend on how git checked the sources out. With
+    // core.autocrlf=true the same source yields CRLF here and LF elsewhere, which rewrote every
+    // icon string on any machine that regenerated — a diff of pure whitespace over the whole file.
+    .replace(/\r\n/g, '\n')
+    .trim()
+    // fix non-uniform scaling that distorts the artwork
+    .replace(/preserveAspectRatio="none"/g, 'preserveAspectRatio="xMidYMid meet"')
+    // recolor: Figma var fills (any fallback incl. "black"), hex fills, named black, hex strokes -> currentColor
+    .replace(/var\(--fill-\d+,\s*[^)]*\)/g, 'currentColor')
+    .replace(/fill="#[0-9A-Fa-f]{3,8}"/g, 'fill="currentColor"')
+    .replace(/fill="black"/g, 'fill="currentColor"')
+    .replace(/stroke="#[0-9A-Fa-f]{3,8}"/g, 'stroke="currentColor"');
+}
+
+const out = {};
+const report = [];
+for (const [key, file] of Object.entries(ICON_FILES)) {
+  try {
+    const raw = fs.readFileSync(file, 'utf8');
+    if (!raw.trim()) { report.push(`${key}: EMPTY (${file})`); continue; }
+    out[key] = process(raw);
+    report.push(`${key}: ${out[key].length} chars OK (${path.basename(file)})`);
+  } catch (e) {
+    report.push(`${key}: MISSING (${file})`);
+  }
+}
+
+// Cybele primary logo — KEEP its real colors (black wordmark + multicolor butterfly).
+// Only de-distort and resolve Figma var() fallbacks to their hex; do NOT flatten to currentColor.
+function processLogo(svg) {
+  return svg
+    .replace(/^﻿/, '').replace(/\r\n/g, '\n').trim()
+    .replace(/preserveAspectRatio="none"/g, 'preserveAspectRatio="xMidYMid meet"')
+    .replace(/var\(--fill-\d+,\s*(#[0-9A-Fa-f]{3,8})\)/g, '$1');
+}
+let logoJs = 'window.BRAND_LOGO = "";';
+try {
+  const logo = processLogo(fs.readFileSync(path.join(__dirname, 'cybele_logo.svg'), 'utf8'));
+  logoJs = 'window.BRAND_LOGO = ' + JSON.stringify(logo) + ';';
+  report.push(`logo: ${logo.length} chars OK (colors kept)`);
+} catch (e) { report.push('logo: MISSING'); }
+
+const js = '// Auto-generated by build-icons.js — do not edit by hand\n'
+  + 'window.BRAND_ICONS = ' + JSON.stringify(out) + ';\n'
+  + logoJs + '\n';
+fs.writeFileSync(path.join(__dirname, 'brand-icons.js'), js);
+console.log(report.join('\n'));
+console.log('\nWrote brand-icons.js (' + js.length + ' bytes)');

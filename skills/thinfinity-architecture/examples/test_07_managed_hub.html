@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Thinfinity arch — Test 07 (managed hub-and-spoke, compact)</title>
+<style>
+  body { background:#f5f5f5; padding:40px; margin:0; font-family:'Inter',system-ui,sans-serif; color:#666; font-size:13px; }
+  h2 { font-weight:500; font-size:13px; margin:0 0 16px; letter-spacing:0.05em; text-transform:uppercase; color:#888; }
+  .frame { background:#fff; border-radius:14px; box-shadow:0 2px 18px rgba(0,0,0,0.06); overflow:hidden; max-width:1220px; }
+  .frame svg { display:block; width:100%; height:auto; }
+</style>
+</head>
+<body>
+
+<h2>Test 07 — Managed by Cybele Software (hub-and-spoke · compact · mirrored bottom clouds)</h2>
+
+<div class="frame">
+<svg viewBox="0 0 1220 500" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <marker id="tip" viewBox="0 0 14 18" refX="11.5" refY="9" markerWidth="14" markerHeight="18" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M2 2 L11.5 9 L2 16" fill="none" stroke="#0AA9FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <rect x="500" y="14" width="280" height="32" rx="16" fill="#EFF7FE"/>
+  <text x="640" y="35" font-size="14" font-weight="600" fill="#0A74D6" text-anchor="middle">Managed by Cybele Software</text>
+
+  <!-- ================= LAYER 1: ZONES ================= -->
+  <rect x="300" y="60" width="200" height="111" rx="10" fill="none" stroke="#BDBDBD" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <image href="icons/remote-access.svg" x="318" y="75" width="22" height="22"/>
+  <text x="347" y="91" font-size="13" font-weight="500" fill="#373737">Remote Access</text>
+
+  <rect x="540" y="60" width="200" height="111" rx="10" fill="none" stroke="#BDBDBD" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <image href="icons/connect.svg" x="558" y="75" width="22" height="22"/>
+  <text x="587" y="91" font-size="13" font-weight="500" fill="#373737">DMZ</text>
+
+  <rect x="780" y="50" width="410" height="186" rx="10" fill="none" stroke="#BDBDBD" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <image href="icons/cloud.svg" x="1154" y="206" width="22" height="22"/>
+
+  <rect x="190" y="270" width="410" height="186" rx="10" fill="none" stroke="#BDBDBD" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <image href="icons/cloud.svg" x="206" y="426" width="22" height="22"/>
+
+  <rect x="680" y="270" width="410" height="186" rx="10" fill="none" stroke="#BDBDBD" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <image href="icons/cloud.svg" x="1054" y="426" width="22" height="22"/>
+
+  <!-- ================= LAYER 2: CONNECTORS ================= -->
+  <!-- Browser → Gateway -->
+  <path d="M480 129.5 H556" fill="none" stroke="#0AA9FF" stroke-width="2" marker-end="url(#tip)"/>
+  <!-- Cloud1 broker → Gateway -->
+  <path d="M800 129.5 H724" fill="none" stroke="#0AA9FF" stroke-width="2" marker-end="url(#tip)"/>
+  <!-- Cloud2 & Cloud3 brokers → trunk → Gateway -->
+  <path d="M580 349.5 H640" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M700 349.5 H640" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M640 349.5 V155" fill="none" stroke="#0AA9FF" stroke-width="2" marker-end="url(#tip)"/>
+
+  <!-- Cloud1 resources → broker (broker LEFT, resources RIGHT) -->
+  <path d="M1010 93.5 H985" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M1010 166.5 H985" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M985 93.5 V166.5" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M985 130 H964" fill="none" stroke="#0AA9FF" stroke-width="2" marker-end="url(#tip)"/>
+
+  <!-- Cloud2 resources → broker (MIRROR of cloud3: broker RIGHT, resources LEFT) -->
+  <path d="M370 313.5 H395" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M370 386.5 H395" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M395 313.5 V386.5" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M395 350 H416" fill="none" stroke="#0AA9FF" stroke-width="2" marker-end="url(#tip)"/>
+
+  <!-- Cloud3 resources → broker (broker LEFT, resources RIGHT) -->
+  <path d="M910 313.5 H885" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M910 386.5 H885" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M885 313.5 V386.5" fill="none" stroke="#0AA9FF" stroke-width="2"/>
+  <path d="M885 350 H864" fill="none" stroke="#0AA9FF" stroke-width="2" marker-end="url(#tip)"/>
+
+  <!-- ================= LAYER 3: PILLS ================= -->
+  <!-- Browser -->
+  <g transform="translate(320,108)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#373737" stroke-width="1.5"/>
+    <image href="icons/html5.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#373737">Web Browser /</text>
+    <text x="39" y="35" font-size="12" fill="#373737">Client / PWA</text>
+  </g>
+
+  <!-- Gateway -->
+  <g transform="translate(560,108)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#0A74D6" stroke-width="1.5"/>
+    <image href="icons/gateway.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#0A74D6">Thinfinity</text>
+    <text x="39" y="35" font-size="12" fill="#0A74D6">Gateway</text>
+  </g>
+
+  <!-- ===== Cloud 1 (top-right) ===== -->
+  <g transform="translate(800,108)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#0A74D6" stroke-width="1.5"/>
+    <image href="icons/broker.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#0A74D6">Thinfinity</text>
+    <text x="39" y="35" font-size="12" fill="#0A74D6">Broker</text>
+  </g>
+  <g transform="translate(1010,72)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5"/>
+    <image href="icons/vm.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#373737">Virtual Desktops</text>
+    <text x="39" y="35" font-size="12" fill="#373737">&amp; Virtual Apps</text>
+  </g>
+  <g transform="translate(1010,145)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5"/>
+    <image href="icons/terminal.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#373737">Terminal Servers</text>
+    <text x="39" y="35" font-size="12" fill="#373737">&amp; Web Apps</text>
+  </g>
+
+  <!-- ===== Cloud 2 (bottom-left, MIRRORED) ===== -->
+  <g transform="translate(210,292)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5"/>
+    <image href="icons/vm.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#373737">Virtual Desktops</text>
+    <text x="39" y="35" font-size="12" fill="#373737">&amp; Virtual Apps</text>
+  </g>
+  <g transform="translate(210,365)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5"/>
+    <image href="icons/terminal.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#373737">Terminal Servers</text>
+    <text x="39" y="35" font-size="12" fill="#373737">&amp; Web Apps</text>
+  </g>
+  <g transform="translate(420,328)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#0A74D6" stroke-width="1.5"/>
+    <image href="icons/broker.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#0A74D6">Thinfinity</text>
+    <text x="39" y="35" font-size="12" fill="#0A74D6">Broker</text>
+  </g>
+
+  <!-- ===== Cloud 3 (bottom-right) ===== -->
+  <g transform="translate(700,328)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#0A74D6" stroke-width="1.5"/>
+    <image href="icons/broker.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#0A74D6">Thinfinity</text>
+    <text x="39" y="35" font-size="12" fill="#0A74D6">Broker</text>
+  </g>
+  <g transform="translate(910,292)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5"/>
+    <image href="icons/vm.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#373737">Virtual Desktops</text>
+    <text x="39" y="35" font-size="12" fill="#373737">&amp; Virtual Apps</text>
+  </g>
+  <g transform="translate(910,365)">
+    <rect width="160" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5"/>
+    <image href="icons/terminal.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#373737">Terminal Servers</text>
+    <text x="39" y="35" font-size="12" fill="#373737">&amp; Web Apps</text>
+  </g>
+
+</svg>
+</div>
+
+</body>
+</html>

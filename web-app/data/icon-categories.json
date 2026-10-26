@@ -1,0 +1,92 @@
+{
+  "_about": "How the console groups the icon library (Nick's pick, 2026-09-28). The Figma file is NOT changed: this is the console's own order. An icon goes to the category that lists it under 'icons'; otherwise to the one that lists its Figma category under 'figmaGroups'. Order here is display order. Icons only in the old Cybfont set close the list as 'Fuera de Figma'.",
+  "categories": [
+    {
+      "name": "Personas y roles",
+      "figmaGroups": ["con figura humana"],
+      "icons": ["all-prof", "profile", "profile-set", "profile-alert"]
+    },
+    {
+      "name": "Seguridad y acceso",
+      "figmaGroups": ["candado", "escudo", "identidad"],
+      "icons": [
+        "group-access", "identity-providers", "hacker", "no-hacker", "id-federation", "danger", "phishing", "audit-log", "granular-access",
+        "2fa", "no-2fa", "no-attack", "target", "session-restriction", "microsegmentation", "watermark",
+        "insecure-transfer", "secure-transfer", "lateral-attack", "vpn-tunnels",
+        "bug", "patch", "key", "id",
+        "ad-forest", "no-pass", "pass-alert", "limited-control", "secure-server", "secure-pass", "secure-access", "recordings", "isolation", "isolated", "read-only"
+      ]
+    },
+    {
+      "name": "Dispositivos y escritorios",
+      "figmaGroups": ["dispositivos"],
+      "icons": [
+        "usb", "z-printer", "hard-drive", "connect-print", "printer", "mouse", "right-click", "camera", "microphone", "audio", "webcam", "keyboard", "keypad", "cpu", "terminal", "multi-terminal",
+        "gpu-fast", "video-quality", "send-keys", "unplugged", "HD", "relative-touch", "abs-tch"
+      , "monitoring"]
+    },
+    {
+      "name": "Apps",
+      "figmaGroups": ["apps"],
+      "icons": [
+        "package", "isolated-app", "installer", "bundle-alert", "launch",
+        "code-alert", "launch-alert", "api", "remote-app-mark", "code", "publishing", "web"
+      ]
+    },
+    {
+      "name": "Nube e infraestructura",
+      "figmaGroups": ["nube"],
+      "icons": [
+        "daas", "premises", "on-prem-mng",
+        "transf-lag", "cloud-lock-in", "proxy", "context", "no-scaling", "over-prov", "infrastructure", "cloud-inf", "workload", "hybrid", "session-broker", "app-pooling",
+        "wifi", "connect",
+        "server-config", "bridge", "switch", "server", "db", "router", "dbs",
+        "gldn-img", "IP", "orch", "latency", "vm-schedule", "vm-stopped", "vm-manage", "no-listener", "multi-ten", "deploy-sett", "arch", "app-server", "EC2-down",
+        "instance", "gateway", "thin-gateway", "load-bal", "broker", "vm", "network", "provisioning",
+        "globe"
+      ]
+    },
+    {
+      "name": "Archivos y carpetas",
+      "figmaGroups": ["archivos", "carpetas"],
+      "icons": ["book", "dll", "attach"]
+    },
+    {
+      "name": "Negocio, costos y licencias",
+      "figmaGroups": ["dinero y costos", "licencias"],
+      "icons": [
+        "mission", "deal", "user-cost", "group-cost", "leads",
+        "license",
+        "simple", "complexity", "earnings-loss", "earnings-profit", "roadmap", "stats",
+        "legal", "support-tickets", "support-ticket", "less-tickets", "rocket", "brief", "premium", "shopping-cart", "marketing", "credit-card",
+        "closed", "idea", "objectives", "view-data", "growth", "churn-down", "churn-up", "churn", "ISV", "workflow", "milestones", "monitor-use", "analytics-op", "complex", "eco", "savings",
+        "dollar"
+      ]
+    },
+    {
+      "name": "Industrias",
+      "figmaGroups": ["edificios y rubros"],
+      "icons": ["doctor", "medical-app", "barcode", "oil", "plane", "CAD", "HMI", "telecom", "hist-buff", "truck", "plc", "plc-scada", "pump", "motor"]
+    },
+    {
+      "name": "Interfaz y controles",
+      "figmaGroups": ["controles", "cuadrados", "flechas", "lineas", "objetos", "conceptos", "circulares"],
+      "icons": ["hand"]
+    },
+    {
+      "name": "Comunicación y tiempo",
+      "figmaGroups": ["comunicacion", "Tiempo"],
+      "icons": [
+        "slides", "presentation", "thumbs-up", "thumbs-down",
+        "coffee", "hourglass", "calling", "email", "dial-down", "dial-up", "support", "call-start", "call-end", "bell",
+        "bell-off", "screen-sharing",
+        "history", "clock"
+      ]
+    },
+    {
+      "name": "Marcas y logos",
+      "figmaGroups": ["logo"],
+      "icons": []
+    }
+  ]
+}

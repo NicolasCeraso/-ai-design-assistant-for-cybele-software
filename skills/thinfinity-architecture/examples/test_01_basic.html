@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Thinfinity arch — Test 01</title>
+<style>
+  body { background:#f5f5f5; padding:40px; margin:0; font-family:'Inter',system-ui,sans-serif; color:#666; font-size:13px; }
+  h2 { font-weight:500; font-size:13px; margin:0 0 16px; letter-spacing:0.05em; text-transform:uppercase; color:#888; }
+  .frame { background:#fff; border-radius:14px; box-shadow:0 2px 18px rgba(0,0,0,0.06); overflow:hidden; max-width:980px; }
+  .frame svg { display:block; width:100%; height:auto; }
+</style>
+</head>
+<body>
+
+<h2>Test 01 — Remote User → Gateway ← Broker + Web App (Network zone)</h2>
+
+<div class="frame">
+<svg viewBox="0 0 940 420" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <marker id="arrow-tip" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="11" markerHeight="11" orient="auto-start-reverse">
+      <path d="M0 0 L14 7 L0 14 z" fill="#0AA9FF"/>
+    </marker>
+  </defs>
+
+  <!-- Remote User pill -->
+  <g transform="translate(60,180)">
+    <rect width="110" height="43" rx="7" fill="#fff" stroke="#373737" stroke-width="1.5"/>
+    <image href="icons/remote.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#373737">Remote</text>
+    <text x="39" y="35" font-size="12" fill="#373737">User</text>
+  </g>
+
+  <!-- Arrow: Remote User → Gateway -->
+  <path d="M174 201.5 L316 201.5" fill="none" stroke="#0AA9FF" stroke-width="2" marker-end="url(#arrow-tip)"/>
+
+  <!-- Thinfinity Gateway pill -->
+  <g transform="translate(320,180)">
+    <rect width="110" height="43" rx="7" fill="#fff" stroke="#0A74D6" stroke-width="1.5"/>
+    <image href="icons/gateway.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#0A74D6">Thinfinity</text>
+    <text x="39" y="35" font-size="12" fill="#0A74D6">Gateway</text>
+  </g>
+
+  <!-- Network zone (dashed rect) -->
+  <rect x="560" y="50" width="340" height="340" rx="10" fill="none" stroke="#BDBDBD" stroke-width="1.5" stroke-dasharray="6 4"/>
+
+  <!-- Network label pill (inside zone, top-left as title) -->
+  <g transform="translate(580,70)">
+    <rect width="110" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <image href="icons/network.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="30" font-size="12" fill="#373737">Network</text>
+  </g>
+
+  <!-- Thinfinity Broker pill (inside Network) -->
+  <g transform="translate(730,150)">
+    <rect width="110" height="43" rx="7" fill="#fff" stroke="#0A74D6" stroke-width="1.5"/>
+    <image href="icons/broker.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="22" font-size="12" fill="#0A74D6">Thinfinity</text>
+    <text x="39" y="35" font-size="12" fill="#0A74D6">Broker</text>
+  </g>
+
+  <!-- Web App pill (inside Network) -->
+  <g transform="translate(730,290)">
+    <rect width="110" height="43" rx="7" fill="#fff" stroke="#BDBDBD" stroke-width="1.5"/>
+    <image href="icons/web-app.svg" x="10" y="10" width="23" height="23"/>
+    <text x="39" y="30" font-size="12" fill="#373737">Web App</text>
+  </g>
+
+  <!-- Arrow: Broker → Gateway (orthogonal, points AT gateway right edge top half) -->
+  <path d="M730 171.5 H498 V191 H432" fill="none" stroke="#0AA9FF" stroke-width="2" marker-end="url(#arrow-tip)"/>
+
+  <!-- Arrow: Web App → Gateway (orthogonal, points AT gateway right edge bottom half) -->
+  <path d="M730 311.5 H498 V212 H432" fill="none" stroke="#0AA9FF" stroke-width="2" marker-end="url(#arrow-tip)"/>
+
+</svg>
+</div>
+
+</body>
+</html>
