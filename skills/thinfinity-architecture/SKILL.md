@@ -357,8 +357,16 @@ explicitly asks (e.g. "color por región", multi-region/multi-tenant where flows
   other deck rules, in the console's `web-app/data/progress.md` › PPTX Generation Pipeline ›
   "Architecture diagrams in a deck". The reference implementation is
   `presentations/reference_builder/build_script.py`.
-- **Push to Figma** only if the user gives a `fileKey`+`nodeId`: use
-  `mcp__figma-remote-mcp__generate_figma_design` (load `/figma-generate-design` first).
+- **Push to Figma** only if the user gives a `fileKey`+`nodeId`. **Icons must land as design-system
+  component instances, not loose vectors** (the design team operates and swaps them in Figma). So do NOT push the
+  SVG/HTML through `generate_figma_design` (it flattens every icon to a vector). Instead build the
+  diagram natively with `use_figma` (load `figma-use` first, `create_session` before it): pills,
+  zones and connectors as frames/auto-layout per this skill's geometry, and each icon via
+  `search_design_system` -> `componentKey` -> `importComponentSetByKeyAsync` (variant `light`) or
+  `importComponentByKeyAsync` -> `createInstance()`, fixed square size, recoloured per §6 by mapping
+  `fills` and `strokes` of the instance's descendants. The SVG remains the standalone deliverable.
+  If the user explicitly wants the quick vector push, use `generate_figma_design` and say that the
+  icons will arrive as vectors.
 - **Labels follow the prompt's language** (English default — matches the source diagrams).
 
 ---

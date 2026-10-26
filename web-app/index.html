@@ -687,6 +687,22 @@
   .tile-title .job-title { font-size: 13.5px; }
   .tile-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
   .tile-actions .job-delbtn { margin-left: auto; }
+  /* Task history · select-to-delete. Selection mode adds a checkbox column to every card/row; the bar
+     stays pinned so Delete is reachable however far down the list you are. */
+  .sel-bar { display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: var(--z-sticky); background: var(--surface); border-radius: 6px; padding: 9px 14px; margin-bottom: 16px; }
+  .sel-count { font-size: 13px; font-weight: 600; color: var(--text); }
+  .sel-spacer { flex: 1; }
+  .sel-del { background: var(--danger); color: #fff; border: none; font-weight: 600; cursor: pointer; transition: background 0.15s ease, opacity 0.15s ease; }
+  .sel-del:hover:not(:disabled) { background: color-mix(in srgb, var(--danger) 80%, #000); }
+  .sel-del:disabled { opacity: 0.4; cursor: default; }
+  #historyList.selecting .job-card, #historyList.selecting .job-listrow { position: relative; padding-left: 50px; cursor: pointer; }
+  #historyList.selecting .job-card.selected, #historyList.selecting .job-listrow.selected { background: color-mix(in srgb, var(--brand) 18%, var(--surface)); }
+  .sel-box { position: absolute; left: 16px; top: 16px; width: 20px; height: 20px; border-radius: 5px; border: 2px solid var(--text-muted); display: flex; align-items: center; justify-content: center; color: #fff; transition: background 0.12s ease, border-color 0.12s ease; }
+  .sel-box svg { width: 14px; height: 14px; opacity: 0; transition: opacity 0.12s ease; }
+  .selected > .sel-box { background: var(--brand); border-color: var(--brand); }
+  .selected > .sel-box svg { opacity: 1; }
+  .sel-box.disabled { opacity: 0.35; cursor: not-allowed; }
+  #historyList.selecting .job-card:has(> .sel-box.disabled), #historyList.selecting .job-listrow:has(> .sel-box.disabled) { cursor: default; }
   /* Buttons: fully rounded (pill). Tags / badges: keep a subtle 5px radius. */
   .btn, .btn-sm, .icon-btn, .filter-pill, .modal-close, .hamburger, .task-act, .file-del,
   .swatch-acts button, .job-edittitle, .job-runbtn,
@@ -1118,8 +1134,16 @@
           <button data-jview="list" title="List" aria-label="List"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.6" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="3.6" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="3.6" cy="18" r="1.3" fill="currentColor" stroke="none"/></svg></button>
           <button data-jview="mosaic" title="Mosaic" aria-label="Mosaic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg></button>
         </div>
+        <button class="btn btn-ghost btn-sm" id="histSelectBtn" data-i18n="Select">Select</button>
         <button class="btn btn-ghost btn-sm" id="refreshHistory" data-i18n="Refresh">Refresh</button>
       </div>
+    </div>
+    <div class="sel-bar" id="histSelBar" style="display:none">
+      <span class="sel-count" id="histSelCount"></span>
+      <button class="btn btn-ghost btn-sm" id="histSelAll"></button>
+      <span class="sel-spacer"></span>
+      <button class="btn btn-ghost btn-sm" id="histSelCancel" data-i18n="Cancel">Cancel</button>
+      <button class="btn btn-sm sel-del" id="histSelDelete" disabled></button>
     </div>
     <div id="historyList"></div>
   </div>
@@ -1642,6 +1666,11 @@ const I18N = {
     'Delete': 'Borrar', 'Delete task': 'Borrar tarea', 'Starting…': 'Iniciando…',
     'Delete this task and its files? This cannot be undone.': '¿Borrar esta tarea y sus archivos? No se puede deshacer.',
     'Task deleted': 'Tarea borrada', 'Could not delete': 'No se pudo borrar',
+    'Select': 'Seleccionar', 'Select all': 'Seleccionar todas', 'Clear selection': 'Quitar selección', 'selected': 'seleccionadas',
+    'Select tasks to delete': 'Elegí las tareas a borrar', 'Tasks deleted': 'Tareas borradas',
+    'In progress — it can be deleted once it finishes': 'En curso — se puede borrar cuando termine',
+    'Delete 1 task and its files? This cannot be undone.': '¿Borrar 1 tarea y sus archivos? No se puede deshacer.',
+    'Delete {n} tasks and their files? This cannot be undone.': '¿Borrar {n} tareas y sus archivos? No se puede deshacer.',
     'Stop': 'Frenar', 'Task stopped': 'Tarea frenada', 'Could not stop': 'No se pudo frenar',
     'Task completed': 'Tarea terminada', 'Task failed': 'La tarea falló',
     'New version ready': 'Nueva versión lista', 'New version failed': 'La nueva versión falló',
@@ -1915,7 +1944,7 @@ const PROMPT_TEMPLATES = {
   wp:     'Build a branded Cybele whitepaper PDF from the attached source (DOCX, PDF, PPTX, image, MD or TXT; convert it to DOCX first if needed). Use the brandbook typography and auto-extract the cover title.',
   blog:   'Generate the blog visuals for the attached article — cover plus in-article section illustrations — as native Figma-safe SVG. How many of each is set in the fields above.',
   arch:   'Draw a Thinfinity architecture diagram for the scenario below, in the Cybele pill visual system. Describe the topology in the prompt.',
-  storyboard: 'Generate a video storyboard from the voiceover script below (paste it, or attach the .md/.txt). Keep the VO verbatim — only graphic decisions. Produce ordered 1920×1080 native Figma-safe SVG keyframes in the Cybele/Thinfinity dark-navy house style (one idea per scene, colour-with-a-job, glow on the focal, per-scene Motion note) as a single stacked HTML preview. Follow STORYBOARD_SPEC.md.',
+  storyboard: 'Generate a video storyboard from the voiceover script below (paste it, or attach the .md/.txt). Keep the VO verbatim — only graphic decisions. Produce blocks of 3840×2160 native Figma-safe SVG scenes (NNa/NNb/NNc) in the Cybele/Thinfinity house style of the "Contact Centers" storyboard (one dominant element per scene, background chosen by the story beat, flat icons, no glow) as one HTML preview, each block with its VO lines and a Guion box (VOICEOVER verbatim + "En pantalla:" in Spanish). Follow STORYBOARD_SPEC.md.',
   'linkedin-carousel': 'Generate a LinkedIn carousel from the post below (paste the script with PLACA 1…N copy, or raw article text). STRICT VERBATIM: no word may be added, removed or altered — no invented headlines, eyebrow tags, diagram labels, axis dates or CTA phrasing, and never render or mine the CAPTION block. You choose line breaks, accent word, type step and composition; the words are Nick\'s. Produce 4–7 native Figma-safe 1200×1500 SVG placas (median 6) on the hook → middle → CTA skeleton: pick ONE middle type (linear / enumeration / contrast / dimension comparison), ONE theme (claro / navy / oscuro), ONE governing metaphor and ONE cover archetype, and state all four in NOTES.md before drawing. Colour never carries meaning on its own. Emit a single HTML preview, then self-verify against the numeric checklist AND run verbatim_check.js — exit 1 means do not deliver. Follow LINKEDIN_CAROUSEL_SPEC.md. Ask for variants after delivery (§10).',
   webapp: 'Describe the change or feature you want for the team web app.',
   shared: 'Describe what you need from this pipeline.',
@@ -3131,7 +3160,9 @@ const openPrompts = new Set(), openClamps = new Set();
 const clampKey = box => {
   const card = box.closest('[data-jobid]') || box.closest('.job-card');
   const id = (card && (card.dataset.jobid || (card.querySelector('[data-showprompt]') || {}).dataset?.showprompt)) || '';
-  return id + '|' + (box.querySelector('.clamp-text') || {}).className;
+  // 'expanded' is state, not identity: leaving it in the key made an opened brief lose its key (and
+  // its "Show less" button) the moment a redraw restored it already expanded.
+  return id + '|' + ((box.querySelector('.clamp-text') || {}).className || '').replace(/\s*\bexpanded\b/, '');
 };
 function wireClamps(container) {
   container.querySelectorAll('[data-showprompt]').forEach(b => {
@@ -3153,9 +3184,10 @@ function wireClamps(container) {
     const txt = box.querySelector('.clamp-text'), btn = box.querySelector('.clamp-toggle');
     if (!txt || !btn) return;
     const key = clampKey(box);
-    if (txt.scrollHeight - txt.clientHeight > 2 || openClamps.has(key)) {
+    const wasOpen = openClamps.has(key) || txt.classList.contains('expanded');
+    if (txt.scrollHeight - txt.clientHeight > 2 || wasOpen) {
       btn.style.display = '';
-      if (openClamps.has(key)) { txt.classList.add('expanded'); btn.textContent = t('Show less'); }
+      if (wasOpen) { openClamps.add(key); txt.classList.add('expanded'); btn.textContent = t('Show less'); }
       btn.onclick = () => {
         const open = txt.classList.toggle('expanded');
         if (open) openClamps.add(key); else openClamps.delete(key);
@@ -3244,7 +3276,8 @@ async function renderHistory(force, known) {
   paintLoading(el);
   let jobs = known || [];
   if (!known) { try { jobs = (await (await fetch('/jobs')).json()).jobs || []; } catch (e) {} }
-  if (!jobs.length) { paintList(el, '<div class="col-empty">No tasks yet.</div>', null, force); return; }
+  histSel.jobs = jobs;
+  if (!jobs.length) { paintList(el, '<div class="col-empty">No tasks yet.</div>', null, force); paintHistSel(); return; }
   // group by task type (pipeline), ordered as in the project list
   const order = projects.map(p => p.key);
   const groups = {};
@@ -3270,8 +3303,90 @@ async function renderHistory(force, known) {
     wireRunDelete(el, () => renderHistory(true));
     wireClamps(el);
   }, force);
+  paintHistSel();
 }
 document.getElementById('refreshHistory').addEventListener('click', () => renderHistory(true));
+
+// ── Task history: select several tasks (or all) and delete them together ──
+// Each deletion goes through the same POST /jobs/<id>/delete as the single Delete button, so the
+// server still refuses a task mid-run and still logs it for the next push. The selection lives here,
+// not in the markup: cards are rebuilt whenever a task changes, and paintHistSel() re-applies it.
+const histSel = { on: false, ids: new Set(), jobs: [], busy: false };
+const histBusy = j => j.status === 'running' || j.status === 'needs-input' ||
+  (j.revisions || []).some(r => r.status === 'running' || r.status === 'needs-input');
+const ICO_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
+function paintHistSel() {
+  const el = document.getElementById('historyList');
+  const byId = new Map(histSel.jobs.map(j => [j.id, j]));
+  histSel.ids.forEach(id => { const j = byId.get(id); if (!j || histBusy(j)) histSel.ids.delete(id); });
+  el.classList.toggle('selecting', histSel.on);
+  document.getElementById('histSelBar').style.display = histSel.on ? '' : 'none';
+  document.getElementById('histSelectBtn').style.display = histSel.on ? 'none' : '';
+  el.querySelectorAll('[data-cardid]').forEach(card => {
+    let box = card.querySelector(':scope > .sel-box');
+    if (!histSel.on) { if (box) box.remove(); card.classList.remove('selected'); return; }
+    const id = card.dataset.cardid, j = byId.get(id), busy = !j || histBusy(j);
+    if (!box) { box = document.createElement('span'); box.className = 'sel-box'; box.innerHTML = ICO_CHECK; card.prepend(box); }
+    box.classList.toggle('disabled', busy);
+    box.title = busy ? t('In progress — it can be deleted once it finishes') : '';
+    card.classList.toggle('selected', histSel.ids.has(id));
+  });
+  const n = histSel.ids.size, total = histSel.jobs.filter(j => !histBusy(j)).length;
+  document.getElementById('histSelCount').textContent = n ? n + ' ' + t('selected') : t('Select tasks to delete');
+  const all = document.getElementById('histSelAll');
+  all.textContent = n && n === total ? t('Clear selection') : t('Select all');
+  all.disabled = histSel.busy || !total;
+  const del = document.getElementById('histSelDelete');
+  del.innerHTML = ICO_TRASH + '<span class="btn-tx">' + t('Delete') + (n ? ' (' + n + ')' : '') + '</span>';
+  del.disabled = histSel.busy || !n;
+  document.getElementById('histSelCancel').disabled = histSel.busy;
+}
+function setHistSelecting(on) {
+  histSel.on = on; histSel.ids.clear();
+  paintHistSel();
+}
+async function deleteSelectedTasks() {
+  const ids = [...histSel.ids];
+  if (!ids.length || histSel.busy) return;
+  const msg = ids.length === 1
+    ? t('Delete 1 task and its files? This cannot be undone.')
+    : t('Delete {n} tasks and their files? This cannot be undone.').replace('{n}', ids.length);
+  if (!confirm(msg)) return;
+  histSel.busy = true; paintHistSel();
+  let ok = 0, firstErr = '';
+  for (const id of ids) {
+    try {
+      const d = await (await fetch('/jobs/' + id + '/delete', { method: 'POST' })).json();
+      if (d.ok) { ok++; Object.keys(lastStatus).forEach(k => { if (k === id || k.startsWith(id + '#')) delete lastStatus[k]; }); }
+      else if (!firstErr) firstErr = d.error || '';
+    } catch (e) { if (!firstErr) firstErr = e.message; }
+  }
+  histSel.busy = false;
+  if (ok === ids.length) showToast(t('Tasks deleted'), String(ok));
+  else showToast(t('Could not delete'), (ids.length - ok) + ' / ' + ids.length + (firstErr ? ' — ' + firstErr : ''));
+  setHistSelecting(false);
+  renderHistory(true);
+}
+document.getElementById('histSelectBtn').addEventListener('click', () => setHistSelecting(true));
+document.getElementById('histSelCancel').addEventListener('click', () => setHistSelecting(false));
+document.getElementById('histSelAll').addEventListener('click', () => {
+  const sel = histSel.jobs.filter(j => !histBusy(j)).map(j => j.id);
+  if (histSel.ids.size === sel.length) histSel.ids.clear(); else sel.forEach(id => histSel.ids.add(id));
+  paintHistSel();
+});
+document.getElementById('histSelDelete').addEventListener('click', deleteSelectedTasks);
+// In selection mode a click anywhere on a card toggles it; capture phase, so the card's own buttons
+// (preview, download, run, title edit…) do nothing until the mode is left.
+document.getElementById('historyList').addEventListener('click', e => {
+  if (!histSel.on) return;
+  const card = e.target.closest('[data-cardid]');
+  if (!card) return;
+  e.preventDefault(); e.stopPropagation();
+  const id = card.dataset.cardid, j = histSel.jobs.find(x => x.id === id);
+  if (histSel.busy || !j || histBusy(j)) return;
+  if (histSel.ids.has(id)) histSel.ids.delete(id); else histSel.ids.add(id);
+  paintHistSel();
+}, true);
 
 // Wire the Run / Stop / Delete buttons on histCard-based views (overview / history)
 function wireRunDelete(el, rerender) {

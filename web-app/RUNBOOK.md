@@ -162,9 +162,10 @@ build that fails there on 3.14 is that, not a bug in the script. `server.js` alr
 ### 3.4b storyboard — Video storyboard
 - Read **`web-app/pipelines/STORYBOARD_SPEC.md`** (authoritative) plus the voiceover
   script (the `sourceFile` or the `prompt`). Keep the VO **verbatim** — only graphic decisions.
-- Produce ordered **1920×1080 native Figma-safe SVG** keyframes (one idea per scene, colour-with-a-job,
-  glow on the focal, per-scene `Motion:` note) as a single stacked **HTML preview**. Render & verify
-  against the spec's checklist (§12), then open it for review.
+- Produce **blocks of 3840×2160 native Figma-safe SVG** scenes (`NNa/NNb/NNc`; one dominant element per
+  scene, background chosen by the story beat, red only for problems, no glow/gradients) as one **HTML
+  preview** with each block = its scenes + `VO n` + a `Guion` box (`VOICEOVER:` verbatim + `En pantalla:`
+  in Spanish). Render & verify against the spec's checklist (§12), then open it for review.
 - Save the HTML + SVGs into `jobs/<id>/output/`. On approval, push to the **"Youtube"** Figma file
   (`K8rHguGyksdPWdHrSA3VOi`) via the project's Figma workflow. (Skill `cybele-video-storyboard` is not
   yet packaged — follow the spec directly.)
