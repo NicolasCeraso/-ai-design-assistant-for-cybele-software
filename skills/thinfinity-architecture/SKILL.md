@@ -494,6 +494,7 @@ the kind of subtle violation that only the second pass catches.
 | 8 | Reference footer overlaps any element? | The footer `<g>` sits at `y > zones_bottom + 30`, inside the card; its own arrow/dashed samples are at the bottom of the canvas where nothing else lives. |
 | 9 | All chevrons OUTSIDE pill bodies, with air? | Chevron tips stop **4 px before** the pill / zone / label edge (shorten the path's last segment by 4 px): a small light gap, never touching or overlapping (Nick, 2026-09-28). Chevron arms extend OUTWARD. |
 | 10 | Any label covering a connector or a chevron? | A port label sits **on** its line and must leave the line visible on both sides. If the straight segment is shorter than the label + 2×8 px (+ ~13 px for a chevron), **lengthen the segment** by moving pills/zones; never move the label off the line (Nick, 2026-09-28). Real bug: `MySQL :3306` on a 95 px segment hid the whole Broker → Config DB arrow. |
+| 11 | SVG is valid XML? | **Escape `&` `<` `>` in every label** (`&` → `&amp;`, e.g. "Virtual Desktops &amp; Virtual Apps"). A bare `&` makes the file not well-formed: the console's SVG link then shows a browser error instead of the diagram (task-1793040811208, 2026-10-26). Verify by parsing the file: `python -c "import xml.etree.ElementTree as E,sys; E.parse(sys.argv[1])" diagram.svg` — it must print nothing. Also check the HTML copy. |
 
 After the check passes, re-render with headless Edge, READ the PNG, and visually confirm. Only then
 report the diagram as done.

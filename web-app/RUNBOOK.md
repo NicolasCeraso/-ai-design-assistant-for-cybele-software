@@ -169,7 +169,7 @@ in the run which interpreter you used. If a module is missing, say which one and
   same case-data form, pre-filled; the answer comes back in `pending.decision.fields` and also
   replaces `job.options.arch`. Fields still empty after that stay out: continue with the standard
   case for them.
-- Save the SVG + HTML preview into `jobs/<id>/output/`.
+- **Before saving, parse the SVG as XML** (escape `&` as `&amp;` in labels — a bare `&` makes the console's SVG link fail with a browser error). Save the SVG + HTML preview into `jobs/<id>/output/`.
 
 ### 3.4b storyboard — Video storyboard
 - Read **`web-app/pipelines/STORYBOARD_SPEC.md`** (authoritative) plus the voiceover

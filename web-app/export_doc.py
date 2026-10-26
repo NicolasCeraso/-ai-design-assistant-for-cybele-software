@@ -9,6 +9,7 @@
 # is a single canvas. Emits JSON {ok, file, name, zip} on stdout.
 import sys, os, json, argparse, zipfile, io, re, base64, subprocess, tempfile, glob, uuid, threading
 from concurrent.futures import ThreadPoolExecutor
+import svg_figma
 
 def parse_pages(sel, n):
     if not sel or sel == 'all':
@@ -84,7 +85,7 @@ def inline_svg(svg_path):
         return tag
     txt = re.sub(r'<image\b[^>]*/>', repl, txt)
     txt = re.sub(r'<image\b[^>]*>.*?</image>', repl, txt, flags=re.S)
-    return txt
+    return svg_figma.inline_markers(txt)   # Figma drops <marker>: draw the arrowheads as real paths
 
 _LOCAL = threading.local()
 def _chrome_profile(outdir):
@@ -247,7 +248,9 @@ def export_from_svg(a, svg_paths, out):
     def one(svg_path):
         base = os.path.splitext(os.path.basename(svg_path))[0]
         if a.fmt == 'svg':
-            return (base + '.svg', inline_svg(svg_path).encode('utf-8'))
+            svg_text = inline_svg(svg_path)
+            svg_figma.check_vector(svg_text, os.path.basename(svg_path))   # never deliver a broken or image-only "SVG"
+            return (base + '.svg', svg_text.encode('utf-8'))
         if a.fmt == 'pdf':
             return (base + '.pdf', chrome_pdf(svg_path, out))
         # png / jpg — render the SVG with Chrome, then encode (optionally fit to a byte budget)
@@ -284,6 +287,9 @@ def export_from_raster(a, src, out):
             for i in selp: nd.insert_pdf(pdfdoc, from_page=i, to_page=i)
             results.append((f"{base}.pdf", nd.tobytes())); nd.close()
     elif a.fmt == 'svg':
+        if not is_pdf:
+            raise RuntimeError('No vector source for this deliverable: only an image (' + ext + ') is available, and '
+                               'wrapping it in an <svg> would not be editable. Export PNG or PDF instead.')
         for i in sel:
             results.append((f"{base}.svg" if len(sel) == 1 else f"{base}_p{i+1}.svg", doc[i].get_svg_image().encode('utf-8')))
     else:
