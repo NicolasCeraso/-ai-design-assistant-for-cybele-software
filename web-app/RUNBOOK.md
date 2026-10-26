@@ -143,6 +143,14 @@ in the run which interpreter you used. If a module is missing, say which one and
   **copied verbatim from the article**, so whoever lays out the post can find the spot with Ctrl+F.
   The Preview shows exactly that under each visual. Without the file the console can only guess a
   title from the filename and has no placement to show.
+- **With a preview, every `visuals.json` entry carries `file`** — the PNG of *that* visual (one entry and
+  one file per variant, e.g. `"file": "s1-dark.png"`). An entry that has a Figma link but no `file` shows in
+  the console as an empty box with only "Open in Figma": the PNGs exist but nothing points to them.
+- **A revision (v2, v3…) of a Blog Images task always writes the preview of what it built** — the PNGs,
+  `preview.pdf` and `visuals.json` with `file` on every entry — whatever the base task's
+  `options.outputs.preview` says. Tasks created before Figma + Preview became the default carry
+  `preview: false`, and revisions inherit it; Nick asked that Blog Images requests always give a preview.
+  A revision that builds nothing (ambiguous request, frames not found) says so in `NOTES.md` and writes no preview.
 
 ### 3.4 arch — Architecture diagram
 - Invoke the **`thinfinity-architecture`** skill with the topology described in the `prompt`.
