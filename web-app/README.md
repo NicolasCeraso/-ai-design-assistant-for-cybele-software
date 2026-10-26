@@ -1,7 +1,7 @@
 # Cybele Project Console (Team Web App)
 
 The shared interface for the **Cybele AI Design Assistant** — a local web app that tracks the
-project and **prepares + runs tasks** for each pipeline (PPTX, Whitepaper PDF, Blog visuals,
+project and **prepares + runs tasks** for each pipeline (PPTX, Whitepaper PDF, Blog Images,
 Architecture diagrams). It's the "Web App for the team" from the project vision.
 
 Single self‑contained `index.html` + `brand-icons*.js`, served by `server.js` on **port 3491**.

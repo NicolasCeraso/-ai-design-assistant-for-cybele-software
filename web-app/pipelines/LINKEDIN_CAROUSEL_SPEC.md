@@ -1,7 +1,7 @@
 # LinkedIn Carousel (Placas) — Document Type / Pipeline Spec
 
 **Added:** 2026-07-27 · **Rewritten:** 2026-07-29 · **Owner:** Nick Ceraso · **Status:** live
-**Pipeline id:** `linkedin-carousel` · **Family:** SVG / Figma (sits next to *Blog visuals*)
+**Pipeline id:** `linkedin-carousel` · **Family:** SVG / Figma (sits next to *Blog Images*)
 
 > **What this doctype does.** Given the **text of a LinkedIn post**, generate a set of **native,
 > Figma-safe SVG placas** (portrait 1200×1500, 4:5) applying Cybele/Thinfinity's LinkedIn carousel

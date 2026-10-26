@@ -71,7 +71,7 @@
     {
       "name": "Interfaz y controles",
       "figmaGroups": ["controles", "cuadrados", "flechas", "lineas", "objetos", "conceptos", "circulares"],
-      "icons": ["hand"]
+      "icons": ["hand", "flag", "spinner", "kind-size", "kind-text", "kind-radius", "kind-color"]
     },
     {
       "name": "Comunicación y tiempo",

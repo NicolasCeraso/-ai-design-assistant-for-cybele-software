@@ -43,15 +43,22 @@ part of the request, not background material. See RUNBOOK §2.6.
 ## Icons in the console UI (rule — Nick asked for this three times)
 
 Every icon in `index.html` comes from the brandbook library (`brand-icon-lib.js`, `window.BRAND_ICON_LIB`). **Never** an
-emoji (📎, 🗑…) and never a hand-drawn `<svg>`: search the library first (Brand assets view, or the names in
+emoji (📎, 🗑…), never a text symbol standing in for an icon (✎ ✓ ▶ ⬇ ▸ ‹ › ↗ ✕ ×) and never a hand-drawn `<svg>`: search the library first (Brand assets view, or the names in
 `brand-icon-lib.js`; careful, `x` is the X/Twitter logo — a close cross is `cancel`). How to use one:
 
 - static HTML: `<svg data-icon="name" class="…" width="…" height="…"></svg>` — `hydrateIcons()` fills it from the library and keeps the class and size;
+- collapsible rows: the CSS variable `--ico-chev` (the library's chevron as a mask) replaces the old ▸ marker;
 - in JS strings: `brandSvg('name', { class: '…', width: 12 })`, or `window.BRAND_ICON_LIB.name` wrapped in `<span class="bico bico-svg">…</span>`.
 
-If the library lacks the icon, say so and ask; a drawing may stay only with `brandbook-exception: <why>` on its line (today: the
-"mark" flag and the running spinner). After touching `index.html` run `node check-ui-icons.js` (`npm run check:icons`): it fails on any
-emoji icon, undeclared hand-drawn `<svg>` or icon name missing from the library.
+If the library lacks the icon, say so and ask Nick. Once agreed, **draw it into the library**, as `attach`, `flag`, `spinner` and the
+style-rule `kind-*` icons were: `data/icons-custom/<name>.svg` (194×194 box, stroke 9.2, round caps/joins, `currentColor`), add its name to a
+category in `data/icon-categories.json` and to `data/icon-keywords.json`, run `node build-icon-lib.js` and look at it next to its neighbours.
+A drawing may stay in `index.html` only with `brandbook-exception: <why>` on its line (today only the OS notification titles, which are
+plain text). After touching `index.html` run `node check-ui-icons.js` (`npm run check:icons`): it fails on any emoji or text-symbol icon,
+undeclared hand-drawn `<svg>` or icon name missing from the library.
+
+Open tabs keep the code they loaded: the console shows a "new version available — Reload" bar when `index.html` changed on disk, and a fix
+that "did not apply" is usually a tab that needs `Ctrl+F5`.
 
 ## Publishing to GitHub (on request only)
 

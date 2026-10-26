@@ -113,7 +113,7 @@ in the run which interpreter you used. If a module is missing, say which one and
   View the picture, write what it says into the DOCX (same language, never translate), then build.
 - `cd web-app/deckgen && py -3.13 whitepaper/build_whitepaper.py "<the DOCX>" "<abs path>/jobs/<id>/output/<name>.pdf"` (give the output as an absolute path: the script runs from `deckgen/`)
 
-### 3.3 blog — Blog visuals
+### 3.3 blog — Blog Images
 - Invoke the **`cybele-blog-visuals`** skill with the article (the `sourceFile` or the prompt).
 - **Honor what the user picked in the launcher** — `job.json` → `options`
   (`coverBrief`, `sectionImages`; the prompt repeats them as a "Deliverables for this article" line).
@@ -127,7 +127,8 @@ in the run which interpreter you used. If a module is missing, say which one and
 - **Honor the output routes too** — `job.json` → `options.outputs` (`figma` + `figmaUrl`, `svg`,
   `preview`; the prompt repeats them as an "Output route" line). Only the checked routes are
   produced: an unchecked one writes no file at all. The launcher's default for blog visuals is
-  **Figma only** — no SVG, no preview — because that is where the visuals are reviewed. See
+  **Figma + Preview** (no SVG): Figma is where the visuals are reviewed, the preview is the quick look
+  from the console. On Figma + Preview, render the PNGs from the frames with `exportAsync` into the version folder. See
   OUTPUT ROUTES and Phase 4 in the skill.
 - On the Figma route the icons are **instances of the Cybele Design System components** in that
   file, and body copy is **one text node per paragraph** (fixed width, auto height). Importing SVGs

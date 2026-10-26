@@ -123,8 +123,7 @@
   .sidebar-logo { padding: 22px 20px; display: flex; align-items: center; gap: 11px; border-bottom: 1px solid var(--border); }
   .brand-logo { display: flex; align-items: center; }
   .brand-logo svg { height: 22px; width: auto; display: block; }
-  /* light: real primary colors (black wordmark + multicolor butterfly). dark: render white. */
-  [data-theme="dark"] .brand-logo svg { filter: brightness(0) invert(1); }
+  /* light: primary logo (black wordmark + multicolor butterfly). dark: the negative logo asset (white wordmark), swapped in JS. */
   .brand-suffix { font-size: 11px; color: var(--text-muted); border-left: 1px solid var(--border); padding-left: 11px; font-weight: 500; line-height: 1.2; }
 
   .sidebar-nav { flex: 1; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; }
@@ -324,7 +323,7 @@
   .style-file { border-top: 1px solid var(--border); padding: 12px 0 4px; }
   .style-file:first-of-type { border-top: none; }
   /* Three levels, three weights, and containment shown by indentation:
-     document type (Blog Visuals) > spec file (Section illustrations) > element (Body / description).
+     document type (Blog Images) > spec file (Section illustrations) > element (Body / description).
      They used to be 13px/600, 12.5px/600 and 13px/600 — indistinguishable. */
   .style-file > summary { cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 10px; padding: 7px 0; }
   .style-file .sf-name { font-size: 15.5px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
@@ -395,7 +394,7 @@
   .style-elem { padding: 12px 0 12px 14px; }
   .style-item { padding: 9px 0 9px 14px; }
   .style-file > summary::-webkit-details-marker { display: none; }
-  .style-file > summary::before { content: '▸'; color: var(--text-muted); font-size: 11px; transition: transform .15s ease; }
+  .style-file > summary::before { content: ''; display: inline-block; width: 1em; height: 1em; background: currentColor; -webkit-mask: var(--ico-chev) center / contain no-repeat; mask: var(--ico-chev) center / contain no-repeat; color: var(--text-muted); font-size: 11px; transition: transform .15s ease; }
   .style-file[open] > summary::before { transform: rotate(90deg); }
   .style-file .sf-path { font-size: 11.5px; color: var(--text-muted); font-family: 'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace; }
   .style-file .sf-count { font-size: 11.5px; color: var(--text-muted); margin-left: auto; }
@@ -675,7 +674,7 @@
   details.job-result summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--mint); user-select: none; }
   details.job-result summary:hover { text-decoration: underline; text-underline-offset: 3px; }
   details.job-result summary::-webkit-details-marker { display: none; }
-  details.job-result summary::after { content: '▸'; color: var(--text-muted); transition: transform 0.15s ease; }
+  details.job-result summary::after { content: ''; display: inline-block; width: 1em; height: 1em; background: currentColor; -webkit-mask: var(--ico-chev) center / contain no-repeat; mask: var(--ico-chev) center / contain no-repeat; color: var(--text-muted); transition: transform 0.15s ease; }
   details.job-result[open] summary::after { transform: rotate(90deg); }
   details.job-result.is-error summary, .job-result-line.is-error { color: var(--danger-badge); }
   .job-result-body { margin-top: 7px; font-size: 12.5px; color: var(--text-secondary); line-height: 1.45; padding-left: 2px; }
@@ -731,7 +730,7 @@
   .ver-title { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-secondary); user-select: none; margin-bottom: 7px; }
   .ver-title[data-vtoggle] { cursor: pointer; }
   .ver-title[data-vtoggle]:hover { color: var(--text); }
-  .ver-title[data-vtoggle]::after { content: '▸'; color: var(--text-muted); transition: transform 0.15s ease; }
+  .ver-title[data-vtoggle]::after { content: ''; display: inline-block; width: 1em; height: 1em; background: currentColor; -webkit-mask: var(--ico-chev) center / contain no-repeat; mask: var(--ico-chev) center / contain no-repeat; color: var(--text-muted); transition: transform 0.15s ease; }
   .job-versions.show-all .ver-title[data-vtoggle]::after { transform: rotate(90deg); }
   .job-versions .ver-list { display: none; }
   .job-versions.show-all .ver-list { display: block; }
@@ -742,7 +741,7 @@
   .ver-main { flex: 1; min-width: 0; margin-right: auto; }
   .ver-nameline { display: flex; align-items: center; gap: 8px; }
   .ver-tag-btn { cursor: pointer; border: none; gap: 4px; font-family: inherit; transition: filter 0.12s ease; align-self: flex-start; }
-  .ver-tag-btn::after { content: '▸'; font-size: 8px; line-height: 1; transition: transform 0.15s ease; }
+  .ver-tag-btn::after { content: ''; display: inline-block; width: 1em; height: 1em; background: currentColor; -webkit-mask: var(--ico-chev) center / contain no-repeat; mask: var(--ico-chev) center / contain no-repeat; font-size: 8px; line-height: 1; transition: transform 0.15s ease; }
   .ver-tag-btn[aria-expanded="true"]::after { transform: rotate(90deg); }
   .ver-tag-btn:hover { background: var(--brand); color: #fff; }
   .ver-req { display: none; flex-basis: 100%; width: 100%; font-size: 12px; line-height: 1.45; color: var(--text-secondary); margin-top: 2px; padding: 8px 10px; background: var(--accent-tint-soft); border-radius: 6px; white-space: pre-wrap; word-break: break-word; }
@@ -758,7 +757,7 @@
   /* The requested changes of a revision: collapsed by default, same caret grammar as .ver-title. */
   .rev-changes > summary { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-secondary); cursor: pointer; user-select: none; list-style: none; transition: color 0.12s ease; }
   .rev-changes > summary::-webkit-details-marker { display: none; }
-  .rev-changes > summary::after { content: '▸'; color: var(--text-muted); transition: transform 0.15s ease; }
+  .rev-changes > summary::after { content: ''; display: inline-block; width: 1em; height: 1em; background: currentColor; -webkit-mask: var(--ico-chev) center / contain no-repeat; mask: var(--ico-chev) center / contain no-repeat; color: var(--text-muted); transition: transform 0.15s ease; }
   .rev-changes > summary:hover { color: var(--text); }
   .rev-changes[open] > summary { margin-bottom: 6px; }
   .rev-changes[open] > summary::after { transform: rotate(90deg); }
@@ -766,7 +765,7 @@
   /* Foldable revision row: summary = Rev N · status · version · actions; body = request, result, files */
   .rev-fold > summary { list-style: none; cursor: pointer; user-select: none; margin-bottom: 0; flex-wrap: wrap; }
   .rev-fold > summary::-webkit-details-marker { display: none; }
-  .rev-fold > summary::before { content: '▸'; color: var(--text-muted); font-size: 11px; transition: transform 0.15s ease; }
+  .rev-fold > summary::before { content: ''; display: inline-block; width: 1em; height: 1em; background: currentColor; -webkit-mask: var(--ico-chev) center / contain no-repeat; mask: var(--ico-chev) center / contain no-repeat; color: var(--text-muted); font-size: 11px; transition: transform 0.15s ease; }
   .rev-fold[open] > summary::before { transform: rotate(90deg); }
   .rev-fold > summary .job-status { margin-left: 0; }   /* the badge's auto margin belongs to the card top, not here */
   .rev-fold > summary.no-body { cursor: default; }
@@ -787,6 +786,12 @@
   .rev-body .rev-result { display: flex; align-items: flex-start; gap: 6px; }
   .rev-body .rev-result .bico-svg { flex-shrink: 0; margin-top: 1px; }
   details.revise { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 10px; }
+  .sum-ico { display: inline-flex; align-items: center; gap: 6px; }
+  /* Stale-tab guard: an open tab keeps the code it loaded; this offers the reload when index.html changed on disk. */
+  .stale-bar { position: fixed; top: 14px; left: 50%; transform: translateX(-50%); z-index: 10000; display: flex; align-items: center; gap: 10px;
+    background: var(--brand); color: #fff; padding: 7px 8px 7px 16px; border-radius: 999px; font-size: 12.5px; font-weight: 600; box-shadow: 0 8px 28px rgba(0,0,0,.35); }
+  .stale-bar button { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 999px; background: #fff; color: var(--brand); font: inherit; font-weight: 700; padding: 5px 12px; cursor: pointer; }
+  .stale-bar button:hover { background: rgba(255,255,255,.88); }
   details.revise summary { font-size: 12.5px; font-weight: 600; color: var(--brand-light); cursor: pointer; list-style: none; }
   details.revise summary::-webkit-details-marker { display: none; }
   details.revise summary:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -826,7 +831,7 @@
   .pv-gal { height: 72vh; display: grid; grid-template-rows: 1fr auto; background: #0a1422; border-radius: 0 0 6px 6px; overflow: hidden; }
   .pv-gal-stage { position: relative; display: flex; align-items: center; justify-content: center; min-height: 0; padding: 18px; }
   .pv-gal-stage img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; border-radius: 4px; }
-  .pv-gal-figma { color: #fff; background: rgba(255,255,255,.10); border-radius: 8px; padding: 12px 18px; font-size: 13px; font-weight: 600; text-decoration: none; }
+  .pv-gal-figma { display: inline-flex; align-items: center; gap: 6px; color: #fff; background: rgba(255,255,255,.10); border-radius: 8px; padding: 12px 18px; font-size: 13px; font-weight: 600; text-decoration: none; }
   .pv-gal-figma:hover { background: rgba(255,255,255,.18); }
   .pv-gal-bar { display: flex; align-items: center; gap: 10px; padding: 9px 14px; background: rgba(255,255,255,.06); }
   .pv-gal-bar button { flex: 0 0 auto; width: 28px; height: 28px; border: none; border-radius: 50%; background: rgba(255,255,255,.10); color: #fff; font-size: 16px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
@@ -843,7 +848,7 @@
   .pv-gal-count { flex: 0 0 auto; font-size: 11.5px; font-weight: 600; color: rgba(255,255,255,.55); font-variant-numeric: tabular-nums; }
   /* Preview · Annotate mode (pins + comments → one change request) */
   .pv-seg, .seg { display: inline-flex; background: var(--track); border-radius: 999px; padding: 3px; margin-right: 10px; }
-  .pv-seg button, .seg button { border: none; background: transparent; color: var(--text-secondary); font: inherit; font-size: 12px; font-weight: 600; padding: 5px 13px; border-radius: 999px; cursor: pointer; transition: background .15s, color .15s; }
+  .pv-seg button, .seg button { display: inline-flex; align-items: center; gap: 5px; border: none; background: transparent; color: var(--text-secondary); font: inherit; font-size: 12px; font-weight: 600; padding: 5px 13px; border-radius: 999px; cursor: pointer; transition: background .15s, color .15s; }
   .pv-seg button.on, .seg button.on { background: var(--brand); color: #fff; }
   .seg { margin-right: 0; }
   .seg-sm button { font-size: 11.5px; padding: 4px 11px; }
@@ -1031,7 +1036,7 @@
       <span data-i18n="Task history">Task history</span>
     </div>
     <div class="nav-item" data-view="assets">
-      <svg data-icon="color-picker" class="nav-icon"></svg>
+      <svg data-icon="list" class="nav-icon"></svg>
       <span data-i18n="Brand assets">Brand assets</span>
     </div>
     <div class="nav-item" data-view="styles">
@@ -1259,7 +1264,7 @@
         <textarea id="wsSrcText" class="mono" style="min-height:132px;display:none" placeholder="Paste the article here — one article per task, headings included." data-i18n-ph="Paste the article here — one article per task, headings included."></textarea>
         <p class="exp-note" id="wsSrcNote" style="margin:6px 0 0"></p>
       </div>
-      <!-- Blog Visuals only: how many visuals Claude makes for this article. Covers default to 1;
+      <!-- Blog Images only: how many visuals Claude makes for this article. Covers default to 1;
            the section-images field left empty means Auto (one per illustrable section). -->
       <div id="wsBlogOpts" class="ws-blogopts" style="display:none;">
         <div class="field">
@@ -1424,10 +1429,10 @@
       <span class="modal-title" id="previewTitle">Preview</span>
       <span class="pv-seg" id="pvSeg" style="display:none">
         <button type="button" id="pvViewBtn" class="on" data-pvmode="view">View</button>
-        <button type="button" id="pvAnnotBtn" data-pvmode="annot">✎ Annotate</button>
+        <button type="button" id="pvAnnotBtn" data-pvmode="annot"><svg data-icon="edit" width="13" height="13"></svg> Annotate</button>
       </span>
       <button type="button" id="previewDownload" class="btn btn-ghost btn-sm" style="display:none;margin-right:6px"><span class="bico bico-svg"><svg data-icon="download"></svg></span><span data-i18n="Download">Download</span></button>
-      <a id="previewOpen" class="btn btn-ghost btn-sm" href="#" target="_blank" rel="noopener" style="margin-right:6px">Open in tab ↗</a>
+      <a id="previewOpen" class="btn btn-ghost btn-sm" href="#" target="_blank" rel="noopener" style="margin-right:6px">Open in tab <svg data-icon="new-window" width="13" height="13"></svg></a>
       <button class="modal-close" data-close="preview" aria-label="Close">
         <svg data-icon="cancel" width="16" height="16"></svg>
       </button>
@@ -1438,24 +1443,24 @@
     <div id="pvGallery" class="pv-gal" style="display:none">
       <div class="pv-gal-stage">
         <img id="pvGalImg" alt="" draggable="false">
-        <a id="pvGalFigma" class="pv-gal-figma" href="#" target="_blank" rel="noopener" style="display:none">Open in Figma ↗</a>
+        <a id="pvGalFigma" class="pv-gal-figma" href="#" target="_blank" rel="noopener" style="display:none">Open in Figma <svg data-icon="new-window" width="14" height="14"></svg></a>
       </div>
       <div class="pv-gal-bar">
-        <button type="button" id="pvGalPrev" aria-label="Previous visual">‹</button>
+        <button type="button" id="pvGalPrev" aria-label="Previous visual"><svg data-icon="a-left" width="16" height="16"></svg></button>
         <div class="pv-gal-cap">
           <span class="pv-gal-title" id="pvGalTitle"></span>
           <span class="pv-gal-sub" id="pvGalSub"></span>
         </div>
         <span class="pv-gal-count" id="pvGalCount"></span>
-        <button type="button" id="pvGalNext" aria-label="Next visual">›</button>
+        <button type="button" id="pvGalNext" aria-label="Next visual"><svg data-icon="a-right" width="16" height="16"></svg></button>
       </div>
     </div>
     <div id="pvAnnotate" class="pv-annotate" style="display:none">
       <div class="pv-stage" id="pvStage">
         <div class="pv-pagenav" id="pvPageNav" style="display:none">
-          <button type="button" id="pvPrev" aria-label="Previous page">‹</button>
+          <button type="button" id="pvPrev" aria-label="Previous page"><svg data-icon="a-left" width="16" height="16"></svg></button>
           <span class="pv-pagelabel" id="pvPageLabel"></span>
-          <button type="button" id="pvNext" aria-label="Next page">›</button>
+          <button type="button" id="pvNext" aria-label="Next page"><svg data-icon="a-right" width="16" height="16"></svg></button>
         </div>
         <div class="pv-doc" id="pvDoc"><img id="pvImg" alt="" draggable="false"></div>
         <div class="pv-hint" id="pvHint"></div>
@@ -1622,6 +1627,8 @@ function hydrateIcons(root) {
   });
 }
 hydrateIcons();
+// --ico-chev: the library's chevron as a CSS mask, for the ▸ markers of every collapsible row (CSS cannot read the library).
+document.documentElement.style.setProperty('--ico-chev', 'url("data:image/svg+xml,' + encodeURIComponent(brandSvg('a-right', { width: 24, height: 24 }).replace(/currentColor/g, '#000')) + '")');
 
 // ── i18n ──
 let LANG = (function () { try { return localStorage.getItem('np-lang') || 'en'; } catch (e) { return 'en'; } })();
@@ -1637,12 +1644,10 @@ const I18N = {
     'Every task, including archived ones': 'Todas las tareas, incluidas las archivadas',
     'Cybele palette, logo and pipeline icons': 'Paleta Cybele, logo e iconos',
     'Console configuration': 'Configuración de la consola',
-    'New task': 'Nueva tarea', 'Document type': 'Tipo de documento', 'View all →': 'Ver todo →', 'Refresh': 'Actualizar', 'Launch ›': 'Abrir ›', 'Planned': 'Planificado',
-    '▶ Run with Claude': '▶ Ejecutar con Claude', 'Starting…': 'Iniciando…', '✓ Approve & close': '✓ Aprobar y cerrar',
-    '✎ Request changes': '✎ Pedir cambios', 'Send change request': 'Enviar pedido',
-    'Create File': 'Crear archivo', 'Cancel': 'Cancelar', '⬇ Download': '⬇ Descargar', '👁 Preview': '👁 Vista previa',
-    'All projects': 'Todos', '+ Add color': '+ Agregar color', 'Language': 'Idioma',
-    '✓ Approved & closed': '✓ Aprobado y cerrado', 'Describe what to change…': 'Describí qué cambiar…', 'Requested changes': 'Cambios pedidos',
+    'New version of the console available': 'Hay una versión nueva de la consola', 'Reload': 'Recargar', 'New task': 'Nueva tarea', 'Document type': 'Tipo de documento', 'View all →': 'Ver todo →', 'Refresh': 'Actualizar', 'Launch': 'Abrir', 'Planned': 'Planificado',
+    'Starting…': 'Iniciando…',     'Send change request': 'Enviar pedido',
+    'Create File': 'Crear archivo', 'Cancel': 'Cancelar',     'All projects': 'Todos', '+ Add color': '+ Agregar color', 'Language': 'Idioma',
+    'Describe what to change…': 'Describí qué cambiar…', 'Requested changes': 'Cambios pedidos',
     'Could not restore': 'No se pudo restaurar',
     'Add document type': 'Agregar tipo de documento',
     'Queued': 'En cola', 'Running': 'En ejecución', 'Done': 'Lista', 'Error': 'Error', 'Needs input': 'Requiere acción', 'Cancelled': 'Cancelada',
@@ -1730,8 +1735,7 @@ const I18N = {
     'All projects': 'Todos los proyectos',
     'Continue task': 'Continuar tarea', 'What should this run do? (creates a new version)': '¿Qué debe hacer esta corrida? (crea una nueva versión)',
     'Continuing as a new version': 'Continuando como una nueva versión', 'Could not continue': 'No se pudo continuar',
-    '✓ Closed': '✓ Cerrada',
-    'Untitled': 'Untitled', 'Edit title': 'Editar título', 'Task title': 'Título de la tarea', 'File title': 'Título del archivo',
+        'Untitled': 'Untitled', 'Edit title': 'Editar título', 'Task title': 'Título de la tarea', 'File title': 'Título del archivo',
     'Upload': 'Subir', 'Grid': 'Grilla', 'List': 'Lista',
     'Pin': 'Fijar', 'Mark': 'Marcar', 'Favorite': 'Favorito',
     'Show more': 'Ver más', 'Show less': 'Ver menos',
@@ -1790,7 +1794,7 @@ function setLang(lang) {
 const projects = [
   { key: 'pptx',   label: 'PPTX',          color: 'var(--viz-1)' },
   { key: 'wp',     label: 'Whitepaper PDF', color: 'var(--viz-2)' },
-  { key: 'blog',   label: 'Blog Visuals',  color: 'var(--viz-3)' },
+  { key: 'blog',   label: 'Blog Images',  color: 'var(--viz-3)' },
   { key: 'arch',   label: 'Arch Diagrams', color: 'var(--viz-4)' },
   { key: 'storyboard', label: 'Video Storyboard', color: '#7B7BF5' },
   { key: 'linkedin-carousel', label: 'LinkedIn Carousel', color: '#F5B454' },
@@ -1814,7 +1818,7 @@ let DECKGEN = 'deckgen';
 const pipelines = [
   { key:'pptx',   name:'PPTX Generation', status:'live',     kind:'shell', cwd:DECKGEN, deckgen:true, cmd:'py -3.13 build_pptx.py', desc:'2 paths — from-scratch editorial, faithful (Node/pptxgenjs). Palette 06/26.' },
   { key:'wp',     name:'Whitepaper PDF',  status:'stable',   kind:'shell', cwd:DECKGEN, deckgen:true, cmd:'py -3.13 whitepaper/build_whitepaper.py <input.docx>', desc:'DOCX → paginated, branded multi-page PDF. Other sources (PDF, PPTX, images, MD, TXT) are converted to DOCX first.' },
-  { key:'blog',   name:'Blog Visuals',    status:'live',     kind:'skill', cmd:'cybele-blog-visuals', desc:'Cover + in-article illustrations, native Figma-safe SVG. You choose how many of each.' },
+  { key:'blog',   name:'Blog Images',    status:'live',     kind:'skill', cmd:'cybele-blog-visuals', desc:'Cover + in-article illustrations, native Figma-safe SVG. You choose how many of each.' },
   { key:'arch',   name:'Arch Diagrams',   status:'live',     kind:'skill', cmd:'thinfinity-architecture', desc:'Thinfinity "pill" system, 131-icon set, capability → topology.' },
   { key:'storyboard', name:'Video Storyboard', status:'live', kind:'skill', cmd:'cybele-video-storyboard', desc:'Voiceover script → 1920×1080 keyframes, native Figma-safe SVG. Dark-navy house style.' },
   { key:'linkedin-carousel', name:'LinkedIn Carousel', status:'live', kind:'skill', cmd:'cybele-linkedin-carousel', desc:'Post/article → 4–7 portrait 1200×1500 SVG placas (native Figma-safe). Hook → middle → CTA, 3 themes, CVD-safe palette, variants on request.' },
@@ -1874,7 +1878,7 @@ function renderPipelines() {
   grid.classList.toggle('compact', single);
   grid.style.gridTemplateColumns = '';                    // reset any parity layout
   const icon = p => (window.BRAND_ICONS && window.BRAND_ICONS[p.key]) || '';
-  const launchBtn = p => `<button class="btn btn-ghost btn-sm" data-launch="${p.key}" ${p.status === 'planned' ? 'disabled style="opacity:.5;cursor:not-allowed"' : ''}>${p.status === 'planned' ? t('Planned') : t('Launch ›')}</button>`;
+  const launchBtn = p => `<button class="btn btn-ghost btn-sm" data-launch="${p.key}" ${p.status === 'planned' ? 'disabled style="opacity:.5;cursor:not-allowed"' : ''}>${p.status === 'planned' ? t('Planned') : t('Launch') + brandSvg('a-right', { width: 12, height: 12 })}</button>`;
   if (single) {
     // Selected task type → a slim launch strip. No big card, and no "Add document type" tile
     // (that only belongs to the All-projects grid).
@@ -1932,6 +1936,7 @@ document.getElementById('themeToggle').addEventListener('click', () => {
   const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
   try { localStorage.setItem('np-theme', next); } catch (e) {}
+  paintBrandLogo();
 });
 
 // ── View router ──
@@ -2000,7 +2005,7 @@ const PROMPT_TEMPLATES = {
   shared: 'Describe what you need from this pipeline.',
 };
 
-// ── Blog Visuals counts (how many visuals Claude produces for one article) ──
+// ── Blog Images counts (how many visuals Claude produces for one article) ──
 // Covers: 0 = no cover at all, empty = the default 1. Section images: empty = Auto (one per
 // illustrable section), 0 = none. Both at 0 means there is nothing to generate.
 // No upper limit on purpose: whatever the user types is what the task asks for. A field that
@@ -2014,8 +2019,8 @@ function blogCounts() {
   return { coverBrief: brief, sectionImages: sec, outputs: blogOutputs() };
 }
 // Where the blog visuals for this article are delivered. Blog covers and section illustrations are
-// reviewed in Figma, so that is the default and the only box checked: the SVG set and the
-// preview/PDF are opt-in, not a by-product of every run.
+// reviewed in Figma, so Figma is the default route; the preview (PNGs rendered from the Figma frames,
+// shown in the console for a quick look) is checked too. The SVG set stays opt-in.
 const BLOG_FIGMA_DEFAULT = 'https://www.figma.com/design/1rA3ZWuHPxh1BW2YXfF1LR/Blog-Posts---2026?node-id=11136-3584';
 function blogOutputs() {
   const figma = document.getElementById('wsBlogOutFigma').checked;
@@ -2314,7 +2319,7 @@ async function openWorkspace(p, picker) {
     document.getElementById('wsBlogSections').value = '';   // empty = Auto
     document.getElementById('wsBlogOutFigma').checked = true;   // the route these are reviewed in
     document.getElementById('wsBlogOutSvg').checked = false;    // opt-in, not a by-product
-    document.getElementById('wsBlogOutPrev').checked = false;   // redundant when it lands in Figma
+    document.getElementById('wsBlogOutPrev').checked = true;    // quick look in the console, no trip to Figma
     document.getElementById('wsBlogFigmaUrl').value = BLOG_FIGMA_DEFAULT;
   }
   const isArch = p.key === 'arch';
@@ -2399,7 +2404,7 @@ document.getElementById('wsCreate').addEventListener('click', async () => {
   const p = currentWs; if (!p) return;
   let prompt = document.getElementById('wsPrompt').value.trim();
   let options = null;
-  // Blog Visuals: the two count fields are authoritative, so they go both into the prompt Claude
+  // Blog Images: the two count fields are authoritative, so they go both into the prompt Claude
   // reads and into job.json — editing the prompt text can't silently drop them.
   if (p.key === 'blog') {
     options = blogCounts();
@@ -2507,7 +2512,7 @@ async function openExportModal(ds) {
   expCtx.path = expCtx.svg || expCtx.raster || expCtx.dl || '';
   expCtx.pptxNative = /\.pptx$/i.test(expCtx.dl || '');   // deliverable already IS a deck
   // A download covers the whole run (a cover + its section illustrations, a full carousel), so it is
-  // named after the document type — "Blog Visuals" — not after whichever file resultPath points at.
+  // named after the document type — "Blog Images" — not after whichever file resultPath points at.
   const pipe = pipelines.find(x => x.key === expCtx.pipeline);
   expCtx.setLabel = (pipe && pipe.name) || projLabel(expCtx.pipeline) || '';
   expCtx.setName = expCtx.setLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
@@ -2645,7 +2650,7 @@ const statusClass = s => {
 // the brand set has no spinner. The drawn path stays as the fallback if a brand icon is missing.
 const STATUS_META = {
   queued:        { label: 'Queued',      brand: 'clock' },
-  running:       { label: 'Running',     ico: '<path d="M12 3a9 9 0 1 0 9 9"/>', spin: true },   // brandbook-exception: the library has no spinner
+  running:       { label: 'Running',     brand: 'spinner', spin: true },
   done:          { label: 'Done',        brand: 'check' },   // brand icon (Figma "check"), not a hand-drawn tick
   error:         { label: 'Error',       brand: 'alert-s' },
   'needs-input': { label: 'Needs input', brand: 'question' },
@@ -2653,8 +2658,7 @@ const STATUS_META = {
 };
 const statusIcon = s => {
   const m = STATUS_META[statusClass(s)] || STATUS_META.queued;
-  if (m.brand && (window.BRAND_ICON_LIB || {})[m.brand]) return `<span class="bico bico-svg bico-brand">${window.BRAND_ICON_LIB[m.brand]}</span>`;
-  return `<span class="bico bico-svg${m.spin ? ' spin' : ''}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${m.ico}</svg></span>`;
+  return `<span class="bico bico-svg bico-brand${m.spin ? ' spin' : ''}">${window.BRAND_ICON_LIB[m.brand]}</span>`;
 };
 const statusBadge = s => {
   const k = statusClass(s);
@@ -2673,7 +2677,7 @@ const ICO_COMMENT = '<span class="bico bico-svg">' + window.BRAND_ICON_LIB.chat 
 const continueBtn = id => `<button class="job-continuebtn" data-continue="${id}" title="${t('Request changes')}">${ICO_COMMENT}<span class="btn-tx">${t('Request changes')}</span></button>`;
 // Per-task flags: Pin (float to top), Mark (flag), Favorite (star)
 const PIN_SVG = window.BRAND_ICON_LIB.pin;
-const FLAG_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2.2 4L16 12H5"/></svg>';   // brandbook-exception: the library has no flag icon
+const FLAG_SVG = window.BRAND_ICON_LIB.flag;
 const STAR_SVG = window.BRAND_ICON_LIB.star;
 function jobFlags(j) {
   const f = (key, on, svg, label) => `<button class="flag-btn ${key}${on ? ' on' : ''}" data-flag="${key}" data-fid="${j.id}" title="${label}" aria-pressed="${on ? 'true' : 'false'}">${svg}</button>`;
@@ -2784,7 +2788,7 @@ function renderAttach(key) {
   const row = document.querySelector('[data-attach="' + CSS.escape(key) + '"]');
   if (!row) return;
   row.innerHTML = `<label class="attach-add">${ICO_CLIP}${t('Attach files')}<input type="file" multiple></label>` +
-    attachList(key).map((f, i) => `<span class="attach-chip"><span class="an" title="${escapeHtml(f.name)}">${escapeHtml(f.name)}</span><span class="asz">${fmtBytes(f.size)}</span><button type="button" class="adel" data-i="${i}" title="${t('Remove')}" aria-label="${t('Remove')}">✕</button></span>`).join('');
+    attachList(key).map((f, i) => `<span class="attach-chip"><span class="an" title="${escapeHtml(f.name)}">${escapeHtml(f.name)}</span><span class="asz">${fmtBytes(f.size)}</span><button type="button" class="adel" data-i="${i}" title="${t('Remove')}" aria-label="${t('Remove')}">${brandSvg('cancel', { width: 10, height: 10 })}</button></span>`).join('');
   row.querySelector('input[type=file]').addEventListener('change', e => { attachAdd(key, e.target.files); e.target.value = ''; });
   row.querySelectorAll('.adel').forEach(b => b.addEventListener('click', () => attachRemove(key, +b.dataset.i)));
 }
@@ -2932,7 +2936,8 @@ async function syncTasks() {
       const prev = lastStatus[it.key], cur = it.status;
       if (prev && prev !== cur) {
         const where = j.id + it.ver;
-        if (cur === 'done') { notify('✓ ' + projLabel(j.pipeline), (it.ver ? t('New version ready') : t('Task completed')) + ' · ' + where); playChime('done'); }
+        // brandbook-exception: OS notification titles are plain text — they cannot carry an SVG
+  if (cur === 'done') { notify('✓ ' + projLabel(j.pipeline), (it.ver ? t('New version ready') : t('Task completed')) + ' · ' + where); playChime('done'); }
         else if (cur === 'error') { notify('⚠ ' + projLabel(j.pipeline), (it.ver ? t('New version failed') : t('Task failed')) + ' · ' + where); playChime('error'); }
         else if (cur === 'needs-input') notify('❓ ' + projLabel(j.pipeline), t('Needs your decision') + ' · ' + where);
       }
@@ -3216,7 +3221,7 @@ function preparedCard(j) {
         </details>`;
       }).join('')}
       <details class="revise">
-        <summary>${t('✎ Request changes')}</summary>
+        <summary><span class="sum-ico">${ICO_PENCIL}${t('Request changes')}</span></summary>
         <div class="attach-drop" data-attachkey="${escapeHtml(j.id)}">
           <textarea class="revise-input" id="rev-${j.id}" placeholder="${t('Describe what to change…')}"></textarea>
           <div class="attach" data-attach="${escapeHtml(j.id)}"></div>
@@ -3267,7 +3272,7 @@ function jobThumb(j, big) {
   // (Page count is resolved lazily by wireThumbGalleries; arrows/indicator stay hidden until then.)
   const isPdfThumb = ext(thumbSrc) === 'pdf';
   const galAttr = isPdfThumb ? ` data-thumbpdf="${escapeHtml(thumbSrc)}" data-page="1"` : '';
-  const gal = isPdfThumb ? `<div class="thumb-nav-wrap" style="display:none"><button type="button" class="thumb-nav prev" aria-label="${t('Previous page')}">‹</button><button type="button" class="thumb-nav next" aria-label="${t('Next page')}">›</button></div><span class="thumb-pageind" style="display:none"></span>` : '';
+  const gal = isPdfThumb ? `<div class="thumb-nav-wrap" style="display:none"><button type="button" class="thumb-nav prev" aria-label="${t('Previous page')}">${brandSvg('a-left', { width: 14, height: 14 })}</button><button type="button" class="thumb-nav next" aria-label="${t('Next page')}">${brandSvg('a-right', { width: 14, height: 14 })}</button></div><span class="thumb-pageind" style="display:none"></span>` : '';
   return `<div class="job-thumb${big ? ' big' : ''}" data-preview="${openUrl}" data-title="${escapeHtml(projLabel(j.pipeline))}"${annAttr}${dlAttr}${galAttr}><img src="${thumbUrl}" loading="lazy" alt="">${gal}</div>`;
 }
 // Resolve page counts for PDF thumbnails and wire their prev/next gallery arrows. Arrow clicks
@@ -3758,7 +3763,7 @@ function openPreview(url, title, opts) {
   document.getElementById('pvSeg').style.display = canAnnotate ? 'inline-flex' : 'none';
   if (canAnnotate) {
     document.getElementById('pvViewBtn').textContent = t('View');
-    document.getElementById('pvAnnotBtn').textContent = '✎ ' + t('Annotate');
+    document.getElementById('pvAnnotBtn').innerHTML = brandSvg('edit', { width: 13, height: 13 }) + ' ' + t('Annotate');
   }
   // Download button → same export dialog (format · resolution · pages) for the previewed deliverable.
   pvExport = (opts.dl || opts.svg || opts.raster) ? { dl: opts.dl || url, dlname: opts.dlname || '', dlsvg: opts.svg || '', dlraster: opts.raster || '' } : null;
@@ -3901,7 +3906,7 @@ function renderAnnot() {
     const multi = pvState.pageCount > 1;
     list.innerHTML = pvState.pins.map((p, i) => `
       <div class="pv-ci${pvState.sel === i ? ' sel' : ''}" data-idx="${i}">
-        <div class="pv-cih"><span class="pv-cn">${i + 1}</span><span class="pv-cloc">${multi ? '<span class="pv-cpage">' + t('Page') + ' ' + (p.page + 1) + '</span> · ' : ''}${Math.round(p.x * 100)}% · ${Math.round(p.y * 100)}%</span><button type="button" class="pv-cx" data-del="${i}" title="${t('Remove')}">✕</button></div>
+        <div class="pv-cih"><span class="pv-cn">${i + 1}</span><span class="pv-cloc">${multi ? '<span class="pv-cpage">' + t('Page') + ' ' + (p.page + 1) + '</span> · ' : ''}${Math.round(p.x * 100)}% · ${Math.round(p.y * 100)}%</span><button type="button" class="pv-cx" data-del="${i}" title="${t('Remove')}">${brandSvg('cancel', { width: 12, height: 12 })}</button></div>
         <textarea data-ci="${i}" placeholder="${t('Describe the change…')}">${escapeHtml(p.comment)}</textarea>
       </div>`).join('');
     list.querySelectorAll('textarea').forEach(ta => {
@@ -4039,8 +4044,10 @@ const noteKey = (spec, file, tk) => [spec.key, file.rel, tk.heading, tk.label].j
 // whichever shape a line uses is the shape the editor keeps when you pick another weight.
 const FONT_WEIGHTS = [['Thin', 100], ['ExtraLight', 200], ['Light', 300], ['Regular', 400], ['Medium', 500],
                       ['SemiBold', 600], ['Bold', 700], ['ExtraBold', 800], ['Black', 900]];
-const KIND_BADGE = { size: '↔', percent: '%', family: 'Aa', weight: 'W', radius: '◠', rgba: '◧', text: '¶',
-                     chars: 'abc', count: '#' };
+// Value kinds: a library icon where there is one, the plain text label (%, Aa, W, #, abc) otherwise.
+const KIND_ICON = { size: 'kind-size', radius: 'kind-radius', rgba: 'kind-color', text: 'kind-text' };
+const KIND_BADGE = { percent: '%', family: 'Aa', weight: 'W', chars: 'abc', count: '#' };
+const kindBadge = k => KIND_ICON[k] ? brandSvg(KIND_ICON[k], { width: 15, height: 15 }) : (KIND_BADGE[k] || '·');
 const SHAPE = { color: /^#[0-9a-fA-F]{6}$/, size: /^\d{1,4}(\.\d+)?\s?(px|pt)$/, radius: /^\d{1,3}$/,
                 percent: /^\d{1,3}(\.\d+)?%$/,
                 family: /^[A-Za-z][A-Za-z0-9 .-]{0,30}$/,
@@ -4062,7 +4069,7 @@ function styleValueHtml(spec, file, tk) {
   if (tk.kind === 'text') {
     return `<span class="style-v style-v-txt" title="${attrq(t('Written as prose in the spec — edit it there'))}">
       ${tk.column ? `<span class="style-col">${escapeHtml(tk.column)}</span>` : ''}
-      <span class="style-ctrl"><span class="style-kind">¶</span><span class="style-txt">${escapeHtml(tk.value)}</span></span>
+      <span class="style-ctrl"><span class="style-kind">${kindBadge('text')}</span><span class="style-txt">${escapeHtml(tk.value)}</span></span>
     </span>`;
   }
 
@@ -4072,7 +4079,7 @@ function styleValueHtml(spec, file, tk) {
   const dis = tk.historic ? ' disabled' : '';
   const control = tk.kind === 'color'
     ? `<input type="color" class="style-sw" value="${val}"${dis} aria-label="${attrq(tk.column || tk.label)}" />`
-    : `<span class="style-kind" title="${tk.kind}">${KIND_BADGE[tk.kind] || '·'}</span>`;
+    : `<span class="style-kind" title="${tk.kind}">${kindBadge(tk.kind)}</span>`;
   // A weight is one of nine known values, so it belongs in a list, not in a free-text field.
   const field = tk.kind === 'weight'
     ? `<select class="style-val style-wsel"${dis}>${FONT_WEIGHTS.map(([name, num]) => {
@@ -4781,7 +4788,7 @@ async function renderAssets() {
         <label class="dropzone file-drop" id="assetDrop"><input type="file" id="assetFile" /><span class="fd-plus">+</span><span class="fd-text">${t('Upload')}</span></label>
         ${files.map(f => `
         <div class="file-card">
-          <button class="file-del" data-del-file="${escapeHtml(f.name)}" title="Delete">×</button>
+          <button class="file-del" data-del-file="${escapeHtml(f.name)}" title="Delete">${brandSvg('trash', { width: 13, height: 13 })}</button>
           <div class="file-thumb">${isImg(f.ext) ? `<img src="${f.url}" alt="">` : `<span class="ext">${f.ext || 'file'}</span>`}</div>
           <div class="file-name" title="${escapeHtml(f.name)}">${escapeHtml(f.name)}</div>
         </div>`).join('')}
@@ -5202,9 +5209,38 @@ async function loadUser() {
   try { paintUser((await (await fetch('/whoami')).json()).name); } catch (e) { paintUser(''); }
 }
 
+function paintBrandLogo() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.getElementById('brandLogo').innerHTML = (isDark && window.BRAND_LOGO_NEGATIVE) || window.BRAND_LOGO || '';
+}
+
+// ── Stale-tab guard ──
+// index.html is read from disk on every load, but an open tab keeps running the code it loaded, so a fix can look
+// "not applied" until the tab is reloaded. Compare the page on disk with the one this tab started from; when it
+// differs, offer the reload (not an automatic one: it could drop a half-written prompt).
+const pageSig = txt => { let h = 5381; for (let i = 0; i < txt.length; i++) h = ((h << 5) + h + txt.charCodeAt(i)) | 0; return txt.length + ':' + h; };
+let loadedSig = null, staleShown = false;
+async function checkStale() {
+  if (staleShown) return;
+  try {
+    const sig = pageSig(await (await fetch('/index.html', { cache: 'no-store' })).text());
+    if (loadedSig === null) { loadedSig = sig; return; }
+    if (sig === loadedSig) return;
+    staleShown = true;
+    const bar = document.createElement('div');
+    bar.className = 'stale-bar'; bar.setAttribute('role', 'status');
+    bar.innerHTML = '<span>' + t('New version of the console available') + '</span><button type="button">' + brandSvg('refresh', { width: 14, height: 14 }) + t('Reload') + '</button>';
+    bar.querySelector('button').addEventListener('click', () => location.reload());
+    document.body.appendChild(bar);
+  } catch (e) { /* server restarting or offline: try again at the next check */ }
+}
+checkStale();
+setInterval(() => { if (!document.hidden) checkStale(); }, 30000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) checkStale(); });
+
 // ── Init ──
 async function init() {
-  document.getElementById('brandLogo').innerHTML = window.BRAND_LOGO || '';
+  paintBrandLogo();
   applyI18n();
   enhanceAllSelects();         // style every native <select> (dark-mode-legible custom dropdown)
   renderFilters();

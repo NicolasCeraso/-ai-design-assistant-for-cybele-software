@@ -14,7 +14,7 @@ const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
 
-const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8').replace(/\r\n/g, '\n');
+const html = fs.readFileSync(process.argv[2] || path.join(__dirname, 'index.html'), 'utf8').replace(/\r\n/g, '\n');   // optional: another index.html to check
 const lines = html.split('\n');
 const sandbox = { window: {} };
 vm.runInNewContext(fs.readFileSync(path.join(__dirname, 'brand-icon-lib.js'), 'utf8'), sandbox);
@@ -29,6 +29,15 @@ const EMOJI = [[/\u{1F4CE}|\u{1F587}/u, 'paperclip emoji — use the library ico
                [/\u{1F5D1}/u, 'wastebasket emoji — use the library icon "trash"']];
 lines.forEach((l, i) => { if (!isComment(l)) for (const [re, why] of EMOJI) if (re.test(l)) fails.push(`index.html:${i + 1}  ${why}`); });
 
+// 1b) text glyphs used as icons (✎ ✓ ▶ ⬇ ▸ ‹ › ↗ …, and × as a close button). Plain text arrows (→), "…" and
+//     sizes like 1920×1080 are fine; OS notifications and similar may carry a `brandbook-exception` marker.
+const GLYPH = /[✎✏✓✔✕✖⬇⬆▶▸‹›↗⟳↻☰⚙↔◠◧¶\u{1F441}\u{1F50D}\u{26A0}\u{2753}]|(?<!\d)×/u;
+lines.forEach((l, i) => {
+  if (isComment(l) || !GLYPH.test(l)) return;
+  if (/brandbook-exception/.test(lines.slice(Math.max(0, i - 3), i + 1).join('\n'))) return;
+  fails.push(`index.html:${i + 1}  glyph used as an icon (${l.match(GLYPH)[0]}) — use a brandbook icon`);
+});
+
 // 2) hand-drawn <svg>
 const DRAWING = /<(path|circle|rect|line|polyline|polygon|ellipse)\b/;
 for (const m of code.matchAll(/<svg(?=[\s>])[^<>]*>(?:(?!<svg)[\s\S])*?<\/svg>/g)) {   // real tags only, not the '<svg' text in strings
@@ -42,7 +51,7 @@ for (const m of code.matchAll(/<svg(?=[\s>])[^<>]*>(?:(?!<svg)[\s\S])*?<\/svg>/g
 const CONST = { ICO_CLIP: 'attach', ICO_TRASH: 'trash', TRASH_ICON: 'trash', ICO_DOWNLOAD: 'download', ICO_PENCIL: 'edit',
   EDIT_ICON: 'edit', ICO_EYE: 'eye', ICO_FILE: 'file', ICO_REFRESH: 'refresh', ICO_COMMENT: 'chat', ICO_CHECK: 'check',
   ICO_LINK: 'link', ICO_ALERT: 'alert-s', ICO_CHEV_DOWN: 'a-down', ALL_ICON: 'grid', ICO_PLAY: 'play',
-  PIN_SVG: 'pin', STAR_SVG: 'star', GRID_SVG: 'grid', LIST_SVG: 'list' };
+  PIN_SVG: 'pin', STAR_SVG: 'star', GRID_SVG: 'grid', LIST_SVG: 'list', FLAG_SVG: 'flag' };
 for (const [name, icon] of Object.entries(CONST)) {
   const def = lines.find(l => l.startsWith('const ' + name + ' ='));
   if (!def) fails.push(`${name} is not defined in index.html`);
@@ -50,7 +59,9 @@ for (const [name, icon] of Object.entries(CONST)) {
 }
 const wanted = new Set([...Object.values(CONST),
   ...[...code.matchAll(/data-icon="([^"]+)"/g)].map(m => m[1]),
-  ...[...code.matchAll(/brandSvg\('([^']+)'/g)].map(m => m[1])]);
+  ...[...code.matchAll(/brandSvg\('([^']+)'/g)].map(m => m[1]),
+  ...[...code.matchAll(/\bbrand: '([^']+)'/g)].map(m => m[1]),                        // STATUS_META
+  ...[...(code.match(/const KIND_ICON = \{[^}]*\}/) || [''])[0].matchAll(/: '([^']+)'/g)].map(m => m[1])]);
 for (const icon of wanted) if (!LIB[icon]) fails.push(`the library has no icon "${icon}"`);
 
 if (fails.length) {

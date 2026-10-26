@@ -239,6 +239,12 @@
   "wifi": "wifi inalambrico red conexion wireless",
   "workload": "carga trabajo recursos workload",
 
+  "flag": "bandera marcar marca marcado señalar flag mark pendiente",
+  "spinner": "cargando carga girando espera en curso ejecutando progreso spinner loading running",
+  "kind-size": "ancho alto tamaño medida dimension horizontal doble flecha size width",
+  "kind-text": "texto parrafo párrafo pilcrow contenido text paragraph",
+  "kind-radius": "radio esquina redondeada borde corner radius rounded",
+  "kind-color": "color opacidad transparencia alfa rgba relleno opacity alpha",
   "attach": "adjunto adjuntar clip archivo adjunto paperclip attachment",
   "audio-file": "archivo audio sonido musica",
   "book": "libro documentacion manual guia",

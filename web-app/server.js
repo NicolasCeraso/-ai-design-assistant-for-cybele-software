@@ -202,7 +202,7 @@ const STYLE_SPECS = [
   // Covers used to appear here with 141 values, every one of them from the retired generative
   // system. A cover is now a text brief designed by a person: there is no value to configure, so
   // the row is gone rather than sitting empty and looking broken.
-  { key: 'blog', label: 'Blog Visuals', files: [
+  { key: 'blog', label: 'Blog Images', files: [
     { rel: '../skills/cybele-blog-visuals/SECTION_RULES.md',      label: 'Section illustrations' },
   ]},
   { key: 'arch', label: 'Arch Diagrams', files: [
