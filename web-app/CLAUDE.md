@@ -40,6 +40,19 @@ with numbered pins drawn on the rendered page) and `pins` (`{n, page, xPct, yPct
 request, stored under `jobs/<id>/attachments/rev<N>/`. **Read every one before working**; they are
 part of the request, not background material. See RUNBOOK §2.6.
 
+## Icons in the console UI (rule — Nick asked for this three times)
+
+Every icon in `index.html` comes from the brandbook library (`brand-icon-lib.js`, `window.BRAND_ICON_LIB`). **Never** an
+emoji (📎, 🗑…) and never a hand-drawn `<svg>`: search the library first (Brand assets view, or the names in
+`brand-icon-lib.js`; careful, `x` is the X/Twitter logo — a close cross is `cancel`). How to use one:
+
+- static HTML: `<svg data-icon="name" class="…" width="…" height="…"></svg>` — `hydrateIcons()` fills it from the library and keeps the class and size;
+- in JS strings: `brandSvg('name', { class: '…', width: 12 })`, or `window.BRAND_ICON_LIB.name` wrapped in `<span class="bico bico-svg">…</span>`.
+
+If the library lacks the icon, say so and ask; a drawing may stay only with `brandbook-exception: <why>` on its line (today: the
+"mark" flag and the running spinner). After touching `index.html` run `node check-ui-icons.js` (`npm run check:icons`): it fails on any
+emoji icon, undeclared hand-drawn `<svg>` or icon name missing from the library.
+
 ## Publishing to GitHub (on request only)
 
 The user works **locally** (Desktop copy); tasks stay on disk and are **not** pushed automatically.

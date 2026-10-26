@@ -4,7 +4,8 @@
   "description": "Cybele Design Console — local web app (Node built-ins only, no dependencies).",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "check:icons": "node check-ui-icons.js"
   },
   "keywords": [],
   "author": "",

@@ -548,6 +548,7 @@
     font-size: 10.5px; text-transform: none; letter-spacing: 0; cursor: pointer; padding: 0; }
   .job-showprompt:hover { color: var(--brand-light); text-decoration: underline; text-underline-offset: 2px; }
   .job-meta { font-size: 11.5px; color: var(--text-muted); display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .job-srcname { display: inline-flex; align-items: center; gap: 5px; }
   .job-run { font-family: ui-monospace, Consolas, monospace; font-size: 11.5px; color: var(--brand-light); background: var(--track); padding: 4px 9px; border-radius: 6px; }
   .job-download { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; color: #fff; background: var(--brand); padding: 4px 11px; border-radius: 6px; text-decoration: none; transition: background 0.15s ease; border: none; cursor: pointer; font-family: inherit; }
   .job-download:hover { background: var(--brand-strong); }
@@ -1021,24 +1022,24 @@
 
   <nav class="sidebar-nav">
     <div class="nav-item active" data-view="overview">
-      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      <svg data-icon="home" class="nav-icon"></svg>
       <span data-i18n="Overview">Overview</span>
     </div>
 
     <div class="nav-item" data-view="history" style="margin-top: 12px;">
-      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 106 5.3L3 8"/><path d="M12 7v5l4 2"/></svg>
+      <svg data-icon="history" class="nav-icon"></svg>
       <span data-i18n="Task history">Task history</span>
     </div>
     <div class="nav-item" data-view="assets">
-      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 100 18c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.4-1-.24-.27-.39-.62-.39-1 0-.83.67-1.5 1.5-1.5H16a5 5 0 005-5c0-4.42-4.03-8-9-8z"/><circle cx="7.5" cy="11.5" r="1.1"/><circle cx="11" cy="7.5" r="1.1"/><circle cx="16" cy="9.5" r="1.1"/></svg>
+      <svg data-icon="color-picker" class="nav-icon"></svg>
       <span data-i18n="Brand assets">Brand assets</span>
     </div>
     <div class="nav-item" data-view="styles">
-      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h10"/><path d="M18 6h2"/><circle cx="16" cy="6" r="2"/><path d="M4 12h4"/><path d="M12 12h8"/><circle cx="10" cy="12" r="2"/><path d="M4 18h8"/><path d="M16 18h4"/><circle cx="14" cy="18" r="2"/></svg>
+      <svg data-icon="config-options" class="nav-icon"></svg>
       <span data-i18n="Style rules">Style rules</span>
     </div>
     <div class="nav-item" data-view="settings">
-      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+      <svg data-icon="gear" class="nav-icon"></svg>
       <span data-i18n="Settings">Settings</span>
     </div>
   </nav>
@@ -1057,7 +1058,7 @@
 <main class="main">
   <div class="header">
     <button class="hamburger" id="hamburger" aria-label="Menu" title="Menu">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      <svg data-icon="hamburger" width="20" height="20"></svg>
     </button>
     <div>
       <h1>Project Overview</h1>
@@ -1065,11 +1066,11 @@
     </div>
     <div class="header-actions">
       <button class="btn icon-btn" id="themeToggle" aria-label="Toggle color theme" title="Toggle theme">
-        <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        <svg data-icon="sun" class="sun" width="18" height="18"></svg>
+        <svg data-icon="moon" class="moon" width="18" height="18"></svg>
       </button>
       <button class="btn btn-primary" id="newTaskBtn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        <svg data-icon="plus" width="14" height="14"></svg>
         <span data-i18n="New task">New task</span>
       </button>
     </div>
@@ -1093,14 +1094,14 @@
       <div class="section-title" data-i18n="Recent tasks">Recent tasks</div>
       <div class="section-head-tools">
         <div class="recent-find">
-          <svg class="recent-find-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <svg data-icon="search" class="recent-find-ico"></svg>
           <input type="search" id="recentSearch" class="recent-search" data-i18n-ph="Search tasks…" placeholder="Search tasks…" autocomplete="off">
         </div>
         <div class="filter-dd" id="sortDD">
           <button type="button" class="recent-filter filter-dd-btn" id="sortDDBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="Order tasks" data-i18n-al="Order tasks">
-            <svg class="filter-dd-sort" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg>
+            <svg data-icon="sort-custom" class="filter-dd-sort" width="13" height="13"></svg>
             <span id="sortDDLabel" data-i18n="Order tasks">Order tasks</span>
-            <svg class="filter-dd-chev" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            <svg data-icon="a-down" class="filter-dd-chev" width="12" height="12"></svg>
           </button>
           <div class="filter-dd-menu" id="sortDDMenu" role="listbox">
             <div class="filter-dd-opt sel" role="option" data-val="date" data-i18n="Date created">Date created</div>
@@ -1108,9 +1109,9 @@
           </div>
         </div>
         <div class="view-toggle" id="recentViewToggle">
-          <button data-jview="cards" title="Cards" aria-label="Cards"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="7" rx="1.6"/><rect x="3" y="13" width="18" height="7" rx="1.6"/></svg></button>
-          <button data-jview="list" title="List" aria-label="List"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.6" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="3.6" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="3.6" cy="18" r="1.3" fill="currentColor" stroke="none"/></svg></button>
-          <button data-jview="mosaic" title="Mosaic" aria-label="Mosaic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg></button>
+          <button data-jview="cards" title="Cards" aria-label="Cards"><svg data-icon="grid"></svg></button>
+          <button data-jview="list" title="List" aria-label="List"><svg data-icon="list"></svg></button>
+          <button data-jview="mosaic" title="Mosaic" aria-label="Mosaic"><svg data-icon="tiles"></svg></button>
         </div>
         <button class="btn btn-ghost btn-sm" id="recentJobsAll" data-i18n="View all →">View all →</button>
       </div>
@@ -1124,9 +1125,9 @@
       <div class="section-title" data-i18n="Prepared tasks">Prepared tasks</div>
       <div class="section-head-tools">
         <div class="view-toggle" id="preparedViewToggle">
-          <button data-jview="cards" title="Cards" aria-label="Cards"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="7" rx="1.6"/><rect x="3" y="13" width="18" height="7" rx="1.6"/></svg></button>
-          <button data-jview="list" title="List" aria-label="List"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.6" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="3.6" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="3.6" cy="18" r="1.3" fill="currentColor" stroke="none"/></svg></button>
-          <button data-jview="mosaic" title="Mosaic" aria-label="Mosaic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg></button>
+          <button data-jview="cards" title="Cards" aria-label="Cards"><svg data-icon="grid"></svg></button>
+          <button data-jview="list" title="List" aria-label="List"><svg data-icon="list"></svg></button>
+          <button data-jview="mosaic" title="Mosaic" aria-label="Mosaic"><svg data-icon="tiles"></svg></button>
         </div>
         <button class="btn btn-ghost btn-sm" id="refreshJobs" data-i18n="Refresh">Refresh</button>
       </div>
@@ -1154,9 +1155,9 @@
     <div class="section-head">
       <div class="section-head-tools" style="margin-left:auto">
         <div class="view-toggle" id="historyViewToggle">
-          <button data-jview="cards" title="Cards" aria-label="Cards"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="7" rx="1.6"/><rect x="3" y="13" width="18" height="7" rx="1.6"/></svg></button>
-          <button data-jview="list" title="List" aria-label="List"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.6" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="3.6" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="3.6" cy="18" r="1.3" fill="currentColor" stroke="none"/></svg></button>
-          <button data-jview="mosaic" title="Mosaic" aria-label="Mosaic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg></button>
+          <button data-jview="cards" title="Cards" aria-label="Cards"><svg data-icon="grid"></svg></button>
+          <button data-jview="list" title="List" aria-label="List"><svg data-icon="list"></svg></button>
+          <button data-jview="mosaic" title="Mosaic" aria-label="Mosaic"><svg data-icon="tiles"></svg></button>
         </div>
         <button class="btn btn-ghost btn-sm" id="histSelectBtn" data-i18n="Select">Select</button>
         <button class="btn btn-ghost btn-sm" id="refreshHistory" data-i18n="Refresh">Refresh</button>
@@ -1186,7 +1187,7 @@
       <span class="modal-mark" id="runMark"></span>
       <span class="modal-title" id="runTitle">Run pipeline</span>
       <button class="modal-close" data-close="run" aria-label="Close">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        <svg data-icon="cancel" width="16" height="16"></svg>
       </button>
     </div>
     <div class="modal-body">
@@ -1203,7 +1204,7 @@
       <div class="modal-actions">
         <button class="btn btn-ghost" data-close="run">Cancel</button>
         <button class="btn btn-primary" id="runExec">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <svg data-icon="play" width="13" height="13"></svg>
           Run
         </button>
       </div>
@@ -1218,7 +1219,7 @@
       <span class="modal-mark" id="wsMark"></span>
       <span class="modal-title" id="wsTitle">New task</span>
       <button class="modal-close" data-close="ws" aria-label="Close">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        <svg data-icon="cancel" width="16" height="16"></svg>
       </button>
     </div>
     <div class="modal-body">
@@ -1231,9 +1232,9 @@
       </div>
       <div class="ctx-panel" id="wsCtxPanel">
         <div class="ctx-head" id="wsCtxHead">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+          <svg data-icon="file" width="14" height="14"></svg>
           <span id="wsCtxLabel">Context from progress.md</span>
-          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+          <svg data-icon="a-right" class="chev" width="16" height="16"></svg>
         </div>
         <div class="ctx-body" id="wsContext">Loading…</div>
       </div>
@@ -1309,7 +1310,7 @@
     <div class="modal-head">
       <span class="modal-title" id="addRowTitle">Add rule</span>
       <button class="modal-close" data-close="addrow" aria-label="Close">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        <svg data-icon="cancel" width="16" height="16"></svg>
       </button>
     </div>
     <div class="modal-body">
@@ -1329,7 +1330,7 @@
       <span class="modal-mark" id="colorMark"></span>
       <span class="modal-title" id="colorTitle">Add color</span>
       <button class="modal-close" data-close="color" aria-label="Close">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        <svg data-icon="cancel" width="16" height="16"></svg>
       </button>
     </div>
     <div class="modal-body">
@@ -1376,7 +1377,7 @@
       <span class="modal-mark" style="background:var(--text)"></span>
       <span class="modal-title" id="ndtTitle">New document type</span>
       <button class="modal-close" data-close="newtype" aria-label="Close">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        <svg data-icon="cancel" width="16" height="16"></svg>
       </button>
     </div>
     <div class="modal-body">
@@ -1425,10 +1426,10 @@
         <button type="button" id="pvViewBtn" class="on" data-pvmode="view">View</button>
         <button type="button" id="pvAnnotBtn" data-pvmode="annot">✎ Annotate</button>
       </span>
-      <button type="button" id="previewDownload" class="btn btn-ghost btn-sm" style="display:none;margin-right:6px"><span class="bico bico-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M5 21h14"/></svg></span><span data-i18n="Download">Download</span></button>
+      <button type="button" id="previewDownload" class="btn btn-ghost btn-sm" style="display:none;margin-right:6px"><span class="bico bico-svg"><svg data-icon="download"></svg></span><span data-i18n="Download">Download</span></button>
       <a id="previewOpen" class="btn btn-ghost btn-sm" href="#" target="_blank" rel="noopener" style="margin-right:6px">Open in tab ↗</a>
       <button class="modal-close" data-close="preview" aria-label="Close">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        <svg data-icon="cancel" width="16" height="16"></svg>
       </button>
     </div>
     <iframe id="previewFrame" class="preview-frame" title="Result preview"></iframe>
@@ -1479,7 +1480,7 @@
       <span class="modal-title" id="logTitle">Run log</span>
       <button class="btn btn-ghost btn-sm" id="logRefresh" style="margin-right:6px">Refresh</button>
       <button class="modal-close" data-close="log" aria-label="Close">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        <svg data-icon="cancel" width="16" height="16"></svg>
       </button>
     </div>
     <pre class="run-output show" id="logOutput" style="margin: 0 22px 22px; max-height: 60vh;"></pre>
@@ -1493,7 +1494,7 @@
       <span class="modal-mark" style="background:var(--brand)"></span>
       <span class="modal-title" id="rerunTitle">Edit prompt & re-run</span>
       <button class="modal-close" data-close="rerun" aria-label="Close">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        <svg data-icon="cancel" width="16" height="16"></svg>
       </button>
     </div>
     <div class="modal-body">
@@ -1520,7 +1521,7 @@
       <span class="modal-mark" style="background:var(--brand)"></span>
       <span class="modal-title" id="exportTitle">Download</span>
       <button class="modal-close" data-close="export" aria-label="Close">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        <svg data-icon="cancel" width="16" height="16"></svg>
       </button>
     </div>
     <div class="modal-body">
@@ -1599,6 +1600,29 @@
 <script src="brand-icons.js"></script>
 <script src="brand-icon-lib.js"></script>
 <script>
+// ── Icons ── every icon comes from the brandbook library (brand-icon-lib.js). Static HTML carries
+// <svg data-icon="name"> placeholders (size/class kept) that are filled in here; JS builds strings with
+// brandSvg(). Never draw one by hand: check-ui-icons.js fails the build of the page if one comes back.
+function brandSvg(name, attrs) {
+  let svg = window.BRAND_ICON_LIB[name];
+  if (!svg) throw new Error('brandbook icon missing from the library: ' + name);
+  const a = attrs || {};
+  if (a.width || a.height) svg = svg.replace(' width="100%"', '').replace(' height="100%"', '');
+  const extra = Object.entries(a).map(([k, v]) => ' ' + k + '="' + v + '"').join('');
+  return svg.replace('<svg', '<svg' + extra);
+}
+function hydrateIcons(root) {
+  (root || document).querySelectorAll('svg[data-icon]').forEach(ph => {
+    const tpl = document.createElement('template');
+    tpl.innerHTML = brandSvg(ph.getAttribute('data-icon')).trim();
+    const svg = tpl.content.firstElementChild;
+    for (const at of ph.attributes) if (at.name !== 'data-icon') svg.setAttribute(at.name, at.value);
+    svg.setAttribute('data-brand-icon', ph.getAttribute('data-icon'));
+    ph.replaceWith(svg);
+  });
+}
+hydrateIcons();
+
 // ── i18n ──
 let LANG = (function () { try { return localStorage.getItem('np-lang') || 'en'; } catch (e) { return 'en'; } })();
 const I18N = {
@@ -1825,7 +1849,7 @@ async function saveCustomPipelines() {
 let activeProject = 'all';
 
 // ── Project filter ──
-const ALL_ICON = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8" rx="1.6"/><rect x="13" y="3" width="8" height="8" rx="1.6"/><rect x="3" y="13" width="8" height="8" rx="1.6"/><rect x="13" y="13" width="8" height="8" rx="1.6"/></svg>';
+const ALL_ICON = window.BRAND_ICON_LIB.grid;
 function renderFilters() {
   const el = document.getElementById('projectFilters');
   const pills = [{ key:'all', label:t('All projects'), color:'var(--brand)' }, ...projects.filter(p => !['shared', 'webapp'].includes(p.key))];
@@ -2161,8 +2185,8 @@ function archPlanText(p) {
   if (p.bandwidthWithMarginGbps != null) parts.push(`${archFmt(p.bandwidthWithMarginGbps)} Gbps con margen del 20%`);
   return parts.join(' · ');
 }
-const ICO_ALERT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>';
-const ICO_CHEV_DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+const ICO_ALERT = window.BRAND_ICON_LIB['alert-s'];
+const ICO_CHEV_DOWN = window.BRAND_ICON_LIB['a-down'];
 const ARCH_UNSET = 'Sin especificar';
 function archFormHtml(prefix, intro) {
   const fid = k => prefix + '_' + k;
@@ -2409,18 +2433,18 @@ document.getElementById('wsCreate').addEventListener('click', async () => {
 // ── Jobs view ──
 // Brand icon from the Cybele/Thinfinity library when one fits; clean line glyphs for the rest.
 const biSvg = name => { const s = (window.BRAND_ICON_LIB || {})[name]; return s ? `<span class="bico bico-svg">${s}</span>` : ''; };
-const ICO_DOWNLOAD = '<span class="bico bico-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M5 21h14"/></svg></span>';
+const ICO_DOWNLOAD = '<span class="bico bico-svg">' + window.BRAND_ICON_LIB.download + '</span>';
 // Brand "play" (Controles set, the pair of the Stop button's "stop"); the drawn triangle is the fallback.
-const ICO_PLAY = (window.BRAND_ICON_LIB || {}).play ? '<span class="bico bico-svg">' + window.BRAND_ICON_LIB.play + '</span>'
-  : '<span class="bico bico-svg"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M7 5v14l11-7z"/></svg></span>';
-const ICO_PENCIL = '<span class="bico bico-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg></span>';
-const ICO_TRASH = '<span class="bico bico-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></span>';
-const ICO_EYE = '<span class="bico bico-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span>';
-const ICO_FILE = '<span class="bico bico-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span>';
-// Paperclip drawn for the console in the brand's light style (data/icons-custom/attach.svg, 2026-09-28):
-// the Figma set has no attachment icon. The old drawn clip stays as the fallback.
-const ICO_CLIP = (window.BRAND_ICON_LIB || {}).attach ? '<span class="bico bico-svg">' + window.BRAND_ICON_LIB.attach + '</span>' : '<span class="bico bico-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></span>';
-const ICO_REFRESH = '<span class="bico bico-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></span>';
+const ICO_PLAY = '<span class="bico bico-svg">' + window.BRAND_ICON_LIB.play + '</span>';
+const ICO_PENCIL = '<span class="bico bico-svg">' + window.BRAND_ICON_LIB.edit + '</span>';
+// The brandbook's trash icon (Cybele Design System "trash", via the icon library), not a drawn one.
+const ICO_TRASH = '<span class="bico bico-svg">' + window.BRAND_ICON_LIB.trash + '</span>';
+const ICO_EYE = '<span class="bico bico-svg">' + window.BRAND_ICON_LIB.eye + '</span>';
+const ICO_FILE = '<span class="bico bico-svg">' + window.BRAND_ICON_LIB.file + '</span>';
+// The library's "attach" (drawn for the console in the brand's light style: data/icons-custom/attach.svg,
+// since the Figma set has no attachment icon). No fallback drawing: an icon missing from the library should show up, not hide.
+const ICO_CLIP = '<span class="bico bico-svg">' + window.BRAND_ICON_LIB.attach + '</span>';
+const ICO_REFRESH = '<span class="bico bico-svg">' + window.BRAND_ICON_LIB.refresh + '</span>';
 // Source document attached to a task → view (preview if viewable, else download)
 const srcBtn = j => j.sourceFile ? `<button class="job-srcbtn" data-src="${encodeURI('/jobs/' + j.id + '/' + j.sourceFile)}" data-srcname="${escapeHtml(j.sourceFile)}">${ICO_CLIP}${escapeHtml(j.sourceFile)}</button>` : '';
 // Export sources: the SVG is the editable vector base; the raster (PDF preview / image) is used
@@ -2620,12 +2644,12 @@ const statusClass = s => {
 // what tells them apart under colour-vision deficiency. Running keeps the drawn arc: it spins, and
 // the brand set has no spinner. The drawn path stays as the fallback if a brand icon is missing.
 const STATUS_META = {
-  queued:        { label: 'Queued',      brand: 'clock', ico: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 1.8"/>' },
-  running:       { label: 'Running',     ico: '<path d="M12 3a9 9 0 1 0 9 9"/>', spin: true },
+  queued:        { label: 'Queued',      brand: 'clock' },
+  running:       { label: 'Running',     ico: '<path d="M12 3a9 9 0 1 0 9 9"/>', spin: true },   // brandbook-exception: the library has no spinner
   done:          { label: 'Done',        brand: 'check' },   // brand icon (Figma "check"), not a hand-drawn tick
-  error:         { label: 'Error',       brand: 'alert-s', ico: '<path d="M10.3 3.7 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.7a2 2 0 0 0-3.4 0z"/><path d="M12 9.5v4"/><path d="M12 17h.01"/>' },
-  'needs-input': { label: 'Needs input', brand: 'question', ico: '<circle cx="12" cy="12" r="9"/><path d="M9.1 9.3a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4"/><path d="M12 17h.01"/>' },
-  cancelled:     { label: 'Cancelled',   brand: 'cancel', ico: '<circle cx="12" cy="12" r="9"/><path d="m15 9-6 6M9 9l6 6"/>' },
+  error:         { label: 'Error',       brand: 'alert-s' },
+  'needs-input': { label: 'Needs input', brand: 'question' },
+  cancelled:     { label: 'Cancelled',   brand: 'cancel' },
 };
 const statusIcon = s => {
   const m = STATUS_META[statusClass(s)] || STATUS_META.queued;
@@ -2645,12 +2669,12 @@ const stopBtn = id => `<button class="job-stopbtn" data-stop="${id}" title="${t(
 // Speech bubble, not the pencil: the pencil is the inline title editor, and reusing it made two
 // unrelated actions look like the same one. Requesting changes writes feedback (and pins) for
 // Claude to act on, so a comment mark is what it actually is.
-const ICO_COMMENT = '<span class="bico bico-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 15a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/></svg></span>';
+const ICO_COMMENT = '<span class="bico bico-svg">' + window.BRAND_ICON_LIB.chat + '</span>';
 const continueBtn = id => `<button class="job-continuebtn" data-continue="${id}" title="${t('Request changes')}">${ICO_COMMENT}<span class="btn-tx">${t('Request changes')}</span></button>`;
 // Per-task flags: Pin (float to top), Mark (flag), Favorite (star)
-const PIN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l-1 7 3.5 3.5V15H6.5v-1.5L10 10 9 3z"/><path d="M12 15v6"/></svg>';
-const FLAG_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2.2 4L16 12H5"/></svg>';
-const STAR_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.7 6.8 19.3l1-5.8-4.3-4.1 5.9-.9L12 3.2z"/></svg>';
+const PIN_SVG = window.BRAND_ICON_LIB.pin;
+const FLAG_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2.2 4L16 12H5"/></svg>';   // brandbook-exception: the library has no flag icon
+const STAR_SVG = window.BRAND_ICON_LIB.star;
 function jobFlags(j) {
   const f = (key, on, svg, label) => `<button class="flag-btn ${key}${on ? ' on' : ''}" data-flag="${key}" data-fid="${j.id}" title="${label}" aria-pressed="${on ? 'true' : 'false'}">${svg}</button>`;
   return `<span class="job-flags">${f('pinned', j.pinned, PIN_SVG, t('Pin'))}${f('marked', j.marked, FLAG_SVG, t('Mark'))}${f('favorite', j.favorite, STAR_SVG, t('Favorite'))}</span>`;
@@ -3157,7 +3181,7 @@ function preparedCard(j) {
       ${briefOrPrompt(j)}
       ${j.status === 'error' ? `<div class="job-result-line is-error">${statusIcon('error')} ${escapeHtml(j.result || t('No error message was recorded. Open the log to see what happened.'))}</div>` : j.result ? `<div class="job-result-line">${biSvg('check')} ${escapeHtml(j.result)}</div>` : ''}
       <div class="job-meta">
-        ${j.sourceFile ? '<span>📎 ' + escapeHtml(j.sourceFile) + '</span>' : '<span>no source file</span>'}
+        ${j.sourceFile ? '<span class="job-srcname">' + ICO_CLIP + escapeHtml(j.sourceFile) + '</span>' : '<span>no source file</span>'}
         <span>${fmtTime(j.createdAt)}</span>
         ${(j.previewPath || j.resultPath) ? '<span class="ver-tag">v1</span>' : ''}
         ${pvBtn(j.previewPath, projLabel(j.pipeline) + ' · v1', j.id, true, j.resultPath)}
@@ -3465,7 +3489,7 @@ document.getElementById('refreshHistory').addEventListener('click', () => render
 const histSel = { on: false, ids: new Set(), jobs: [], busy: false };
 const histBusy = j => j.status === 'running' || j.status === 'needs-input' ||
   (j.revisions || []).some(r => r.status === 'running' || r.status === 'needs-input');
-const ICO_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
+const ICO_CHECK = window.BRAND_ICON_LIB.check;
 function paintHistSel() {
   const el = document.getElementById('historyList');
   const byId = new Map(histSel.jobs.map(j => [j.id, j]));
@@ -3681,7 +3705,7 @@ function enhanceSelect(sel) {
   btn.setAttribute('aria-haspopup', 'listbox'); btn.setAttribute('aria-expanded', 'false');
   if (sel.getAttribute('aria-label')) btn.setAttribute('aria-label', sel.getAttribute('aria-label'));
   const label = document.createElement('span'); label.className = 'filter-dd-label'; btn.appendChild(label);
-  btn.insertAdjacentHTML('beforeend', '<svg class="filter-dd-chev" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>');
+  btn.insertAdjacentHTML('beforeend', brandSvg('a-down', { class: 'filter-dd-chev', width: 12, height: 12 }));
   const menu = document.createElement('div'); menu.className = 'filter-dd-menu'; menu.setAttribute('role', 'listbox');
   const sync = () => { const o = sel.options[sel.selectedIndex]; label.textContent = o ? o.textContent : ''; menu.querySelectorAll('.filter-dd-opt').forEach(x => x.classList.toggle('sel', x.dataset.val === sel.value)); };
   const close = () => { menu.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); };
@@ -3980,12 +4004,12 @@ function openSource(url, name) {
 
 // ── Brand assets view (editable + server-persisted) ──
 let brandColors = [];
-const EDIT_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>';
-const TRASH_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>';
+const EDIT_ICON = '<span class="bico bico-svg" style="width:14px;height:14px;font-size:14px">' + window.BRAND_ICON_LIB.edit + '</span>';
+const TRASH_ICON = '<span class="bico bico-svg" style="width:14px;height:14px;font-size:14px">' + window.BRAND_ICON_LIB.trash + '</span>';   // brandbook trash, same as ICO_TRASH
 
 // ── Brand Assets per-section view modes (Grid / List) ──
-const GRID_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>';
-const LIST_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.6" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="3.6" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="3.6" cy="18" r="1.3" fill="currentColor" stroke="none"/></svg>';
+const GRID_SVG = window.BRAND_ICON_LIB.grid;
+const LIST_SVG = window.BRAND_ICON_LIB.list;
 function assetView(sec) { try { return (JSON.parse(localStorage.getItem('np-assetviews') || '{}'))[sec] || 'grid'; } catch (e) { return 'grid'; } }
 function setAssetView(sec, v) { let m = {}; try { m = JSON.parse(localStorage.getItem('np-assetviews') || '{}'); } catch (e) {} m[sec] = v; try { localStorage.setItem('np-assetviews', JSON.stringify(m)); } catch (e) {} }
 function assetToggle(sec) {
@@ -4134,7 +4158,7 @@ const styleElemKey = label => String(label).toLowerCase()
   .split(/\s+/).filter(Boolean)
   .map(w => (w.length > 3 && !/(us|ss|is|os|as)$/.test(w) ? w.replace(/s$/, '') : w))
   .join(' ').trim();
-const ICO_LINK = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9.5 14.5l5-5"/><path d="M13 7l1.5-1.5a3.5 3.5 0 015 5L18 12"/><path d="M11 17l-1.5 1.5a3.5 3.5 0 01-5-5L6 12"/></svg>';
+const ICO_LINK = '<span class="bico bico-svg" style="width:15px;height:15px;font-size:15px">' + window.BRAND_ICON_LIB.link + '</span>';
 // The modes a spec declares, listed as such: which variants exist, what each one is for, and the
 // ability to add or drop one. Before this they existed only as column names, so the only way to
 // learn that "dark" was a thing was to notice that some elements had a second colour.
