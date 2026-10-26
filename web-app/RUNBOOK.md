@@ -150,6 +150,15 @@ build that fails there on 3.14 is that, not a bug in the script. `server.js` alr
   (Nick, 2026-09-28). Filled fields shape the drawing: cloud → that cloud's names, plus the environment zone of SKILL.md §2.2b (cloud = violet, On-premises = green, Híbrido = both, Hosteado por Cybele = blue); users →
   how many Gateways/hosts; HA → duplicate Gateway and Broker; identity → which IdP and how it links;
   third-party access → the ZTNA vendor path; sites → single or multi-site.
+- **Advanced** (`job.options.arch.advanced: true`; the prompt says "Modo Advanced"): the New task
+  window had the Advanced section open, with extra fields — Perfil de uso, Códec H.264, Plataforma,
+  Ancho de banda pico, Gateways, Communication Gateways, Brokers. Here, unlike the standard fields, **an
+  empty sizing field is calculated, not dropped**: read
+  `skills/thinfinity-architecture/reference/sizing.md` and use `job.options.arch.plan` (the console
+  already applied the model; the prompt repeats it as "Dimensionamiento estimado"). Values the user
+  typed win. `job.options.arch.alerts` holds the conflicts the window showed: draw what was typed,
+  repeat each alert in the task result, and say the figures are an estimate. The standard fields keep
+  their rule (empty = not relevant). Without `advanced`, none of this applies.
 - **Ports / firewall** only when those fields say `Sí`: follow
   `skills/thinfinity-architecture/reference/ports_and_firewall.md` (arrow direction rule, port per
   component, how rules are derived per zone). Never add ports or rules unasked.
@@ -291,6 +300,8 @@ root.children.forEach(g => { if (g.name !== 'Frame 26') walk(g, g.name); });
 **Console-drawn icons** live in `data/icons-custom/` (e.g. `attach`, the paperclip, 2026-09-28): drawn in
 the brand's light style (194 canvas, 9.2 stroke, round caps) where Figma has no equivalent; tooltip
 "dibujado para la consola, fuera de Figma". A Figma icon with the same name replaces it on the next build.
+Draw them with `stroke="currentColor"` / `fill="currentColor"`, never `black` or a hex: a fixed colour
+ignores the theme (`attach` was black and vanished in dark mode until 2026-10-26).
 Give each one a category (`icons` in `icon-categories.json`) and keywords.
 
 Icons whose Figma name says **"no se usa"** (retired, e.g. "absolute-touch ⚠️ no se usa") are

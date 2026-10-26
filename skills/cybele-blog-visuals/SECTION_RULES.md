@@ -703,6 +703,24 @@ the pattern, and it never outranks the shape of the content.
 **Two illustrations in the same article may not use the same pattern.** If they converge, one of the
 two was not chosen — it was inherited. Go back to the shape of the second section and name it again.
 
+### Arrangements inside a pattern
+
+An arrangement is how the items of an already-chosen pattern are laid out. It never changes what the
+figure claims, so it never chooses the pattern: the shape of the content does that first, and only
+then does the arrangement come up. Every rule of the pattern and of its elements still holds.
+
+**Ordered steps · stacked.** The steps run down a single column, one card per row, every card the same
+size, read from top to bottom. It is the arrangement for a sequence that is long, or whose steps each
+need a full line of text, where several columns would wrap and the direction would stop being
+obvious. Nothing about the pattern bends for it: each card keeps the Step number in its own
+fixed-width column as the bare digit, and carries no icon beside it. A stacked card is a wide card
+for the text budget, and the gap between cards is the one the pattern already uses.
+
+**Stat set · offset.** A circle is round, so a strict row of them reads rigid. The circles may sit at
+alternating heights, provided the offset is regular and never climbs or falls in one direction: a
+staircase says order, and a set of stats has none. The number, its centring and the fill are the
+Stat number and Card rules, unchanged.
+
 **Four is not a target.** Every pattern above works at the size the section actually has. A section
 with three ideas gets three; one with six gets six, or gets split. Padding to four invents content
 and trimming to four drops it, and both have happened.

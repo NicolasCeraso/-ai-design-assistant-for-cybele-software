@@ -44,6 +44,10 @@ All assets are bundled alongside this `SKILL.md`:
 - `examples/*.html` — the exact source of those 8 diagrams. **Copy/adapt their structure; don't reinvent.**
   `examples/test_08_zero_inbound_ztna.html` is the worked source of R33 (zero-inbound / ZTNA on OCI).
 
+- `reference/sizing.md` — **Advanced mode only** (case data says `advanced: true`): users → bandwidth →
+  Gateways / Communication Gateways / Brokers, the Nueva and Legacy platforms, and the conflicts to
+  report. Empty sizing fields are calculated, not dropped. Standard mode never loads it.
+
 The richest single calibration pair is `examples/test_03_full.html` (linear, uniform) and
 `examples/test_07_managed_hub.html` (radial); `examples/test_08_zero_inbound_ztna.html` is the model for a
 clean ZTNA "no inbound listener" topology. Read at least one before generating. For conceptual

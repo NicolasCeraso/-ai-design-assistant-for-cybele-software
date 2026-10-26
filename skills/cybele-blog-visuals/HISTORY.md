@@ -41,6 +41,33 @@ what `SECTION_RULES.md` says and raise the question rather than inventing a valu
   (`BRAND_DESIGN_RULES.md` §2) says `TEXT_PRIMARY #2E2E2E` / `TEXT_BODY #454B57`. Blog visuals follow
   the amendment; someone should decide whether the two should converge.
 
+## Figma review, 2026-10-26 — what was added and what was left out
+
+Nick had the Blog Posts file (`1rA3ZWuHPxh1BW2YXfF1LR`, node `11136:3584`: the current Hub models in
+every mode plus the published POS-printing, Verizon DBIR and "Next Four Moves" illustrations) compared
+with this spec. His instruction: **the spec is not changed from what the Figma shows; only what does
+not contradict it is added.**
+
+**Added to `SECTION_RULES.md` (*Arrangements inside a pattern*):** Ordered steps in a single stacked
+column, and a stat set at alternating heights. Both are arrangements of patterns that already exist
+and follow every rule of them. The stacked version is the Figma's numbered rows with what the spec
+forbids taken out: the Figma rows carry a number *and* an icon, in a disc, with a right-aligned note.
+
+**Seen in the Figma and deliberately not adopted**, because each contradicts a rule in force:
+
+- A step card with a number and an icon together (the spec: one or the other, never both).
+- The step number inside a filled disc or chip (the spec: the bare digit).
+- Arrows from the cards into a Hub centre (the spec: a Hub has no connector).
+- A card whose title sits on a filled colour band (the spec: a card takes its colour from the Card
+  table; the band's blue is in no table).
+- A plain card with a vertical accent bar on its left edge (the spec: lines separate items inside a
+  column and never box a card).
+- A row of topic chips under a Hub (the spec: a run of pills reads as scattered tags).
+- A right-aligned note on a row (the spec: card text is left-aligned; only the stat circle is not).
+
+**Not settled either way:** title alignment. The Figma mixes left and centred titles and the spec says
+nothing, so no rule was written.
+
 ## Measurements, consolidated (2026-09-08)
 
 Every dimension moved into one `## Measurements` section in `SECTION_RULES.md`: the canvas, the safe

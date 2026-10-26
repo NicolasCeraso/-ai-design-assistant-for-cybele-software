@@ -60,9 +60,11 @@
     --up-bg: rgba(61,204,161,0.15);
     --down-bg: rgba(199,70,52,0.18);
     --shadow-pop: 0 10px 30px rgba(0,0,0,0.45);
+    --pill-neutral: rgba(255,255,255,0.16);   /* white at 16%: a neutral pill that is not the brand blue */
   }
 
   [data-theme="light"] {
+    --pill-neutral: rgba(0,0,0,0.09);          /* black at 9% */
     color-scheme: light;
     --bg: #EEF4FB;
     --sidebar: #FFFFFF;
@@ -278,6 +280,17 @@
   .arch-grid .field.wide { grid-column: 1 / -1; }
   .arch-sep { grid-column: 1 / -1; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
   @media (max-width: 560px) { .arch-grid { grid-template-columns: 1fr; } }
+  /* Advanced: a quiet disclosure, closed by default so the standard form stays as it was. Conflicts are
+     tinted blocks with a glyph (never colour alone) and never block the Create button. */
+  .arch-adv-toggle { align-self: flex-start; display: inline-flex; align-items: center; gap: 7px; background: var(--brand); color: #fff; border: none; border-radius: 999px; margin-top: 6px; padding: 6px 12px 6px 15px; font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: background 0.15s ease; }
+  .arch-adv-toggle:hover { background: var(--brand-strong); }
+  .arch-adv-toggle svg { width: 14px; height: 14px; transition: transform 0.15s ease; }
+  .arch-adv-toggle.open svg { transform: rotate(180deg); }
+  .arch-adv:not([hidden]) { display: flex; flex-direction: column; gap: 10px; }
+  .arch-calc { font-size: 12.5px; line-height: 1.5; color: var(--text-secondary); }
+  .arch-alerts { display: flex; flex-direction: column; gap: 6px; }
+  .arch-alert { display: flex; align-items: flex-start; gap: 9px; font-size: 12.5px; line-height: 1.45; color: var(--text); background: color-mix(in srgb, var(--danger) 14%, var(--surface)); border-radius: 6px; padding: 8px 11px; }
+  .arch-alert svg { flex: none; width: 15px; height: 15px; margin-top: 1px; color: var(--danger-badge); }
   .field { display: flex; flex-direction: column; gap: 6px; }
   .field label { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
   .field input, .field textarea, .field select, .field .filter-dd-btn {
@@ -942,13 +955,14 @@
   .file-grid.as-list .file-del { opacity: 1; position: static; margin-left: auto; }
   .file-grid.as-list .file-drop { aspect-ratio: auto; flex-direction: row; gap: 8px; height: 52px; }
   /* Icon library — List */
-  .icon-lib.as-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 2px 14px; max-height: 460px; overflow: auto; }
+  /* List = up to 7 columns, stretched to fill the row (a 220px floor: 4 on a laptop, fewer when narrower). */
+  .icon-lib.as-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(max(220px, (100% - 6 * 14px) / 7), 1fr)); gap: 2px 14px; max-height: 460px; overflow: auto; }
   .icon-lib.as-list .lib-cell { flex-direction: row; align-items: center; justify-content: flex-start; gap: 12px; padding: 7px 10px; }
   .icon-lib.as-list .lib-name { text-align: left; font-size: 12px; }
   /* By category: the scroller holds sections; each section's cells use the same grid / list rules. */
   .icon-lib.grouped { display: block; }
   .icon-lib .lib-group-cells { display: grid; grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 10px; }
-  .icon-lib.as-list .lib-group-cells { grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 2px 14px; }
+  .icon-lib.as-list .lib-group-cells { grid-template-columns: repeat(auto-fill, minmax(max(220px, (100% - 6 * 14px) / 7), 1fr)); gap: 2px 14px; }
   /* search suggestions (and the no-match note) span the whole A–Z grid, below the results */
   .icon-lib:not(.grouped) > .lib-suggest, .icon-lib:not(.grouped) > .lib-empty { grid-column: 1 / -1; }
   .icon-lib:not(.grouped) > .lib-suggest { margin-top: 18px; }
@@ -959,6 +973,15 @@
   .lib-group-name { display: inline-block; }
   .lib-group-name::first-letter { text-transform: uppercase; }
   .lib-group-count { font-weight: 400; color: var(--text-muted); }
+  /* List view: each section title is a neutral pill (white / black at low opacity per theme, never the
+     brand blue). The head stays an opaque sticky bar so icons scrolling under it do not show through. */
+  .lib-group-pill { display: inline-flex; align-items: baseline; gap: 8px; }
+  .icon-lib.as-list .lib-group-head { margin: 0 0 6px; padding: 8px 6px 6px; }
+  .icon-lib.as-list .lib-group-pill { background: var(--pill-neutral); color: var(--text); font-size: 13px; font-weight: 600; padding: 5px 14px; border-radius: 999px; }
+  .icon-lib.as-list .lib-group-count { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; color: var(--text); }
+  /* a thin vertical rule splits the title from how many icons it holds */
+  .icon-lib.as-list .lib-group-count::before { content: ''; width: 1px; height: 12px; background: currentColor; opacity: 0.35; }
+  .icon-lib.as-list .lib-group + .lib-group { margin-top: 26px; }
   .order-toggle { transform: scale(0.9); transform-origin: right center; }
   .order-toggle button { width: auto; padding: 0 11px; font-family: inherit; font-size: 12px; font-weight: 500; }
   /* Brand colors — List */
@@ -2055,6 +2078,88 @@ const ARCH_FIELDS = [
   { key: 'firewall', label: 'Incluir reglas de firewall por zona', type: 'yesno' },
   { key: 'notes', label: 'Otros datos', type: 'text', wide: true, placeholder: 'Lo que no entre en los campos anteriores' },
 ];
+// ── Advanced: sizing fields, the calculation behind them, and the conflicts it can see ──
+// The standard fields above stay as they were. "Advanced" adds the fields that shape a bigger or more
+// specific diagram. A field left empty there is NOT dropped: it is filled by this calculation
+// (skills/thinfinity-architecture/reference/sizing.md is the same model, written for the run).
+// The figures come from Mariano's Thinfinity Architect v2 and are an estimate, not a product spec.
+const ARCH_PROFILES = [
+  { id: 'idle',       label: 'Inactivo',                    mbps: 0.0003, mbpsH264: 0.0003 },
+  { id: 'word',       label: 'Word',                        mbps: 0.15,   mbpsH264: 0.3 },
+  { id: 'excel',      label: 'Excel',                       mbps: 0.2,    mbpsH264: 0.5 },
+  { id: 'powerpoint', label: 'PowerPoint',                  mbps: 4.5,    mbpsH264: 1.8 },
+  { id: 'web',        label: 'Navegación web',              mbps: 6.5,    mbpsH264: 1 },
+  { id: 'gallery',    label: 'Galería de imágenes',         mbps: 3.6,    mbpsH264: 0.8 },
+  { id: 'video_half', label: 'Video (media pantalla)',      mbps: 9.5,    mbpsH264: 2.8 },
+  { id: 'video_full', label: 'Video (pantalla completa)',   mbps: 8.5,    mbpsH264: 3.1 },
+];
+const ARCH_DEFAULT_PROFILE = 'video_half';   // the most demanding of the set, so an unstated profile never under-sizes
+const ARCH_MODEL = { lbL7Gbps: 8, gbpsPerOcpu: 1, maxVmGbps: 40, efficiency: 0.97, operation: 0.8, margin: 0.2, brokerMax: 6 };
+const ARCH_PLATFORMS = {
+  nueva:  { label: 'Nueva (HA extendida)',  gwOcpu: 4, cgwOcpu: 16 },
+  legacy: { label: 'Legacy (HA básica)',    gwOcpu: 4, cgwOcpu: 0 },   // Legacy has no Communication Gateways
+};
+const ARCH_ADV_FIELDS = [
+  { key: 'profile',   label: 'Perfil de uso',                 type: 'select',  options: ARCH_PROFILES.map(p => p.label) },
+  { key: 'h264',      label: 'Códec H.264',                   type: 'yesno' },
+  { key: 'platform',  label: 'Plataforma',                    type: 'select',  options: Object.values(ARCH_PLATFORMS).map(p => p.label) },
+  { key: 'bandwidth', label: 'Ancho de banda pico (Gbps)',    type: 'decimal', placeholder: 'ej. 4,5' },
+  { key: 'gateways',  label: 'Gateways',                      type: 'number',  placeholder: 'ej. 2' },
+  { key: 'cgws',      label: 'Communication Gateways',        type: 'number',  placeholder: 'ej. 2' },
+  { key: 'brokers',   label: 'Brokers',                       type: 'number',  placeholder: 'ej. 2' },
+];
+const archOperGbps = ocpu => Math.min(ocpu * ARCH_MODEL.gbpsPerOcpu, ARCH_MODEL.maxVmGbps) * ARCH_MODEL.efficiency * ARCH_MODEL.operation;
+const archFmt = n => n.toLocaleString('es-AR', { maximumFractionDigits: 1 });
+// v = what archFormRead collected. Returns the plan (typed values win, the rest is calculated) and the
+// conflicts found. An alert never blocks: the person decides whether to go on.
+function archSize(v) {
+  const legacy = /^Legacy/.test(v.platform || ''), P = legacy ? ARCH_PLATFORMS.legacy : ARCH_PLATFORMS.nueva;
+  const prof = ARCH_PROFILES.find(p => p.label === v.profile) || ARCH_PROFILES.find(p => p.id === ARCH_DEFAULT_PROFILE);
+  const mbps = v.h264 === 'Sí' ? prof.mbpsH264 : prof.mbps;
+  const bw = v.bandwidth != null ? v.bandwidth : (v.users ? v.users * mbps / 1000 : null);
+  const bwM = bw != null ? bw * (1 + ARCH_MODEL.margin) : null;
+  const minQty = v.ha === 'No' ? 1 : 2;           // HA unspecified = the HA reference design
+  const gwNeed = legacy && bwM != null ? Math.max(minQty, Math.ceil(Math.min(bwM, ARCH_MODEL.lbL7Gbps) / archOperGbps(P.gwOcpu))) : minQty;
+  const cgwNeed = legacy ? 0 : (bwM != null ? Math.max(minQty, Math.ceil(bwM / archOperGbps(P.cgwOcpu))) : minQty);
+  const plan = {
+    platform: P.label,
+    ha: v.ha || 'Sí (por defecto)',
+    profile: prof.label,
+    bandwidthGbps: bw != null ? +bw.toFixed(2) : null,
+    bandwidthWithMarginGbps: bwM != null ? +bwM.toFixed(2) : null,
+    gateways: v.gateways != null ? v.gateways : gwNeed,
+    cgws: legacy ? 0 : (v.cgws != null ? v.cgws : cgwNeed),
+    brokers: v.brokers != null ? v.brokers : minQty,
+  };
+  const al = [];
+  if (legacy && v.cgws > 0) al.push('Legacy no incluye Communication Gateways: elegí la plataforma Nueva o dejá ese campo vacío.');
+  if (v.ha === 'Sí') {
+    if (v.gateways != null && v.gateways < 2) al.push(`Alta disponibilidad pide al menos 2 Gateways (cargaste ${v.gateways}).`);
+    if (v.brokers != null && v.brokers < 2) al.push(`Alta disponibilidad pide al menos 2 Brokers (cargaste ${v.brokers}).`);
+    if (!legacy && v.cgws != null && v.cgws < 2) al.push(`Alta disponibilidad pide al menos 2 Communication Gateways (cargaste ${v.cgws}).`);
+  }
+  if (v.ha === 'No' && ((v.gateways || 0) > 1 || (v.brokers || 0) > 1 || (v.cgws || 0) > 1))
+    al.push('Alta disponibilidad está en No, pero cargaste más de 1 Gateway, Broker o Communication Gateway.');
+  if (v.brokers > ARCH_MODEL.brokerMax) al.push(`El máximo es ${ARCH_MODEL.brokerMax} Brokers (cargaste ${v.brokers}).`);
+  if (bwM != null) {
+    if (legacy && bwM > ARCH_MODEL.lbL7Gbps)
+      al.push(`El tráfico (${archFmt(bwM)} Gbps con margen del 20%) supera el límite del balanceador L7 (${ARCH_MODEL.lbL7Gbps} Gbps): Legacy no llega, usá la plataforma Nueva.`);
+    else if (legacy && v.gateways != null && bwM > v.gateways * archOperGbps(P.gwOcpu))
+      al.push(`Con ${v.gateways} Gateways el tráfico (${archFmt(bwM)} Gbps) supera su capacidad operativa (${archFmt(v.gateways * archOperGbps(P.gwOcpu))} Gbps): sumá Gateways o usá la plataforma Nueva.`);
+    if (!legacy && v.cgws != null && v.cgws < cgwNeed && !(v.ha === 'Sí' && v.cgws < 2))
+      al.push(`Con ${archFmt(bwM)} Gbps hacen falta ${cgwNeed} Communication Gateways (cargaste ${v.cgws}).`);
+  }
+  return { plan, alerts: al };
+}
+function archPlanText(p) {
+  const parts = [p.platform, 'Alta disponibilidad: ' + p.ha, `${p.gateways} Gateway${p.gateways === 1 ? '' : 's'}`];
+  if (p.cgws) parts.push(`${p.cgws} Communication Gateway${p.cgws === 1 ? '' : 's'}`);
+  parts.push(`${p.brokers} Broker${p.brokers === 1 ? '' : 's'}`);
+  if (p.bandwidthWithMarginGbps != null) parts.push(`${archFmt(p.bandwidthWithMarginGbps)} Gbps con margen del 20%`);
+  return parts.join(' · ');
+}
+const ICO_ALERT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>';
+const ICO_CHEV_DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
 const ARCH_UNSET = 'Sin especificar';
 function archFormHtml(prefix, intro) {
   const fid = k => prefix + '_' + k;
@@ -2062,6 +2167,7 @@ function archFormHtml(prefix, intro) {
     if (f.sep) return `<div class="arch-sep">${escapeHtml(f.sep)}</div>`;
     let input;
     if (f.type === 'number') input = `<input type="number" id="${fid(f.key)}" min="1" step="1" inputmode="numeric" placeholder="${escapeHtml(f.placeholder || ARCH_UNSET)}" />`;
+    else if (f.type === 'decimal') input = `<input type="text" id="${fid(f.key)}" inputmode="decimal" placeholder="${escapeHtml(f.placeholder || ARCH_UNSET)}" />`;
     else if (f.type === 'text') input = `<textarea id="${fid(f.key)}" style="min-height:54px" placeholder="${escapeHtml(f.placeholder || '')}"></textarea>`;
     else {
       const opts = f.type === 'yesno' ? ['Sí', 'No'] : f.options;
@@ -2070,42 +2176,84 @@ function archFormHtml(prefix, intro) {
     return `<div class="field${f.wide ? ' wide' : ''}"><label for="${fid(f.key)}">${escapeHtml(f.label)}</label>${input}</div>`;
   };
   return `<div class="arch-head"><strong>Datos del caso <span style="color:var(--text-muted);font-weight:400">(opcional)</span></strong><span class="exp-note">${escapeHtml(intro)}</span></div>
-    <div class="arch-grid">${ARCH_FIELDS.map(field).join('')}</div>`;
+    <div class="arch-grid">${ARCH_FIELDS.map(field).join('')}</div>
+    <button type="button" class="arch-adv-toggle" id="${prefix}_advBtn" aria-expanded="false" aria-controls="${prefix}_adv"><span>Advanced</span>${ICO_CHEV_DOWN}</button>
+    <div class="arch-adv" id="${prefix}_adv" hidden>
+      <span class="exp-note">Para diagramas más específicos. Lo que dejes vacío acá se calcula según los usuarios y el perfil de uso.</span>
+      <div class="arch-grid">${ARCH_ADV_FIELDS.map(field).join('')}</div>
+      <div class="arch-calc" id="${prefix}_calc"></div>
+      <div class="arch-alerts" id="${prefix}_alerts" aria-live="polite"></div>
+    </div>`;
 }
 // Build a container's form once (the custom dropdowns attach document listeners), then only fill it.
 function archFormMount(containerId, prefix, intro) {
   const box = document.getElementById(containerId);
-  if (!box.dataset.built) { box.innerHTML = archFormHtml(prefix, intro); enhanceAllSelects(box); box.dataset.built = '1'; }
+  if (!box.dataset.built) {
+    box.innerHTML = archFormHtml(prefix, intro); enhanceAllSelects(box); box.dataset.built = '1';
+    document.getElementById(prefix + '_advBtn').addEventListener('click', () => archAdvSet(prefix, document.getElementById(prefix + '_adv').hidden));
+    // Any field of the form can change a conflict (HA, users, sites…), so refresh on every edit.
+    ['input', 'change'].forEach(ev => box.addEventListener(ev, () => archAdvRefresh(prefix)));
+  }
   return box;
+}
+const archAdvOpen = prefix => { const b = document.getElementById(prefix + '_adv'); return !!b && !b.hidden; };
+function archAdvSet(prefix, open) {
+  const box = document.getElementById(prefix + '_adv'), btn = document.getElementById(prefix + '_advBtn');
+  if (!box) return;
+  box.hidden = !open;
+  btn.classList.toggle('open', open); btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  archAdvRefresh(prefix);
+}
+// Repaint the "how it will be filled" line and the conflict alerts from the current form.
+function archAdvRefresh(prefix) {
+  if (!archAdvOpen(prefix)) return;
+  const v = archFormRead(prefix);
+  document.getElementById(prefix + '_calc').textContent = 'Dimensionamiento estimado: ' + archPlanText(v.plan);
+  document.getElementById(prefix + '_alerts').innerHTML = (v.alerts || []).map(a => `<div class="arch-alert">${ICO_ALERT}<span>${escapeHtml(a)}</span></div>`).join('');
 }
 function archFormSet(prefix, values) {
   values = values || {};
-  ARCH_FIELDS.forEach(f => {
+  [...ARCH_FIELDS, ...ARCH_ADV_FIELDS].forEach(f => {
     if (f.sep) return;
     const el = document.getElementById(prefix + '_' + f.key); if (!el) return;
-    el.value = values[f.key] != null ? String(values[f.key]) : '';
+    el.value = values[f.key] != null ? String(values[f.key]).replace('.', f.type === 'decimal' ? ',' : '.') : '';
     if (el._ddSync) el._ddSync();
   });
+  archAdvSet(prefix, !!values.advanced);
 }
-// Only what was filled in; an empty object is the standard case.
+// Only what was filled in; an empty object is the standard case. With Advanced open, the object also
+// says so (advanced: true) and carries the calculated plan and the conflicts, so job.json and the
+// prompt hold exactly what the window showed.
 function archFormRead(prefix) {
-  const out = {};
-  ARCH_FIELDS.forEach(f => {
+  const out = {}, adv = archAdvOpen(prefix);
+  [...ARCH_FIELDS, ...(adv ? ARCH_ADV_FIELDS : [])].forEach(f => {
     if (f.sep) return;
     const el = document.getElementById(prefix + '_' + f.key); if (!el) return;
     const v = el.value.trim();
     if (!v) return;
     if (f.type === 'number') { const n = parseInt(v, 10); if (n > 0) out[f.key] = n; }
+    else if (f.type === 'decimal') { const n = parseFloat(v.replace(',', '.')); if (n > 0) out[f.key] = n; }
     else out[f.key] = v;
   });
+  if (adv) { const r = archSize(out); out.advanced = true; out.plan = r.plan; out.alerts = r.alerts; }
   return out;
 }
 // The block the prompt carries, so a run reads the case data even if job.json is not consulted.
 function archCaseBlock(vals) {
-  const lines = ARCH_FIELDS.filter(f => !f.sep && vals[f.key] != null).map(f => `- ${f.label}: ${vals[f.key]}`);
-  return lines.length
+  const keys = [...ARCH_FIELDS, ...(vals.advanced ? ARCH_ADV_FIELDS : [])];
+  const lines = keys.filter(f => !f.sep && vals[f.key] != null).map(f => `- ${f.label}: ${vals[f.key]}`);
+  let block = lines.length
     ? 'Datos del caso (formulario de la consola; lo que no figura no es relevante para este diagrama):\n' + lines.join('\n')
     : 'Datos del caso: ninguno completado → diagrama estándar y simple, sin datos adicionales.';
+  if (vals.advanced && vals.plan) {
+    block += '\n\nModo Advanced. Los campos de dimensionamiento que quedaron vacíos se calculan (no se dejan afuera); '
+      + 'el modelo está en skills/thinfinity-architecture/reference/sizing.md y el cálculo de la consola ya lo aplicó:\n'
+      + '- Dimensionamiento estimado: ' + archPlanText(vals.plan);
+    if ((vals.alerts || []).length)
+      block += '\n\nAlertas de conflicto que la ventana mostró al crear (mandan los valores cargados por el usuario; mencionalas en el resultado):\n'
+        + vals.alerts.map(a => '- ' + a).join('\n');
+  }
+  return block;
 }
 
 let currentWs = null, wsFileObj = null;
@@ -4552,6 +4700,20 @@ async function renderStyles() {
   wireStyleRules(el);
 }
 
+// Figma exports some logos with preserveAspectRatio="none" and width/height="100%": in an <img> they
+// have no size of their own, take the box's shape and come out stretched. The preview shows a copy
+// with "meet" instead (centred, proportional); the file on disk and its downloads are not touched.
+function fixSvgThumbs(root) {
+  root.querySelectorAll('.file-thumb img').forEach(async img => {
+    if (!/\.svg(\?|$)/i.test(img.getAttribute('src') || '')) return;
+    try {
+      const txt = await (await fetch(img.getAttribute('src'))).text();
+      if (!/preserveAspectRatio\s*=\s*["']none["']/i.test(txt)) return;
+      const fixed = txt.replace(/preserveAspectRatio\s*=\s*["']none["']/gi, 'preserveAspectRatio="xMidYMid meet"');
+      img.src = URL.createObjectURL(new Blob([fixed], { type: 'image/svg+xml' }));
+    } catch (e) {}
+  });
+}
 async function renderAssets() {
   const el = document.getElementById('assetsView');
   let files = [];
@@ -4565,7 +4727,7 @@ async function renderAssets() {
   const iconCell = n => `
         <div class="lib-cell" data-name="${n}" title="${legacy.has(n) ? n + ' · ' + t('not in Figma') : custom.has(n) ? n + ' · ' + t('drawn for the console, not in Figma') : n}"><div class="ic-sm">${window.BRAND_ICON_LIB[n]}</div><div class="lib-name">${n}</div></div>`;
   const iconLibBody = () => iconOrder === 'group'
-    ? iconGroups.map(([g, names]) => `<section class="lib-group"><div class="style-sec lib-group-head"><span class="lib-group-name">${g === null ? t('Not in Figma') : escapeHtml(g)}</span><span class="lib-group-count">${names.length}</span></div><div class="lib-group-cells">${names.map(iconCell).join('')}</div></section>`).join('')
+    ? iconGroups.map(([g, names]) => `<section class="lib-group"><div class="style-sec lib-group-head"><span class="lib-group-pill"><span class="lib-group-name">${g === null ? t('Not in Figma') : escapeHtml(g)}</span><span class="lib-group-count">${names.length}</span></span></div><div class="lib-group-cells">${names.map(iconCell).join('')}</div></section>`).join('')
     : lib.map(iconCell).join('');
   const orderToggle = () => iconGroups.length ? `<div class="view-toggle order-toggle">${[['group', t('Categories'), t('Grouped by category')], ['az', 'A–Z', t('One list, A–Z')]].map(([m, label, tip]) => `<button data-iorder="${m}" class="${iconOrder === m ? 'active' : ''}" title="${tip}">${label}</button>`).join('')}</div>` : '';
   const isImg = ext => ['png','jpg','jpeg','svg','gif','webp'].includes(ext);
@@ -4615,6 +4777,7 @@ async function renderAssets() {
     if (confirm('Delete color "' + brandColors[i].name + '"?')) { brandColors.splice(i, 1); saveColors(); renderAssets(); }
   }));
   // wire files
+  fixSvgThumbs(el);
   const drop = document.getElementById('assetDrop'), input = document.getElementById('assetFile');
   input.addEventListener('change', () => { if (input.files[0]) uploadAsset(input.files[0]); });
   ['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
@@ -4664,7 +4827,7 @@ async function renderAssets() {
     const shown = new Set([...box.querySelectorAll('.lib-cell')].filter(c => c.style.display !== 'none').map(c => c.dataset.name));
     const sugg = lib.filter(n => !shown.has(n)).map(n => [n, score(n, sw)]).filter(x => x[1] > 0)
       .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'en', { sensitivity: 'base' })).slice(0, MAX_SUGGESTIONS).map(x => x[0]);
-    if (sugg.length) box.insertAdjacentHTML('beforeend', `<section class="lib-group lib-suggest"><div class="style-sec lib-group-head"><span class="lib-group-name">${t('Suggestions')}</span><span class="lib-group-count">${sugg.length}</span></div><div class="lib-group-cells">${sugg.map(iconCell).join('')}</div></section>`);
+    if (sugg.length) box.insertAdjacentHTML('beforeend', `<section class="lib-group lib-suggest"><div class="style-sec lib-group-head"><span class="lib-group-pill"><span class="lib-group-name">${t('Suggestions')}</span><span class="lib-group-count">${sugg.length}</span></span></div><div class="lib-group-cells">${sugg.map(iconCell).join('')}</div></section>`);
     else if (!shown.size) box.insertAdjacentHTML('beforeend', `<p class="style-note lib-empty">${t('No icon matches')} “${escapeHtml(search.value.trim())}”.</p>`);
   };
   if (search) search.addEventListener('input', filterIcons);
