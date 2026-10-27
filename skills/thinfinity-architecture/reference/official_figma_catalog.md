@@ -16,7 +16,9 @@
 > Este doc **extiende** `thinfinity_reference_architecture.md` (capa producto). Donde aquel tiene R1–R11,
 > acá están R12–R31 + vocabulario y convenciones nuevas observadas en los diagramas oficiales.
 >
-> **Archivo:** `fileKey = W3Pnm739iwmVdo3hSaBNQe`, página `0:1`.
+> **Escalera comercial (POC → Pilot → Sitio Inicial → 2 Sitios → DR):** ver **§6** al final.
+>
+> **Archivo:** `fileKey = W3Pnm739iwmVdo3hSaBNQe`, página `0:1` (más la página "Casos más usados", `1015:6349`, §6).
 > **Cómo calibrar contra un diagrama:** `mcp__figma-remote-mcp__get_screenshot` con ese fileKey + el
 > `nodeId` de la tabla §1 + `maxDimension` 1800–2800 (los diagramas son muy anchos). El metadata de la
 > página completa es enorme (3 MB) — no lo cargues entero; pedí screenshots por sección.
@@ -279,3 +281,119 @@ Sin icono dedicado en el set actual (usar fallback indicado): **Pump/Motor** (`m
 **WAF** (`shield`), **Palo Alto** (`firewall`), **Nginx** (`proxy`), **Okta/Jumpcloud/PingID/Onelogin**
 (`id`/`saml`), **Dynamics/Wordpress/ERP** (`web-app`), **Android Tablets** (`notebook`/`multi-platform`).
 Si Nick quiere fidelidad de marca en estos, conviene agregarlos al set `icons/`.
+
+---
+
+## 6. Casos más usados — la escalera comercial (Figma, página "Casos más usados", 2026-10-27)
+
+> **Fuente:** misma `fileKey W3Pnm739iwmVdo3hSaBNQe`, página `1015:6349` ("Casos más usados"). Es el
+> archivo ordenado con los diagramas que la empresa usa en conversaciones de ventas. Su columna
+> izquierda (~50 secciones "Architecture sample…") repite las de §1 con IDs `1015:*`; los IDs `428:*`
+> de §1 **siguen siendo válidos**. Lo nuevo son las dos columnas de la derecha, que este §6 indexa.
+> Los node IDs de abajo llevan el prefijo `1015:` implícito.
+>
+> **Decisiones de Nick (2026-10-27):**
+> - **Registro visual:** se dibuja con el sistema de **pills** de SKILL.md. De estos diagramas se toma la
+>   **topología** (qué componentes van y dónde), no el estilo: las cajas-host "Windows Server" con el
+>   componente adentro y la Subnet lavanda del Figma **no** se copian.
+> - **Colores de entorno:** rige SKILL §2.2b. El OCI en rojo punteado y Azure en verde azulado del Figma
+>   **no** se copian (nube = violeta, on-prem = verde, Cybele = azul).
+> - **Tramos de usuarios orientativos:** "50–1000" y "100–1000" son el mismo caso (el gráfico nació de
+>   un uso real y quedó en el repositorio); 999 o 1000 es lo mismo. No usar el número como corte duro.
+
+### 6.1 La escalera (elegir UN escalón; cada uno suma al anterior)
+
+| Escalón | Qué dibuja | Cuándo | Nodos (Windows Server / Windows 11 · Linux) |
+|---|---|---|---|
+| **E1 — Prueba de Concepto** | Users (Windows Client + Browser Access) → **1 Gateway** ← **1 Broker**; Subnet con N agentes (`⋮`/`•••`). Sin LB, sin DB, sin firewall. Bus de retorno arriba y abajo. | POC, demo, evaluación | Gateway Windows: `7457` (pool Windows Server) · `7723` (pool Windows 11) · Gateway Linux: `7590` (Windows Server) · `7832` (Windows 11) |
+| **E2 — Pilot to Production** | E1 + **Load Balancer** tras línea `Firewall`. Recursos mezclan Windows 11 y Windows Server. | piloto que pasa a producción | `7941` · `8045` · con App Pool: `8842` · `8951` |
+| **E3 — Sitio Inicial (50–1000 usuarios)** | Users → `WAF` · `Firewall` → LB → **2 Gateways** ⇄ **2 Brokers** (cruzados) → **Profiles (MySQL Database)** + **Analytics (MySQL HeatWave)**; **Monitoring Server** con línea punteada al Broker; Subnet con agentes. | sitio de producción único, con HA | Win 11 `7093` · Linux `7275` · `46317` |
+| **E3b — Sitio Inicial + Application Pool** | E3 con varias **Subnets** (A/B/C), cada una con su **App Pool** (Windows Server · Windows 11 · Linux/Ubuntu). | recursos en varias redes o de varios SO | GW Windows + pool Windows `8149` · GW Windows + pool Linux/Ubuntu `11030` · GW Linux + pool Windows `8373` · GW Linux + pool Linux/Ubuntu `11266` · pool mixto `8597` · `46072` |
+| **E3c — Sitio Inicial + sitio secundario (activo-pasivo)** | **Site 1** = E3 completo. **Site 2 reducido**: `Load Balancer` **sin flecha de usuarios** → 1 Gateway ← 1 Broker ← 1 `MySQL Database`, + Monitoring Server y su Subnet. El Broker del Site 2 abre **además hacia los 2 Gateways del Site 1** (dos flechas largas que cruzan la línea Firewall). Réplica bidireccional entre las bases. Ver §6.5. | dos ubicaciones: una principal y otra secundaria / de respaldo | `10332` · Linux `10681` |
+| **E4 — 2 Sitios Activo-Activo (1000 a 5000)** | **Site 1 y Site 2 simétricos**: cada uno con sus Users, WAF · Firewall, LB, 2 GW ⇄ 2 Brokers, base(s) y Subnet. **Sin flechas Broker→Gateway entre sitios.** Réplica bidireccional vertical entre las bases. Tres niveles de detalle: **rico** (Profiles + Analytics + Monitoring; Subnet con Windows Server + Windows 11) `9484` · Linux `9908`; **medio** (1 `MySQL Data Base` por sitio) `13073` (ES); **simple** (1 `SQL Data Base`, pool `Windows Server VDI`) `12327` (EN). Ver §6.5. | gran escala, dos sitios activos | ver columna Qué dibuja |
+| **E5 — Sitio Inicial con Disaster Recovery** | Sitio principal (Users, WAF · Firewall, LB, 2 GW ⇄ 2 Brokers, 1 SQL, pool de recursos) + **sitio de recuperación** debajo: `URL Recovery` → 1 GW ← 1 Broker → 1 SQL + su pool. El Broker de recuperación abre hacia **los 2 Gateways del principal**. Réplica SQL ↔ SQL bidireccional. Separados por línea punteada. Ver §6.5. | recuperación ante desastres | EN `12614` (pool: Windows Server VDI · Windows 10 VDI · Virtual Applications) · ES `12811` (Subnet Windows 11 + Windows Server) |
+
+### 6.2 Modelos básicos y casos de cliente
+
+| Caso | Qué muestra | Nodo |
+|---|---|---|
+| **Basic Architecture** | User 1…n → Gateway ← Broker; Subnet de Windows Server o Windows 11, con `⋮`. Sin LB ni DB. | `11735` (Server) · `11829` (Win 11) |
+| **Basic model** | 4 Users → Firewall → LB → 1 Gateway ← 1 Broker; pool de `Thinfinity VDI`. | `15471` |
+| **Basic model Prod – Claro Chile** | 3 Users → LB → **3 Gateways** ← **2 Brokers** ← 1 MySQL; Subnet Windows 11. Referencia de fan-out de gateways. | `15690` (POC: `15613`) |
+| **Basic model POC (Claro Chile)** | 1 User → Firewall → LB → 1 GW ← 1 Broker; Subnet con 4 `Windows Server`. El POC de Claro ya lleva LB y firewall (a diferencia de E1). | `15613` |
+| **OCI + Azure — mínimo** | Users (Windows Client + Browser Access) → WAF · Firewall → **1 GW ← 1 Broker dentro de OCI**; la Subnet de 6 `Windows Server` + Agent en **Azure**. Sin LB ni base. Versión simple de `45395`. | `45754` |
+| **Initial Site + FSLogix** | 2 GW ⇄ 2 Brokers + MySQL; zona **Backend Apps** (Windows Server) con flecha bidireccional a una zona **Storage** (FSLogix + User Profile). | `13987` |
+| **Initial Site – VDI pool** | 2 GW ⇄ 2 Brokers + SQL; pool mixto en caja gris: `Windows Server VDI`, `Windows 10 VDI`, `Virtual Applications` (sin Subnet). | `13393` |
+| **Initial Site – 4 Gateways + GPU** | LB → **4 Gateways** (fan-out); 2 Brokers unidos por un bus que alimenta a los 4; 1 SQL; pool `Windows 10/11 VDI` + `Windows GPU Instance`. | `14171` |
+| **Basic model + FSLogix** | Users → LB → 1 GW ← 1 Broker; Subnet con 6 Windows Server y zona **Storage** (FSLogix + User Profile) con flecha bidireccional (verde en el Figma → azul conector acá, §2.2b). | `15257` |
+| **Pilot to Production – App Pool (dos datacenters)** | **Oracle Datacenter (Bogotá)**: LB → GW ← Broker; pill `FastConnect VPN` (flecha bidireccional) hacia **Kyndryl Datacenter (Bogotá)** con App Pool de Windows Server + Agent. Cliente real; el enlace es VPN, no la conexión inversa estándar. | `8842` (Gateway Windows) · `8951` (Gateway Linux, Users con Linux Client) |
+| **Perú + Chile** | Dos orígenes de usuarios (Perú, Chile) → un LB → **grupos de GW + Brokers por país**, cada uno con su Subnet etiquetada `País – N Usuarios`; 2 MySQL. | `39827` |
+| **OCI + Azure Infrastructure** | Control plane (LB, 2 GW, 2 Brokers, MySQL) en una nube; la Subnet de agentes en **otra** nube. Mismo patrón que R24, simple. | `45395` · `45754` |
+| **Thinfinity + OCI + Monitoring (Linux)** | E3 dentro de un entorno OCI, con Monitoring Server. | `45558` |
+| **Tu Recobro – Colombia (OCI + Linux)** | Windows Client → LB → 2 GW ⇄ 2 Brokers + 1 MySQL; Subnet con 6 `Linux Server VDI`, cada uno con un pill `Ubuntu` (en lugar del Agent). | `39669` |
+| **Multi-tenant** (comercial) | Estilo "Thinfinity Hosted": Gateway + Prim. Broker en zona cloud, Customer Hosted con pools secundarios; flechas de tres colores por flujo. | `44762` |
+
+### 6.3 Vocabulario nuevo (traducido a pills)
+
+| Elemento del Figma | Cómo se dibuja acá | Icono |
+|---|---|---|
+| `Monitoring Server` | pill secundaria; **línea punteada** `#0AA9FF` de telemetría hacia el Broker (no es flujo de usuario) | `broker-monitor` / `monitor-VM` (verificar; el Figma usa un ojo) |
+| `Profiles` + `MySQL Database` | zona gris punteada `Profiles` con una pill `MySQL Database` | `database` |
+| `Analytics` + `MySQL HeatWave` | zona gris punteada `Analytics` con una pill `MySQL HeatWave` | `database` (sin icono dedicado: gap) |
+| `URL Recovery` | pill secundaria a la izquierda del Gateway del sitio de recuperación | `refresh` |
+| `WAF` y `Firewall` | **líneas verticales punteadas con etiqueta**, no pills (como §3 punto 5) | — |
+| `Subnet` / `App Pool` | zona gris punteada con etiqueta; dentro del Subnet, un App Pool por red | `network` / `app-group` |
+| Recurso = **host + Agent** | una pill de recurso con su etiqueta de SO (`Windows 11`, `Windows Server`, `Linux Server · Ubuntu`) y el `Thinfinity Agent`; `⋮`/`•••` para repetir | `windows` · `linux` · `thinfinity` |
+| Variantes **"Linux"** del título | **El título no dice qué es Linux: hay combinaciones independientes.** Eje Gateway: `Windows Server` o `Linux Server`; si es Linux, Users lleva `Linux Client` en vez de `Windows Client`. Eje recursos: `Windows 11`, `Windows Server` o `Linux Server` + `Ubuntu`. **Brokers: `Windows Server` en todos los frames vistos.** Ejemplos: GW Windows + pool Linux `11030`, `39669`; GW Linux + pool Windows `7590` `7832` `8045` `8373` `10681`; GW Linux + pool Linux `11266` `46317`. La parte Gateway-Linux/Broker-Windows coincide con la plataforma *Nueva* de `sizing.md`; en estos dibujos **no** hay Communication Gateway. | `linux` |
+| Recurso Linux | en el Figma lleva un pill `Ubuntu` donde el recurso Windows lleva el `Thinfinity Agent` (`39669`, `46317`). Se copia tal cual; no se deduce nada del producto de ahí. | `linux` |
+| Gateway/Broker "dentro de Windows Server" | **no** se dibuja la caja-host; el SO va en el label si el pedido lo dice | — |
+| Cruce Brokers → Gateways (2×2) | cada Broker abre hacia **ambos** Gateways (cross-mesh, I1); es la HA estándar | — |
+| Bus de retorno | los agentes marcan saliente: bus que sale de la Subnet y entra al Gateway por arriba y por abajo | — |
+| Réplica entre sitios | flecha **bidireccional** entre las pills de base de cada sitio | — |
+
+### 6.4 Elegir el escalón desde los "Datos del caso"
+
+Solo cuando el pedido trae el dato; **un campo vacío no se adivina** (regla de "Datos del caso").
+
+| El caso dice | Escalón |
+|---|---|
+| prueba de concepto, demo, evaluación, pocos usuarios | E1 |
+| piloto, "pasar a producción" | E2 |
+| hasta ~1000 usuarios, HA | E3 (+ E3b si hay varias redes o varios SO; E3c si hay un sitio secundario) |
+| ~1000 a 5000 usuarios, o dos sitios activos a la vez (usuarios en ambos) | E4 |
+| dos ubicaciones, una principal y otra secundaria / de respaldo | E3c |
+| recuperación ante desastres explícita | E5 |
+| nada de lo anterior (form vacío) | diagrama simple estándar: **E2 sin LB si no pide HA**, nunca E4 ni E5 por defecto |
+
+- **Sistema operativo: dos ejes que no se deducen uno del otro.** Gateways (`Windows Server` o `Linux Server`; con Linux, Users trae `Linux Client`) y recursos (`Windows 11`, `Windows Server`, `Linux Server` + `Ubuntu`). Los Brokers van `Windows Server`. Plataforma *Nueva* → Gateways Linux (§6.3). Si el pedido dice solo "Linux", **leer qué es Linux** (¿Gateway, recursos o ambos?) y, si no se sabe, no suponer: Gateway `Windows Server` y rotular los recursos como dice el pedido. El escalón no cambia.
+- Los números de usuarios por país o sitio (p. ej. `Perú – 730 Usuarios`) van en el label de la zona, tal
+  cual los da el pedido.
+- En **modo Advanced** mandan los números de `sizing.md` (cantidad de Gateways, Brokers, Communication
+  Gateways); el escalón solo aporta la forma. Si el sizing da más de 3 de algo, vale la regla de `⋮` de
+  SKILL §5.1.
+- Los frames están duplicados en ES/EN y por SO: son el **mismo** diagrama. Elegir uno; el idioma de los
+  labels lo fija el pedido.
+
+
+### 6.5 Los dos modelos de 2 sitios
+
+Los frames de 2 sitios son **dos modelos distintos**; no mezclarlos:
+
+| | **Activo-Activo** (E4) | **Principal + secundario** (E3c, E5) |
+|---|---|---|
+| Quién recibe usuarios | **ambos** sitios (cada uno con su `Users`, WAF · Firewall y LB) | solo el **principal**. En E3c el LB del secundario no recibe flecha de usuarios; en E5 el secundario tiene `URL Recovery` como entrada de emergencia |
+| Forma del 2.º sitio | **simétrico** al 1.º | **reducido**: 1 Gateway, 1 Broker, 1 base (E3c suma Monitoring Server) |
+| Broker del 2.º sitio | solo hacia **sus** Gateways | hacia su Gateway **y** hacia los **2 Gateways del principal** |
+| Réplica | flecha vertical bidireccional entre las bases | igual |
+| Nodos | `9484` `9908` `13073` `12327` | `10332` `10681` · DR `12614` `12811` |
+
+**Cómo dibujarlos en pills:**
+
+1. **Site 1 arriba, Site 2 abajo, en la misma grilla de columnas** (Users · LB · Gateways · Brokers · bases · Subnet), para que las bases queden una sobre otra y la réplica sea una sola flecha vertical.
+2. Etiquetas `Site 1` / `Site 2` en los márgenes y una **línea punteada oscura horizontal** como separador. Como cada sitio lleva una Subnet adentro, **no** se dibuja el sitio como zona (SKILL §2.3 prohíbe anidar): línea + etiqueta.
+3. El bus de retorno de cada Subnet entra a los Gateways **de su propio sitio** (arriba y abajo, como en E1–E3).
+4. En activo-pasivo, las dos flechas del Broker del Site 2 hacia los Gateways del Site 1 van por un **corredor propio** entre la columna de Brokers y la de Gateways, sin atravesar pills (en el Figma son diagonales; acá, ortogonales).
+5. Réplica = flecha bidireccional `<->` con chevrons entre las dos pills de base, cruzando el separador.
+6. Site 2 reducido en activo-pasivo: 1 Gateway y 1 Broker **salvo que el caso o Advanced diga otra cosa**.
+
+**Réplica (Nick, 2026-10-27):** que en `10332`, `9484` y `9908` la flecha toque la base Analytics / HeatWave del Site 1 es un **atajo de layout**. Se dibuja entre las bases equivalentes: `MySQL Database` (Profiles) del Site 1 ↔ `MySQL Database` del Site 2. Analytics / HeatWave no se replica en el dibujo.

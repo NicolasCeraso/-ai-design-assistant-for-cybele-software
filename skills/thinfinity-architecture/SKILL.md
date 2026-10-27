@@ -41,6 +41,10 @@ All assets are bundled alongside this `SKILL.md`:
   Multi-Tenant, Behind Palo Alto, IT/OT, WAG, On-Prem/Hybrid/Fully-Hosted/BYOD, OCI VDI, RBAC, ZTNA,
   detailed IDP integration…) **or is ambiguous** — find the closest official diagram, then
   `get_screenshot` its nodeId to calibrate before drawing.
+  **§6 "Casos más usados"** of that same file is the sales **ladder** (POC → Pilot → Initial Site →
+  2 Sites Active-Active → DR) from the Figma page "Casos más usados": load it when the case data gives
+  users, stage, sites or DR, or the prompt is a plain "typical deployment". Take its **topology**, draw it
+  in pills (§1) — never copy its host-box style or its OCI-red / Azure-teal environment colours (§2.2b).
 - `examples/*.html` — the exact source of those 8 diagrams. **Copy/adapt their structure; don't reinvent.**
   `examples/test_08_zero_inbound_ztna.html` is the worked source of R33 (zero-inbound / ZTNA on OCI).
 
