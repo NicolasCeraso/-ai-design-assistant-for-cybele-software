@@ -1,11 +1,15 @@
 # Cybele / Thinfinity — Video Storyboard Generation Spec
 
-**Version:** 2.0 · **Date:** 2026-10-09
+**Version:** 2.1 · **Date:** 2026-10-30 (2.0: 2026-10-09)
 **Owner:** Cybele design team (Nick Ceraso)
 **Purpose of this file:** the *authoritative, reproducible* spec for generating video storyboards in the
 Cybele/Thinfinity house style. A future Claude session should be able to read **only this file** and
 produce an on-brand storyboard from a voiceover script.
 
+> **v2.1 (2026-10-30)** folds in Nick's `criterio-storyboard-contact-centers.md`: the Figma board structure, the
+> scene-per-key-state rule, the narrative colour logic, the typography as built in the finished storyboard, and the
+> asset policy (library instances first). The new material is §16; §4.5, §5 and §7 were corrected where it differs.
+>
 > **v2.0 replaces v1.0 (2026-07-15).** v1 described a dark-navy "techy" look (glow, dot-grid, glass
 > cards, 1920×1080, `NN · SECTION` kickers). The team's real storyboards in the "Youtube" Figma file
 > do not look like that. v2 is reverse-engineered from the most mature one — the **"Contact Centers"**
@@ -18,7 +22,7 @@ produce an on-brand storyboard from a voiceover script.
 ## 0. TL;DR
 
 From a **fixed voiceover script** (the backbone — never altered), produce **blocks of 3840×2160
-keyframes** (2–3 scenes per block, stacked in a column), each block paired with its `VO n` lines and a
+keyframes** (1–4 scenes per block, one per key state of the animation, stacked in a column), each block paired with its `VO n` lines and a
 `Guion` box (`VOICEOVER:` verbatim + `En pantalla:` in Spanish describing the motion). The look:
 **flat, minimal, one dominant element per scene, a headline on top with a thin rule under it, one
 accent word in red (problem) or none, flat icons, the background colour tells you where you are in the
@@ -91,7 +95,8 @@ rule        #B8CBDC   thin divider under the headline
 pill        #FFFFFF   white pill / card fill on light backgrounds
 person      #D5E1EE   inactive/neutral person disc and placeholders
 blue        #0A74D6   Thinfinity blue — devices, icons, selected card outline
-red         #F12808   PROBLEM / LOSS — the one accent on problem scenes
+red         #DF3A1B   PROBLEM / LOSS — the one accent on problem scenes (Nick's criterion, 2026-10-30)
+redAlt      #F1280A   the second red the finished frames also use; same job, same scenes
 mint        #2ADDBE   SECURE / PROTECTED / CONFIRMED (strokes and small fills)
 mintSoft    #3DCCA1   mint when it has to sit on a white card
 white       #FFFFFF   text and thin strokes on blue/dark backgrounds
@@ -104,7 +109,7 @@ Each colour has **one job**, so a frame reads before you read it.
 
 | Role | Colour | Means | Examples |
 |---|---|---|---|
-| Problem / loss | **red** `#F12808` | something lost, costly, at risk | the 3 agents who leave, "Every exit:", a "gone" word |
+| Problem / loss | **red** `#DF3A1B` | something lost, costly, at risk | the 3 agents who leave, "Every exit:", a "gone" word |
 | Neutral / not the point | **person** `#D5E1EE` | the rest, inactive, background mass | the 6 agents who stay |
 | Thinfinity / device | **blue** `#0A74D6` | the product, a device, a selected item | laptop, selected card outline, supervisor |
 | Secure / confirmed | **mint** `#2ADDBE` | protection, data kept safe, "on" | lock on the cloud, shield, "Zero trust" lock |
@@ -127,21 +132,23 @@ The background colour is a narrative signal. Pick it by where the beat sits:
 Within one block, backgrounds stay the same unless the beat itself flips (problem → pivot).
 
 ### 4.5 Typography
-- **Inter** only. Weights: Regular 400 for headlines, SemiBold 600 and Bold 700 for labels, ExtraBold 800
-  for big statistic numerals.
+- **Inter** only. Weights: Medium 500 and Regular 400 for headlines, SemiBold 600 for supporting phrases and
+  closing, Bold 700 for big statistic numerals.
 - Scale on the 3840 canvas (measured from the frames, ±10%):
-  - **Headline:** 120 px, Regular. Two parts allowed: the **accent part** in `red` (problem scenes) and
-    the rest in `ink`. Example: "**Every exit:** recover · wipe · hope". On `bgBlue`/`bgDark` the
-    headline is white and has no accent.
-  - **Hero statistic:** 480 px ExtraBold, `inkSoft` (e.g. "1/3"), with its label at 150 px SemiBold
+  - **Headline on light backgrounds:** 115 px, Inter Medium, `ink`, with the prefix in `red` ("The problem:"),
+    and a thin rule under it (§4.1). Example: "**Every exit:** recover · wipe · hope".
+  - **Scene title on `bgBlue`/`bgDark`:** 120 px, Inter Regular, white, centered, 150 % line-height, no accent.
+  - **Hero statistic:** 593 px Inter Bold, −8 % tracking, `inkSoft` (e.g. "1/3", "0"), with its label at 150 px SemiBold
     and a source line at 96 px Regular. One accent word in the label may be `red`.
-  - **Pill / card label:** 96 px, Medium.
+  - **Supporting phrase:** 150 px Inter SemiBold, −2 % tracking, 95 % line-height, one keyword in `red`.
+  - **Pill / card label and chips:** 80–110 px, Medium.
   - **Caption on an arrow or link:** 72 px, Regular.
+  - **Closing plate:** 196 px Inter SemiBold (the same as the Contractor VDI title card).
 - The narration lives in the **`VOICEOVER:`** text beside the block, not baked into the frame. The
   on-canvas text is a short headline and labels only (3–6 words).
 
 ### 4.6 Shapes & icons
-- **Flat and borderless**, in line with the brand rules: no shadows, no gradients, no glow, no blur.
+- **Flat and borderless**, in line with the brand rules: no shadows, no gradients, no glow, no blur (the one exception, the cloned title-card artwork of the closing, is in §16.3).
 - **Person:** a round disc (`person`, or `red` when "affected") with a thin lighter outline figure inside.
 - **Laptop:** `blue` body, `screenBlue` screen with two stacked windows (`white` and `winLight`) inside; a
   small white circular badge in the corner for status (refresh, check, lock).
@@ -202,8 +209,9 @@ in Figma:
 ## 7. Scene grammar & block decomposition
 1. Read the whole script; find its **natural sections** (problem → pivot → mechanism → controls → payoff).
 2. **Group into blocks of 1–4 VO sentences** that share one idea. Each block gets a number (`01`, `02`…).
-3. Inside a block, **1–3 scenes** (`a`, `b`, `c`): the continuity chain from §5. Each scene is a state of
-   the same picture, not a new picture.
+3. Inside a block, **1–4 scenes** (`a`, `b`, `c`, `d`): the continuity chain from §5. **One frame per key state of
+   the animation** the script's Visual column describes, so the motion designer sees the start and the end of
+   every transition (see §16.2). Each scene is a state of the same picture, not a new picture.
 4. Assign each block its **background** (§4.4) and its **motif + colour roles** (§4.3) before drawing.
 5. Name each scene `NNx · Short description` (e.g. `01a · Nine agents, one third gone`).
 6. Every block ends with the **`Guion`** box: `VOICEOVER:` (verbatim) + `En pantalla:`.
@@ -280,8 +288,8 @@ OUT="C:/abs/path/preview.png"
 - Scenes inside a block: `NNa`, `NNb`, `NNc`.
 
 ## 14. Status & next steps
-🟡 **In progress.** v2.0 rewritten from the real Figma storyboards on 2026-10-09; not yet validated by a
-console run. Next steps: run one task from a real VO script with this spec, compare it against the
+🟡 **In progress.** v2.0 rewritten from the real Figma storyboards on 2026-10-09; v2.1 (2026-10-30) adds Nick's
+Contact Centers criteria (§16). Not yet validated by a console run. Next steps: run one task from a real VO script with this spec, compare it against the
 Contact Centers page side by side, then fix whichever token or rule is off. Still **not** packaged as a
 Claude skill.
 
@@ -297,6 +305,96 @@ Claude skill.
 | 03 | The laptop dissolves; the desktop lives in the cloud; meet Thinfinity Workspace. | **03a** laptop dissolves · **03b** `bgDark` · desktop inside a mint-outline cloud, "What if the desktop never left the cloud?" · **03c** payoff |
 | 05 | BYOD, data stays in the cloud region, copy/download/print under control. | **05b** solution bg · laptop → dashed "Display only" → cloud with database + mint lock; labels under each side |
 | 09 | Supervisors monitor live sessions, record any session, watermark the screen. | **09a** solution bg · supervisor disc + three white cards, first one selected (blue outline) with a mint magnifier |
+
+---
+
+## 16. Contact Centers criteria (Nick, 2026-10-30)
+
+Source: `criterio-storyboard-contact-centers.md`, written for the **"Thinfinity para Contact Centers"** storyboard
+(script "Thinfinity para Contact Centers: Guión de video", the YouTube table, 1:20–1:45). Destination: Figma
+`Youtube` (`K8rHguGyksdPWdHrSA3VOi`), page **Contact Centers**, frame `Thinfinity para Contact Centers`. Style
+reference: the **Contractor VDI** page of the same file. Scope: the main video only; the four LinkedIn / Cybele
+Blogs clips are cuts of it and get no board of their own.
+
+### 16.1 Figma board structure (what is pushed to the file)
+- A black container frame (`#000000`) with the video title at the top left (Inter Regular 834 px) and a subtitle with
+  format and duration.
+- **One column per script row** (10 columns), 7300 px apart on X. Each column stacks its **3840×2160 scene frames**
+  with a 100 px gap; the columns are aligned at the bottom, as in Contractor VDI.
+- To the right of each column: a **white vertical divider** 8 px wide that follows the column's height, and the
+  **voiceover fragments** (Inter Regular 160 px, white, 2000 px wide) aligned with the scene in which they sound.
+- Below each column, one script block with two parts: **VOICEOVER:** the literal narration, and **En pantalla:** the
+  document's literal visual description. Inter 160 px, labels in Bold.
+- Layer names `NNx – description` (e.g. `05b – Data stays in the cloud region`): the number is the script row, the
+  letter is the animation step.
+
+### 16.2 Scenes per row
+Each row is split into as many frames as the Visual column describes **key states of the animation**, so the start
+and the end of every transition are drawn. The Contact Centers board, as built:
+
+| Row | Frames | Criterion |
+|---|---|---|
+| 1 | 2 | Statistic → laptops are added |
+| 2 | 4 | Replacement with $ → enlarged laptop → multiplication → the auditor's question |
+| 3 | 3 | Laptop dissolves → desktop in the cloud → logos |
+| 4 | 2 | Devices → gateway; then the SSO/MFA balloon |
+| 5 | 3 | BYOD in the browser → data stays in the cloud → copy / download / print controls |
+| 6 | 2 | Outbound connection → zero inbound ports |
+| 7 | 3 | Zoom out to Cloud Manager → shift curve → seasonal peaks |
+| 8 | 2 | Headset + waveform → encrypted tunnel |
+| 9 | 3 | A magnifier over each of the 3 features (one per frame) |
+| 10 | 2 | Closing sentence → final plate |
+
+### 16.3 Narrative colour logic (extends §4.3–§4.4)
+Backgrounds seen in the finished board: dark `#021425` (solution intro, security, closing), Thinfinity blue
+`#003DBC` (connectivity, voice), light A `#E2E9F3` (problem, operations), light B `#EFF7FE` (BYOD, supervision).
+Text navy `#003156` / `#174366`. Red for a problem is `#DF3A1B` (the main one) or `#F1280A` (the second red the finished frames use); the token `red` in §4.2 is `#DF3A1B`. The earlier spec had `#F12808`, a mis-sampled `#F1280A`: replaced.
+Accent blue `#0A74D6`; accent green `#2ADDBE` (security, OK, gateway).
+- **Problem** (rows 1–2): light backgrounds, red for the pain (agents leaving, costs, the auditor).
+- **Turn / solution** (row 3): dark background and green for the paradigm change.
+- **Benefits** alternate blue, light and dark for rhythm; **never two equal backgrounds in a row**.
+- **Closing** (row 10): the dark background with the clouds and red gradient of the existing title card; the final plate
+  uses the same structure as Contractor VDI's. This is the one place a gradient is allowed, because it is the
+  title card's own artwork and is cloned, not redrawn.
+
+### 16.4 Assets and icons: reuse first, draw last
+- **Reuse instances of the Cybele library** already used in Contractor VDI, so they stay linked: `user`, `notebook`,
+  `cpu`, `pc-user-location`, `gateway`, `id-integration`, `2fa`, `lock-check`, `copy`, `file`, `doc`, `ilus-toggle`,
+  `control-panel`, `ilus-monitor`, `full-desk`, `rec`, `ilus-search`, `forbidden`, `Icon / Arrow / Refresh`.
+  (In Figma an icon is always a component instance, never a loose vector: Nick's global rule.)
+- **Clone existing graphic pieces** instead of redrawing: laptop `laptop3`, the `browser` window, the red and navy
+  laptops with a lock; the **Thinfinity + Oracle Cloud** lockup and the title card's logo group; the `soundwave`
+  waveform, the final plate's background ellipse and the title card's gradient clouds.
+- **Draw as vectors only what has no library equivalent**: cloud, headset, database, outline monitor, shift curve,
+  monthly bars, arrows and dotted connectors. If the library gains one of them, replace the vector with the instance.
+- **Connectors are dotted lines**: white on blue, green on dark. It is the same language as the Gateway/Broker flow of
+  the earlier storyboard.
+- **Recolour icons by background:** navy on light, white on blue/dark, green for security or OK states.
+
+### 16.5 On-screen content
+- **On-screen text in English**, like the voiceover and the earlier storyboard; the director's notes stay in Spanish.
+- Very little text: short phrases derived from the voiceover ("All they need is a browser", "Outbound only", "No VPN",
+  "No plugins"), never the whole narration.
+- One simple visual metaphor per technical idea:
+  - **Agent turnover:** a grid of 9 avatars with 3 in red, which then appear as dotted places plus new agents with a $ badge.
+  - **Hardware cost:** a laptop with desktop and an update badge, then multiplied into a grid.
+  - **The desktop never leaves the cloud:** the laptop dissolves into particles and the window rises into a cloud.
+  - **Access from any device:** 3 devices converge on a single gateway.
+  - **Data in the region:** a laptop with "Display only" connected to a cloud with a database and a lock.
+  - **Outbound connection:** the arrow points from the desktops toward the gateway, never the other way round.
+  - **Zero inbound ports:** a red inbound arrow blocked by a prohibited icon.
+  - **Scaling by shift:** a plateau-shaped curve, green at the start and red at shutdown.
+  - **Seasonal peaks:** bars per month with November and December highlighted.
+  - **Voice without plugins:** a tunnel with a waveform between the headset and the desktop, a lock on top.
+  - **Supervision:** a supervisor with 3 cards; a magnifier visits one card per frame.
+- **Final plate:** lockup, "Start with a proof on OCI" and the URL **cybelesoft.com**. The script gives no URL, so the
+  one from the earlier storyboard was used.
+
+### 16.6 Open items to validate
+- The final plate's URL (`cybelesoft.com` was assumed).
+- The "thin client" icon (`cpu` was used) and the "watermark" icon (`doc` was used): replace them if the library has a specific one.
+- Headset and calendar were drawn as vectors: replace them with instances if they are added to the library.
+- The LinkedIn clips have no storyboard of their own.
 
 ---
 

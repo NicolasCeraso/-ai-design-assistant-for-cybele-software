@@ -28,6 +28,7 @@ server uses). It carries the brand rules, file locations and prior decisions for
 | `arch`   | Thinfinity Architecture Diagram Skill | See §3.4 |
 | `storyboard` | Video Storyboard Pipeline | See §3.4b |
 | `linkedin-carousel` | LinkedIn Carousel (Placas) | See §3.4c |
+| `video` | Animated Video Pipeline (pointer — the rules live in the spec) | See §3.4d |
 | `webapp` | Project Vision | Implement the change in this project |
 | `shared` | Next Steps | Ad-hoc; follow the prompt |
 
@@ -218,6 +219,79 @@ in the run which interpreter you used. If a module is missing, say which one and
   spec §10. Copy is **frozen**; variants go in `output/v<N>/variants/` inside the *current* version,
   never a new one. Move one axis at a time, 3 by default, and emit `variants.html` comparing them.
   If a request would change a word, it's a revision → new `v<N+1>`, not a variant.
+
+### 3.4d video — Animated video (storyboard → MP4)
+- Read **`web-app/pipelines/VIDEO_ANIMATION_SPEC.md`** (authoritative; scripts and detailed references in
+  `web-app/pipelines/video-animation/`, a copy of the skill `cybele-video-animation`) plus the task's
+  inputs: the Figma storyboard link the user pasted in the launcher (`job.options.video` = `figmaUrl`,
+  `fileKey`, `nodeId`; also repeated as a line at the end of the prompt — if absent, the prompt or the
+  source file names it, else ask through §3.5), and the audio — all **optional** — that the user attached in the launcher: `job.options.video.audio` =
+  `{ voice, music, sfx[], sfxDir }` (paths relative to `jobs/<id>/`, saved under `audio/voice|music|sfx/`; a
+  voice-over attached as the task's source file counts as `voice` too). Use exactly what was given: voice →
+  `video.json` `voice`/`cuts`; music → `music.file`; SFX → `sfx_dir`, placed by their names where the action
+  fits (whoosh on pushes, pop on appearances…). Do **not** add music or effects that were not provided and do
+  not invent audio. Keep every on-screen word as the storyboard has it.
+- **No audio is NOT a failure and NOT a reason to stop.** Animate without sound (spec "Sin audio": scene
+  durations estimated from the VO text, no SFX/music, `scene_durations` in `video.json`, a video with no
+  audio track) and say so in the result. When the user later attaches the audio in a changes request, redo
+  the timing from the real audio (spec step 1): it is a retiming of the whole video, not a patch.
+- **Step 0 — preflight, always first and automatic:** `python pipelines/video-animation/scripts/preflight.py
+  [video.json]` (Python 3.13+, numpy, ffmpeg with libx264, input files) and the Figma motion probe in the
+  spec (a read-only `use_figma`). Figma motion is a feature of the account/session: it cannot be turned on
+  from this repo. If the probe says it is not enabled, **stop and ask through §3.5** — do not retry or burn
+  calls; tell the user motion is not enabled for their Figma. numpy is in `requirements.txt` (run
+  `pip install -r requirements.txt` if the venv lacks it).
+- **Quality bar — not a slideshow.** Pushing whole storyboard states in and out is a slideshow and is NOT an
+  acceptable deliverable. Animate element by element between states (move what persists, give each new
+  element its own entrance, word-by-word text, traced lines) using the technique and the per-scene brief in
+  `pipelines/video-animation/references/brief-por-escena.md`; delegate one scene (or two) per subagent in
+  parallel when the Agent tool exists. If budget runs out, deliver a partial version, say which scenes stayed
+  simple and do **not** present it as finished (§3.5).
+- Run: audio → cuts per scene → animate each scene in Figma → export one MP4 per scene (1–2 exports at
+  a time) → fill `video.json` (copy `video-animation/video.example.json`) → `python
+  video-animation/scripts/assemble_video.py video.json output/v<N>/video.mp4` (also writes
+  `video_low.mp4`, 720p). 4K only if asked (`--4k`, an upscale, never call it native).
+- Save into `jobs/<id>/output/v<N>/`: `video.mp4` (master), `video_low.mp4`, per-scene MP4s under
+  `scenes/`, `video.json`, `contact_sheet.png`, and `preview.html` made with
+  `python pipelines/video-animation/scripts/make_preview_html.py output/v<N>` — a `<video>` that opens in
+  **low quality by default** (switchable). Set `resultPath` to `video.mp4`: the console then opens that
+  `preview.html` player for the Preview button and the thumbnail. `previewPath` can still be a PDF/PNG of
+  the contact sheet (the task card needs an image for its thumbnail), but the user never sees it as the
+  preview: **the animation must be playable in the browser, not shown as a PDF.**
+- **Output is video only.** The Download dialog for this type offers MP4 (H.264), WebM (VP9) and MOV, with
+  quality Low (720p) / Medium (1080p) / High (the master's size). The console transcodes `video.mp4` with
+  ffmpeg on request (`/export-video`; ffmpeg via `CYBELE_FFMPEG`, PATH or WinGet). No SVG/PNG/PDF/PPTX.
+- **By scenes:** the dialog can also export the per-scene clips instead of the complete video, choosing which
+  scenes (one file each; a zip when several). It reads `output/v<N>/scenes/*.mp4` in scene order, so the run
+  must leave every scene's MP4 there (a `*_base.mp4` intermediate is ignored).
+- Verify on the MP4 (contact sheets, measured timings) and report what could not be verified (playback, audio).
+
+## 3.6 Report progress (every pipeline)
+
+The console shows a progress bar on every running task. It can only be as real as what you tell it, so at
+each **milestone** POST the state of the run to the job (the same endpoint as the final status):
+
+```
+POST http://localhost:3491/jobs/<id>   { "progress": { "steps": ["Preflight", "Audio", "Scene 1", …], "done": 3, "label": "Animating scene 3 of 9" } }
+```
+
+- **Declare the stages once, up front** with `steps` (≤ 60 short names, in order; the console keeps them until you
+  send a new list). The task card then shows "Step 4 of 9 · <label>", one segment per stage (done / current /
+  pending) and a checklist of the stages — that is what lets the user see parts of the process being completed.
+  `total` defaults to the number of `steps`. Later updates only need `done` (stages finished) and `label`.
+
+- `done` = how many stages are finished (the current one is `steps[done]`); `total` only if you send no `steps`. Set it as soon as you know it
+  (it may grow as you learn more; that is fine). **If you cannot know the total, send `total: 0`:** the bar is
+  then indeterminate and shows only the label and elapsed time. Never fake a percentage.
+- Send an update when something finishes or a new phase starts, not on a timer. A few to a few dozen per run.
+- `label` says what you are doing *now*, in the user's language, short (≤ 140 characters).
+- Do **not** clear it: the console removes the progress and the elapsed time when the run ends (status leaves
+  `running`). For a revision, report progress the same way (the run in flight owns it).
+- Typical milestones: **pptx / wp** — read source → structure → build → render → verify (5). **blog** — brief →
+  one step per image → verify. **arch** — case data → topology → draw → verify. **storyboard** — read script →
+  one step per scene → preview. **linkedin-carousel** — read post → skeleton → one step per placa → verbatim check.
+  **video** — preflight → audio/cuts → one step per scene animated and exported → assemble → verify.
+  Count the real items (images, scenes, placas) as soon as you know them.
 
 ## 3.5 If you're blocked or unsure (human-in-the-loop)
 

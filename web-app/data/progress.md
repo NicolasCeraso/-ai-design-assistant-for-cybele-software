@@ -403,6 +403,22 @@ sheet, no "notes for this run" page. Run notes go in `NOTES.md` as a file.
 - **Figma:** after approval, the SVGs go to the "Youtube" file `K8rHguGyksdPWdHrSA3VOi`.
 - **Run recipe:** RUNBOOK §3.4b. There is no packaged `cybele-video-storyboard` skill yet: follow the spec.
 
+## Animated Video Pipeline
+
+> **Pointer (2026-10-30).** The rules for animated videos live in one file:
+> **`web-app/pipelines/VIDEO_ANIMATION_SPEC.md`** (authoritative; scripts and references in
+> `web-app/pipelines/video-animation/`, a copy of the skill `cybele-video-animation`). This section only
+> exists so the console can hand a video run its context. **Do not re-add design values here:** edit the spec.
+
+- **What it produces:** from a Figma storyboard (link pasted in the launcher) and a voice-over WAV, one
+  animated MP4 (H.264): per-scene motion built in Figma, transitions, sound effects and ducked music.
+  Optional 4K is an upscale, never native. The download is video only (MP4 / WebM / MOV; low, medium, high).
+- **House rules:** on-screen text stays exactly as in the storyboard; text enters word by word; movement
+  uses the "parabola" easing; icons are only clones of existing ones; original Figma frames are never touched.
+- **Audio is optional:** with no voice-over the video is animated and delivered without sound (estimated timings); attaching the audio later in a changes request redoes the timing.
+- **Needs:** Figma MCP with motion enabled (the run checks it first and stops if it is not), ffmpeg, Python 3.13 + numpy.
+- **Run recipe:** RUNBOOK §3.4d.
+
 ## LinkedIn Carousel (Placas)
 
 > **Pointer (2026-09-28).** The rules for LinkedIn carousels live in one file:

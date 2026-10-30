@@ -15,6 +15,7 @@ PyMuPDF>=1.24             # PDF read/merge/render (whitepaper, source_to_docx.py
 pypdf>=4.0                # whitepaper PDF assembly (deckgen/whitepaper/generate_pdf.py)
 playwright>=1.45          # HTML -> PDF/PNG rendering
 Pillow>=10.0              # images
+numpy>=1.26               # video pipeline (pipelines/video-animation/scripts/assemble_video.py)
 
 
 # Optional: lets render_pdf.py use Microsoft PowerPoint (COM) as the reference PPTX -> PDF renderer when it is

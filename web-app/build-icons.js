@@ -46,6 +46,7 @@ const ICON_FILES = {
   // Also drawn for the console, on the 24-unit / 1.7-stroke grid, when those document types shipped.
   storyboard:          path.join(FIG, 'storyboard.svg'),           // filmstrip
   'linkedin-carousel': path.join(FIG, 'linkedin-carousel.svg'),    // phone + dots
+  video:               path.join(FIG, 'video.svg'),                // Cybfont "video-file" from the 131-icon lib
 };
 
 function process(svg) {

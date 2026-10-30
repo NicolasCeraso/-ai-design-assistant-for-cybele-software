@@ -527,6 +527,32 @@
   .job-runbtn:hover { background: color-mix(in srgb, var(--mint) 74%, #000); }
   .job-runbtn:disabled { opacity: 0.6; cursor: default; }
   .job-running { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; color: var(--brand-light); }
+  /* Segmented progress: one segment per stage of the run, so what is done / current / pending reads at a glance. */
+  .pgs { display: inline-flex; gap: 2px; flex: 0 0 auto; }
+  .pgs i { display: block; width: 9px; height: 5px; border-radius: 2px; background: var(--border); }
+  .pgs i.done { background: var(--brand-light); }
+  .pgs i.cur { background: var(--brand-light); opacity: .55; animation: pulse 1.2s ease infinite; }
+  .pgs.big { display: flex; gap: 3px; width: 100%; }
+  .pgs.big i { flex: 1 1 0; height: 8px; border-radius: 3px; }
+  .pgb { margin: 8px 0 2px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--accent-tint-soft); }
+  .pgb-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; font-size: 12.5px; }
+  .pgb-step { font-weight: 700; color: var(--brand-light); white-space: nowrap; }
+  .pgb-label { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); }
+  .pgb-el { color: var(--text-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .pgb-list { margin: 8px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 4px 14px; font-size: 12px; color: var(--text-muted); }
+  .pgb-list li { display: flex; align-items: center; gap: 7px; min-width: 0; }
+  .pgb-list li span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pgb-list li::before { content: ''; flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--border); }
+  .pgb-list li.done { color: var(--text); } .pgb-list li.done::before { background: var(--brand-light); border-color: var(--brand-light); }
+  .pgb-list li.cur { color: var(--text); font-weight: 600; } .pgb-list li.cur::before { border-color: var(--brand-light); animation: pulse 1.2s ease infinite; }
+  .pgb-det summary { cursor: pointer; font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+  .pg { display: inline-flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--text-muted); min-width: 0; }
+  .pg-label { max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pg-bar { position: relative; width: 96px; height: 4px; border-radius: 4px; background: var(--border); overflow: hidden; flex: 0 0 auto; }
+  .pg-bar > span { position: absolute; left: 0; top: 0; bottom: 0; background: var(--brand-light); border-radius: 4px; transition: width .5s ease; }
+  .pg-bar.ind > span { width: 38%; animation: pgSlide 1.4s ease-in-out infinite; }
+  @keyframes pgSlide { 0% { left: -38%; } 100% { left: 100%; } }
+  .pg-num { font-variant-numeric: tabular-nums; white-space: nowrap; }
   .job-running .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--brand-light); animation: pulse 1.2s ease infinite; }
   .job-actions { display: flex; align-items: center; gap: 12px; margin-top: 13px; border-top: 1px solid var(--border); padding-top: 13px; }
   .hist-group { margin-bottom: 22px; }
@@ -1300,6 +1326,29 @@
            diagram, and an all-empty form means the standard, simple case. The same fields come back
            in the intervention window when a run needs data validated (ARCH_FIELDS). -->
       <div id="wsArchOpts" class="arch-opts" style="display:none;"></div>
+      <!-- Animated Video only: the Figma storyboard to animate. Optional here (the prompt or an
+           attached file can name it instead), but it is what the run opens first. -->
+      <div id="wsVideoOpts" class="ws-blogopts" style="display:none;">
+        <div class="field">
+          <label for="wsVideoFigmaUrl" data-i18n="Figma storyboard">Figma storyboard</label>
+          <input type="text" id="wsVideoFigmaUrl" placeholder="Paste the link to the Figma storyboard" data-i18n-ph="Paste the link to the Figma storyboard" />
+        </div>
+        <p class="exp-note" id="wsVideoNote" style="margin:6px 0 0"></p>
+        <!-- Optional audio. Without a voice-over the run animates in silence; each file is saved with the task. -->
+        <div class="field">
+          <label for="wsVideoVoice" data-i18n="Voice-over">Voice-over</label>
+          <input type="file" id="wsVideoVoice" accept=".wav,.mp3,.m4a,.aac,.ogg,.flac,audio/*" />
+        </div>
+        <div class="field">
+          <label for="wsVideoMusic" data-i18n="Music">Music</label>
+          <input type="file" id="wsVideoMusic" accept=".wav,.mp3,.m4a,.aac,.ogg,.flac,audio/*" />
+        </div>
+        <div class="field">
+          <label for="wsVideoSfx" data-i18n="Sound effects (FX)">Sound effects (FX)</label>
+          <input type="file" id="wsVideoSfx" accept=".wav,.mp3,.m4a,.aac,.ogg,.flac,audio/*" multiple />
+        </div>
+        <p class="exp-note" id="wsVideoAudioNote" style="margin:6px 0 0"></p>
+      </div>
       <div class="field">
         <label for="wsPrompt">Prompt — what do you need?</label>
         <textarea id="wsPrompt" class="mono" style="min-height:96px"></textarea>
@@ -1541,7 +1590,29 @@
           <option value="png">PNG</option>
           <option value="jpg">JPEG</option>
           <option value="svg">SVG</option>
+          <option value="mp4">MP4 (H.264)</option>
+          <option value="webm">WebM (VP9)</option>
+          <option value="mov">MOV (H.264)</option>
         </select>
+      </div>
+      <div class="field" id="expQualField">
+        <label for="expQual" data-i18n="Quality">Quality</label>
+        <select id="expQual">
+          <option value="low" data-i18n="Low · 720p">Low · 720p</option>
+          <option value="medium" data-i18n="Medium · 1080p">Medium · 1080p</option>
+          <option value="high" selected data-i18n="High · original size">High · original size</option>
+        </select>
+      </div>
+      <div class="field" id="expScopeField">
+        <label data-i18n="Export">Export</label>
+        <div class="exp-radios">
+          <label><input type="radio" name="expScope" value="full" checked> <span data-i18n="Complete video">Complete video</span></label>
+          <label><input type="radio" name="expScope" value="scenes"> <span data-i18n="By scenes">By scenes</span></label>
+        </div>
+      </div>
+      <div class="field" id="expScenesField">
+        <label data-i18n="Scenes">Scenes</label>
+        <div class="exp-radios" id="expScenesList"></div>
       </div>
       <!-- Transparency is a modifier on PNG, not a format of its own — keeps the format list short. -->
       <div class="field" id="expAlphaField">
@@ -1760,6 +1831,16 @@ const I18N = {
     'File too large': 'Archivo demasiado grande', 'Maximum 25 MB per file': 'Máximo 25 MB por archivo',
     'Attaching files…': 'Adjuntando archivos…',
     'Format': 'Formato', 'Transparent background': 'Fondo transparente',
+    'WebM re-encodes the video and can take a few minutes.': 'WebM recodifica el video y puede tardar unos minutos.', 'Re-encodes the master video at the chosen quality.': 'Recodifica el video maestro con la calidad elegida.',
+    'Figma storyboard': 'Storyboard de Figma', 'Paste the link to the Figma storyboard': 'Pegá el link del storyboard de Figma',
+    'Optional: paste the storyboard link, or name it in the prompt.': 'Opcional: pegá el link del storyboard, o nombralo en el prompt.',
+    'That does not look like a Figma link.': 'Eso no parece un link de Figma.', 'Storyboard understood': 'Storyboard reconocido',
+    'Export': 'Exportar', 'Complete video': 'Video completo', 'By scenes': 'Por escenas', 'Scenes': 'Escenas', 'Scene': 'Escena', 'All scenes': 'Todas las escenas',
+    'Select at least one scene.': 'Elegí al menos una escena.', 'One file per scene, zipped when there are several.': 'Un archivo por escena; en un zip si son varias.',
+    'Voice-over': 'Locución', 'Music': 'Música', 'Sound effects (FX)': 'Efectos de sonido (FX)',
+    'Optional audio: with no voice-over the video is animated without sound.': 'Audio opcional: sin locución el video se anima sin sonido.',
+    'Step': 'Paso', 'of': 'de', 'Stages': 'Etapas', 'Working…': 'Trabajando…',
+    'Quality': 'Calidad', 'Low · 720p': 'Baja · 720p', 'Medium · 1080p': 'Media · 1080p', 'High · original size': 'Alta · tamaño original',
     'Resolution': 'Resolución', '1× · Compact': '1× · Compacta', '2× · Standard': '2× · Estándar', '3× · High': '3× · Alta', '≤ 200 KB (auto-fit)': '≤ 200 KB (automático)',
     'Layout': 'Disposición', 'Single canvas (all pages)': 'Un solo canvas (todas las páginas)', 'Single PDF (all pages)': 'Un solo PDF (todas las páginas)', 'Per page': 'Por página',
     'Pages': 'Páginas', 'All pages': 'Todas las páginas', 'Selection': 'Selección',
@@ -1801,6 +1882,7 @@ const projects = [
   { key: 'arch',   label: 'Arch Diagrams', color: 'var(--viz-4)' },
   { key: 'storyboard', label: 'Video Storyboard', color: '#7B7BF5' },
   { key: 'linkedin-carousel', label: 'LinkedIn Carousel', color: '#F5B454' },
+  { key: 'video', label: 'Animated Video', color: '#3DDBB4' },
   { key: 'webapp', label: 'Web App',       color: 'var(--viz-5)' },
   { key: 'shared', label: 'Shared / Infra', color: 'var(--viz-6)' },
 ];
@@ -1825,6 +1907,7 @@ const pipelines = [
   { key:'arch',   name:'Arch Diagrams',   status:'live',     kind:'skill', cmd:'thinfinity-architecture', desc:'Thinfinity "pill" system, 131-icon set, capability → topology.' },
   { key:'storyboard', name:'Video Storyboard', status:'live', kind:'skill', cmd:'cybele-video-storyboard', desc:'Voiceover script → 1920×1080 keyframes, native Figma-safe SVG. Dark-navy house style.' },
   { key:'linkedin-carousel', name:'LinkedIn Carousel', status:'live', kind:'skill', cmd:'cybele-linkedin-carousel', desc:'Post/article → 4–7 portrait 1200×1500 SVG placas (native Figma-safe). Hook → middle → CTA, 3 themes, CVD-safe palette, variants on request.' },
+  { key:'video', name:'Animated Video', status:'live', kind:'skill', cmd:'cybele-video-animation', desc:'Figma storyboard + voice-over WAV → animated MP4 (H.264, optional 4K): per-scene motion, transitions, SFX and ducked music.' },
   { key:'webapp', name:'Team Web App',    status:'progress', kind:'shell', cwd:'.', cmd:'node -e "console.log(\'Console already running on :3491\')"', desc:'Shared interface so the team can run every pipeline. This console.' },
 ];
 const statusLabel = { live:'Live', stable:'Stable', progress:'In progress', planned:'Planned' };
@@ -2003,6 +2086,7 @@ const PROMPT_TEMPLATES = {
   blog:   'Generate the blog visuals for the attached article — cover plus in-article section illustrations — as native Figma-safe SVG. How many of each is set in the fields above.',
   arch:   'Draw a Thinfinity architecture diagram for the scenario below, in the Cybele pill visual system. Describe the topology in the prompt.',
   storyboard: 'Generate a video storyboard from the voiceover script below (paste it, or attach the .md/.txt). Keep the VO verbatim — only graphic decisions. Produce blocks of 3840×2160 native Figma-safe SVG scenes (NNa/NNb/NNc) in the Cybele/Thinfinity house style of the "Contact Centers" storyboard (one dominant element per scene, background chosen by the story beat, flat icons, no glow) as one HTML preview, each block with its VO lines and a Guion box (VOICEOVER verbatim + "En pantalla:" in Spanish). Follow STORYBOARD_SPEC.md.',
+  video: 'Animate the Figma storyboard into a finished video. Inputs: the storyboard (Figma fileKey + frame; the column of states per scene with its VO text), optionally the voice-over WAV (attach it) and background music and a sound-effects folder. No audio is fine: animate without sound (estimated timings, no audio track) and say so — the audio can be attached later in a changes request, and then the timing is redone from it. Keep every on-screen word exactly as in the storyboard. This is NOT a slideshow: do not just push whole states in and out — animate element by element between states (what persists moves, new elements enter with their own motion, lines trace, text word by word), one scene per subagent in parallel. Cut the audio into scenes at the pauses, animate each scene in Figma (word-by-word text, parabola easing, icons only as clones of the existing ones, no new vectors, original frames untouched), export one MP4 per scene at 1920 px / 30 fps, then assemble transitions + sound effects + music with assemble_video.py into one H.264 MP4 (and a 4K upscale only if asked, saying it is an upscale). Verify on the MP4 with contact sheets and measured timings, never on keyframes alone, and state what could not be checked (playback, audio). Follow VIDEO_ANIMATION_SPEC.md.',
   'linkedin-carousel': 'Generate a LinkedIn carousel from the post below (paste the script with PLACA 1…N copy, or raw article text). STRICT VERBATIM: no word may be added, removed or altered — no invented headlines, eyebrow tags, diagram labels, axis dates or CTA phrasing, and never render or mine the CAPTION block. You choose line breaks, accent word, type step and composition; the words are Nick\'s. Produce 4–7 native Figma-safe 1200×1500 SVG placas (median 6) on the hook → middle → CTA skeleton: pick ONE middle type (linear / enumeration / contrast / dimension comparison), ONE theme (claro / navy / oscuro), ONE governing metaphor and ONE cover archetype, and state all four in NOTES.md before drawing. Colour never carries meaning on its own. Emit a single HTML preview, then self-verify against the numeric checklist AND run verbatim_check.js — exit 1 means do not deliver. Follow LINKEDIN_CAROUSEL_SPEC.md. Ask for variants after delivery (§10).',
   webapp: 'Describe the change or feature you want for the team web app.',
   shared: 'Describe what you need from this pipeline.',
@@ -2327,6 +2411,9 @@ async function openWorkspace(p, picker) {
   }
   const isArch = p.key === 'arch';
   document.getElementById('wsArchOpts').style.display = isArch ? '' : 'none';
+  const isVideo = p.key === 'video';
+  document.getElementById('wsVideoOpts').style.display = isVideo ? '' : 'none';
+  if (isVideo) { document.getElementById('wsVideoFigmaUrl').value = ''; ['wsVideoVoice', 'wsVideoMusic', 'wsVideoSfx'].forEach(id => { document.getElementById(id).value = ''; }); updateVideoNote(); updateVideoAudioNote(); }
   if (isArch) {
     archFormMount('wsArchOpts', 'wsArch', 'Lo que completes se usa para dibujar. Lo que dejes vacío no se considera: si no completás nada, el diagrama sale estándar y simple.');
     archFormSet('wsArch', {});
@@ -2403,6 +2490,41 @@ function textToBase64(s) {
 function fileToBase64(file) {
   return new Promise((resolve, reject) => { const r = new FileReader(); r.onload = () => resolve(r.result); r.onerror = reject; r.readAsDataURL(file); });
 }
+// Animated Video: the pasted Figma link -> fileKey + node id (design / board / slides / branch links;
+// node-id "12-34" in the URL is "12:34" in the API). The note echoes what was understood.
+function parseFigmaLink(raw) {
+  const s = (raw || '').trim();
+  if (!s) return null;
+  let u; try { u = new URL(s); } catch (e) { return { error: true }; }
+  if (!/(^|\.)figma\.com$/i.test(u.hostname)) return { error: true };
+  const m = u.pathname.match(/^\/(design|board|slides|file|make)\/([A-Za-z0-9]+)(?:\/branch\/([A-Za-z0-9]+))?/);
+  if (!m) return { error: true };
+  const node = (u.searchParams.get('node-id') || '').replace(/-/g, ':');
+  return { url: s, fileKey: m[3] || m[2], nodeId: node };
+}
+function videoFigma() { return parseFigmaLink(document.getElementById('wsVideoFigmaUrl').value); }
+function updateVideoNote() {
+  const f = videoFigma(), note = document.getElementById('wsVideoNote'), go = document.getElementById('wsCreate');
+  if (currentWs && currentWs.key !== 'video') return;
+  go.disabled = !!(f && f.error);
+  note.textContent = !f ? t('Optional: paste the storyboard link, or name it in the prompt.')
+    : f.error ? t('That does not look like a Figma link.')
+    : t('Storyboard understood') + ': ' + f.fileKey + (f.nodeId ? ' · ' + f.nodeId : '');
+}
+document.getElementById('wsVideoFigmaUrl').addEventListener('input', updateVideoNote);
+const videoAudioFiles = () => ({
+  voice: document.getElementById('wsVideoVoice').files[0] || null,
+  music: document.getElementById('wsVideoMusic').files[0] || null,
+  sfx: [...document.getElementById('wsVideoSfx').files],
+});
+function updateVideoAudioNote() {
+  const a = videoAudioFiles(), parts = [];
+  if (a.voice) parts.push(t('Voice-over') + ': ' + a.voice.name);
+  if (a.music) parts.push(t('Music') + ': ' + a.music.name);
+  if (a.sfx.length) parts.push(t('Sound effects (FX)') + ': ' + a.sfx.length);
+  document.getElementById('wsVideoAudioNote').textContent = parts.length ? parts.join(' · ') : t('Optional audio: with no voice-over the video is animated without sound.');
+}
+['wsVideoVoice', 'wsVideoMusic', 'wsVideoSfx'].forEach(id => document.getElementById(id).addEventListener('change', updateVideoAudioNote));
 document.getElementById('wsCreate').addEventListener('click', async () => {
   const p = currentWs; if (!p) return;
   let prompt = document.getElementById('wsPrompt').value.trim();
@@ -2419,10 +2541,37 @@ document.getElementById('wsCreate').addEventListener('click', async () => {
     options = { arch };
     prompt = (prompt ? prompt + '\n\n' : '') + archCaseBlock(arch);
   }
+  // Animated Video: the storyboard link rides in job.json (options.video) and in the prompt.
+  if (p.key === 'video') {
+    const f = videoFigma();
+    if (f && !f.error) {
+      options = { video: { figmaUrl: f.url, fileKey: f.fileKey, nodeId: f.nodeId } };
+      prompt = (prompt ? prompt + '\n\n' : '') + 'Figma storyboard: ' + f.url + ' (fileKey ' + f.fileKey + (f.nodeId ? ', nodeId ' + f.nodeId : '') + ').';
+    }
+  }
+  let audioPayload = null;
+  if (p.key === 'video') {
+    const a = videoAudioFiles();
+    if (a.voice || a.music || a.sfx.length) {
+      const enc = async f => ({ name: f.name, dataBase64: await fileToBase64(f) });
+      audioPayload = {};
+      try {
+        if (a.voice) audioPayload.voice = await enc(a.voice);
+        if (a.music) audioPayload.music = await enc(a.music);
+        if (a.sfx.length) audioPayload.sfx = await Promise.all(a.sfx.map(enc));
+      } catch (e) { showToast('Could not read the audio files', e.message); return; }
+      const lines = [];
+      if (a.voice) lines.push('voice-over ' + a.voice.name);
+      if (a.music) lines.push('music ' + a.music.name);
+      if (a.sfx.length) lines.push(a.sfx.length + ' sound effect(s)');
+      prompt = (prompt ? prompt + '\n\n' : '') + 'Audio provided (saved under the task folder, listed in job.options.video.audio): ' + lines.join(', ') + '.';
+    }
+  }
   const btn = document.getElementById('wsCreate'); btn.disabled = true; btn.textContent = 'Creating…';
   try {
     const payload = { pipeline: p.key, prompt, title: document.getElementById('wsTaskTitle').value.trim() };
     if (options) payload.options = options;
+    if (audioPayload) payload.audio = audioPayload;
     // Pasted text becomes a real file in the task folder, so nothing downstream has to know how it
     // arrived: the run, the RUNBOOK and job.json all just see a sourceFile.
     if (wsSrcMode === 'paste' && wsSrcText()) {
@@ -2478,6 +2627,7 @@ const FMT_DEFAULT = {
   blog: 'png',                  // goes straight into the CMS
   'linkedin-carousel': 'png',   // LinkedIn does not accept SVG
   storyboard: 'pdf',            // reviewed as a sequence
+  video: 'mp4',                 // the video itself; webm/mov on request
   arch: 'svg',                  // re-edited in Figma
   wp: 'pdf',                    // the whitepaper IS the PDF
   pptx: 'pptx',
@@ -2509,6 +2659,8 @@ function wireDownloads(scope) {
 }
 // ── Export / Download modal (format · single-canvas vs per-page · all/selection) ──
 let expCtx = null;
+const VIDEO_FMTS = ['mp4', 'webm', 'mov'];
+let EXP_FMT_ALL = null;   // every <option> of #expFmt, captured the first time the dialog opens
 async function openExportModal(ds) {
   expCtx = { dl: ds.dl, dlname: ds.dlname || '', svg: ds.dlsvg || '', raster: ds.dlraster || '', pipeline: ds.dlpipe || '', count: 1 };
   // The deliverable path the server uses to locate the folder of real vector assets.
@@ -2521,6 +2673,13 @@ async function openExportModal(ds) {
   expCtx.setName = expCtx.setLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   document.getElementById('exportTitle').textContent = t('Download') + (expCtx.setLabel ? ' · ' + expCtx.setLabel : (expCtx.dlname ? ' · ' + expCtx.dlname : ''));
   const fmt = document.getElementById('expFmt');
+  // The Animated Video deliverable is a video: it offers video formats only (and the other document
+  // types never offer video). The option list is rebuilt from the master list so nothing stays hidden.
+  if (!EXP_FMT_ALL) EXP_FMT_ALL = [...fmt.options].map(o => ({ v: o.value, tx: o.textContent }));
+  const videoDoc = expCtx.pipeline === 'video';
+  fmt.innerHTML = EXP_FMT_ALL.filter(o => VIDEO_FMTS.includes(o.v) === videoDoc).map(o => '<option value="' + o.v + '">' + o.tx + '</option>').join('');
+  document.getElementById('expQual').value = 'high';
+  document.querySelector('input[name=expScope][value=full]').checked = true;
   // Every option is now a named format. There is no "Original (as generated)": it meant a different
   // thing per pipeline (the deck, the PDF, but also a preview.html or a whole folder, neither of
   // which is usable on its own) and never said which. A native deck still downloads byte-for-byte,
@@ -2535,7 +2694,14 @@ async function openExportModal(ds) {
   let av = { svg: false, pdf: false, png: false, jpg: false, pptx: false, vectorCount: 0 };
   try { av = await (await fetch('/formats?path=' + encodeURIComponent(expCtx.path))).json(); } catch (e) {}
   expCtx.av = av;
-  const avail = { svg: av.svg, png: av.png, jpg: av.jpg, pdf: av.pdf, pptx: av.pptx };
+  // Animated Video: one checkbox per scene clip, all ticked, plus an "All scenes" master box.
+  const nSc = videoDoc ? (av.scenes || 0) : 0;
+  expCtx.sceneCount = nSc;
+  document.getElementById('expScenesList').innerHTML = nSc
+    ? '<label><input type="checkbox" id="expSceneAll" checked> <span>' + t('All scenes') + '</span></label>'
+      + Array.from({ length: nSc }, (_, i) => '<label><input type="checkbox" class="expSceneBox" value="' + (i + 1) + '" checked> <span>' + t('Scene') + ' ' + (i + 1) + '</span></label>').join('')
+    : '';
+  const avail = { svg: av.svg, png: av.png, jpg: av.jpg, pdf: av.pdf, pptx: av.pptx, mp4: av.video, webm: av.video, mov: av.video };
   [...fmt.options].forEach(o => { o.disabled = !avail[o.value]; });
   // Pre-select what this pipeline's output is normally used as, when that format is actually
   // available. Nothing is hidden — it just saves a pick on the common path.
@@ -2544,7 +2710,7 @@ async function openExportModal(ds) {
   if (fmt.options[[...fmt.options].findIndex(o => o.value === fmt.value)].disabled) {
     const first = [...fmt.options].find(o => !o.disabled); if (first) fmt.value = first.value;
   }
-  ddSync('expFmt'); ddSync('expRes');  // custom-dropdown labels follow the reset values
+  ddSync('expFmt'); ddSync('expRes'); ddSync('expQual');  // custom-dropdown labels follow the reset values
   // Multiple vector designs → the "pages" selector picks which designs; else fall back to PDF pages.
   expCtx.count = av.vectorCount > 1 ? av.vectorCount : 1;
   if (av.vectorCount <= 1 && /\.pdf$/i.test(expCtx.raster)) {
@@ -2557,6 +2723,23 @@ function updateExpUI() {
   if (!expCtx) return;
   const fmt = document.getElementById('expFmt').value;
   const vectorMulti = !!(expCtx.av && expCtx.av.vectorCount > 1);
+  const isVideo = VIDEO_FMTS.includes(fmt);
+  document.getElementById('expQualField').style.display = isVideo ? '' : 'none';
+  const hasScenes = isVideo && (expCtx.sceneCount || 0) > 0;
+  document.getElementById('expScopeField').style.display = hasScenes ? '' : 'none';
+  const byScenes = hasScenes && document.querySelector('input[name=expScope]:checked').value === 'scenes';
+  document.getElementById('expScenesField').style.display = byScenes ? '' : 'none';
+  if (isVideo) {   // a video has no pages, layout, transparency or image resolution
+    ['expResField', 'expAlphaField', 'expLayoutField', 'expPagesField'].forEach(id => { document.getElementById(id).style.display = 'none'; });
+    const none = byScenes && !document.querySelector('.expSceneBox:checked');
+    document.getElementById('expGo').disabled = none;
+    document.getElementById('expNote').textContent = none ? t('Select at least one scene.')
+      : byScenes ? t('One file per scene, zipped when there are several.')
+      : fmt === 'webm' ? t('WebM re-encodes the video and can take a few minutes.')
+      : t('Re-encodes the master video at the chosen quality.');
+    return;
+  }
+  document.getElementById('expGo').disabled = false;
   if (fmt === 'pptx') {   // native deck → download as-is; design set → build an editable deck
     document.getElementById('expResField').style.display = 'none';
     document.getElementById('expAlphaField').style.display = 'none';
@@ -2606,11 +2789,29 @@ async function exportDownload(url) {
   } catch (e) { showToast(t('Could not export'), e.message); }
 }
 document.getElementById('expFmt').addEventListener('change', updateExpUI);
+document.querySelectorAll('input[name=expScope]').forEach(r => r.addEventListener('change', updateExpUI));
+document.getElementById('expScenesList').addEventListener('change', e => {
+  const boxes = [...document.querySelectorAll('.expSceneBox')];
+  if (e.target.id === 'expSceneAll') boxes.forEach(b => { b.checked = e.target.checked; });
+  else { const all = document.getElementById('expSceneAll'); if (all) all.checked = boxes.every(b => b.checked); }
+  updateExpUI();
+});
 document.querySelectorAll('input[name=expLayout], input[name=expPages]').forEach(r => r.addEventListener('change', updateExpUI));
 document.getElementById('expGo').addEventListener('click', async () => {
   if (!expCtx) return;
   const fmt = document.getElementById('expFmt').value;
   if (fmt === 'pptx' && expCtx.pptxNative) { downloadFile(expCtx.dl, expCtx.dlname); closeModal('export'); return; }
+  if (VIDEO_FMTS.includes(fmt)) {
+    let vurl = '/export-video?path=' + encodeURIComponent(expCtx.path || '') + '&fmt=' + fmt + '&quality=' + document.getElementById('expQual').value;
+    if ((expCtx.sceneCount || 0) > 0 && document.querySelector('input[name=expScope]:checked').value === 'scenes') {
+      const picked = [...document.querySelectorAll('.expSceneBox:checked')].map(b => b.value);
+      vurl += '&scope=scenes&scenes=' + (picked.length === expCtx.sceneCount ? 'all' : picked.join(','));
+    }
+    const vb = document.getElementById('expGo'); vb.disabled = true; const vo = vb.textContent; vb.textContent = t('Exporting…');
+    await exportDownload(vurl);
+    vb.disabled = false; vb.textContent = vo; closeModal('export');
+    return;
+  }
   const realFmt = fmt === 'jpg' ? 'jpg' : fmt === 'svg' ? 'svg' : fmt === 'pdf' ? 'pdf' : fmt === 'pptx' ? 'pptx' : 'png';
   const bg = (fmt === 'png' && document.getElementById('expAlpha').checked) ? 'transparent' : 'opaque';
   const vectorMulti = !!(expCtx.av && expCtx.av.vectorCount > 1);
@@ -2734,15 +2935,52 @@ function versionsBlock(j) {
   const moreList = older.length ? `<div class="ver-list">${older.map(v => verRow(v, false)).join('')}</div>` : '';
   return `<div class="job-versions">${title}${verRow(latest, true)}${moreList}</div>`;
 }
+// Progress of the run in flight. Claude reports { done, total, label } at each milestone (RUNBOOK §3.6);
+// without a total the bar is indeterminate (never a made-up percentage). Elapsed time ticks locally.
+const fmtElapsed = ms => { const s = Math.max(0, Math.floor(ms / 1000)), m = Math.floor(s / 60); return m >= 60 ? Math.floor(m / 60) + ':' + String(m % 60).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0') : m + ':' + String(s % 60).padStart(2, '0'); };
+function progressInline(j) {
+  const p = (j && j.progress) || {};
+  const total = parseInt(p.total, 10) || 0, done = Math.max(0, parseInt(p.done, 10) || 0);
+  const pct = total ? Math.min(100, Math.round(done / total * 100)) : 0;
+  const start = j && j.runStartedAt ? Date.parse(j.runStartedAt) : 0;
+  const bar = total && total <= 24 ? segBar(done, total)
+    : `<span class="pg-bar${total ? '' : ' ind'}" role="progressbar" aria-valuemin="0" aria-valuemax="100"${total ? ` aria-valuenow="${pct}"` : ''}><span${total ? ` style="width:${pct}%"` : ''}></span></span>`;
+  return `<span class="pg"${p.label ? ` title="${escapeHtml(p.label)}"` : ''}>${bar}`
+    + `<span class="pg-num">${total ? done + '/' + total + (start ? ' · ' : '') : ''}${start ? `<span class="pg-el" data-start="${start}">${fmtElapsed(Date.now() - start)}</span>` : ''}</span></span>`;
+}
+// One segment per stage: done · current · pending.
+function segBar(done, total, big) {
+  let h = '';
+  for (let i = 0; i < total; i++) h += `<i class="${i < done ? 'done' : (i === done ? 'cur' : '')}"></i>`;
+  return `<span class="pgs${big ? ' big' : ''}" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${done}">${h}</span>`;
+}
+// The task card's progress block: "Step 4 of 9 · what is happening now", the segments, and (when the run
+// declared its stages) a checklist of them. Unknown total → indeterminate bar, label and time only.
+function progressBlock(j) {
+  const p = j.progress || {};
+  const total = parseInt(p.total, 10) || 0, done = Math.max(0, Math.min(total || 1e9, parseInt(p.done, 10) || 0));
+  const start = j.runStartedAt ? Date.parse(j.runStartedAt) : 0;
+  const steps = Array.isArray(p.steps) ? p.steps : [];
+  const head = `<div class="pgb-head">${total ? `<span class="pgb-step">${t('Step')} ${Math.min(done + 1, total)} ${t('of')} ${total}</span>` : ''}`
+    + `<span class="pgb-label">${escapeHtml(p.label || (steps[done] || t('Working…')))}</span>`
+    + (start ? `<span class="pgb-el pg-el" data-start="${start}">${fmtElapsed(Date.now() - start)}</span>` : '') + `</div>`;
+  const bar = total && total <= 60 ? segBar(done, total, true)
+    : `<span class="pg-bar${total ? '' : ' ind'}" style="width:100%"><span${total ? ` style="width:${Math.min(100, Math.round(done / total * 100))}%"` : ''}></span></span>`;
+  const list = steps.length ? `<details class="pgb-det"><summary>${t('Stages')}</summary><ul class="pgb-list">`
+    + steps.map((s, i) => `<li class="${i < done ? 'done' : (i === done ? 'cur' : '')}"><span>${escapeHtml(s)}</span></li>`).join('') + `</ul></details>` : '';
+  return `<div class="pgb">${head}${bar}${list}</div>`;
+}
 const runningTag = '<span class="job-running"><span class="dot"></span>Claude working…</span>';
+const runningTagFor = j => '<span class="job-running"><span class="dot"></span>Claude working…</span>' + progressInline(j);
+setInterval(() => document.querySelectorAll('.pg-el[data-start]').forEach(el => { el.textContent = fmtElapsed(Date.now() - Number(el.dataset.start)); }), 1000);
 function jobNeedsWork(j) { const act = s => ['queued', 'running', 'needs-input'].includes(s); return act(j.status) || (j.revisions || []).some(r => act(r.status)); }
 // Live "is something being produced?" indicator for a card. Base run → "Claude working…";
 // a request-change revision in flight → "Generating new version · vN…" so the user sees a new
 // version is on the way after they hit Send.
 function workingIndicator(j) {
-  if (j.status === 'running') return runningTag;
+  if (j.status === 'running') return runningTagFor(j);
   const rr = (j.revisions || []).find(r => r.status === 'running');
-  if (rr) return `<span class="job-running"><span class="dot"></span>${t('Generating new version')} · v${rr.n + 1}…</span>`;
+  if (rr) return `<span class="job-running"><span class="dot"></span>${t('Generating new version')} · v${rr.n + 1}…</span>` + progressInline(j);
   return '';
 }
 function jobIsWorking(j) { return j.status === 'running' || (j.revisions || []).some(r => r.status === 'running'); }
@@ -3199,6 +3437,7 @@ function preparedCard(j) {
         ${j.status === 'running' ? runningTag + stopBtn(j.id) : ''}
         ${delBtn(j.id)}
       </div>
+      ${jobIsWorking(j) ? progressBlock(j) : ''}
       ${revs.map(r => {
         // Each revision is one foldable row (Nick, 2026-09-28): closed it shows what you act on — Rev N,
         // its status, its version and buttons; open it adds the requested changes, result and attachments.
@@ -3751,6 +3990,11 @@ document.addEventListener('keydown', e => {
 let pvState = null;
 function openPreview(url, title, opts) {
   opts = opts || {};
+  // Animated Video: what plays is the HTML player (preview.html, a <video> that opens in low quality),
+  // never the PDF contact sheet the card uses as its thumbnail. The deliverable is .../video.<ext>, so
+  // whichever path the click carried (thumbnail, Preview button), open the player beside it.
+  const vm = (opts.dl || '').match(/^(.*\/)video\.(mp4|webm|mov)(\?.*)?$/i);
+  if (vm && !/\.html?$/i.test(url.split('?')[0])) url = vm[1] + 'preview.html';
   document.getElementById('previewTitle').textContent = title || 'Preview';
   // Hide Chrome's built-in PDF toolbar for PDFs — its download icon bypasses our format picker
   // (raw PDF only). Our Download button (format · resolution) becomes the single, consistent way

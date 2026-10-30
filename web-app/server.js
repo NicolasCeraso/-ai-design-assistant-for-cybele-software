@@ -12,6 +12,9 @@ const MIME_TYPES = {
   '.svg': 'image/svg+xml',
   '.json': 'application/json',
   '.pdf': 'application/pdf',
+  '.mp4': 'video/mp4',
+  '.webm': 'video/webm',
+  '.mov': 'video/quicktime',
 };
 
 const BASE = __dirname; // portable: serve from wherever this folder lives
@@ -520,6 +523,7 @@ const SECTION_KEYWORDS = {
   // pointer sections to their specs in pipelines/ (added 2026-09-28; RUNBOOK §2 already listed them)
   storyboard: 'Video Storyboard Pipeline',
   'linkedin-carousel': 'LinkedIn Carousel (Placas)',
+  video: 'Animated Video Pipeline',
   webapp: 'Project Vision',
   shared: 'Next Steps',
 };
@@ -672,6 +676,62 @@ function deliverableFolder(...paths) {
   return '';
 }
 
+// ── Video deliverables (Animated Video pipeline) ─────────────────────────────
+const VIDEO_EXT = /\.(mp4|webm|mov)$/i;
+// The master video of a deliverable: the file itself, else video.mp4 beside it, else the first
+// top-level video in its output folder (the per-scene clips live in scenes/ and are not the video).
+function findMasterVideo(abs) {
+  try { if (VIDEO_EXT.test(abs) && fs.statSync(abs).isFile()) return abs; } catch (e) {}
+  const folder = deliverableFolder(abs);
+  if (!folder) return '';
+  const main = path.join(folder, 'video.mp4');
+  if (fs.existsSync(main)) return main;
+  try {
+    const f = fs.readdirSync(folder).find(n => VIDEO_EXT.test(n));
+    return f ? path.join(folder, f) : '';
+  } catch (e) { return ''; }
+}
+// The per-scene clips of an Animated Video deliverable (output/v<N>/scenes/*.mp4), in scene order.
+function listSceneVideos(abs) {
+  const folder = deliverableFolder(abs);
+  if (!folder) return [];
+  const d = path.join(folder, 'scenes');
+  try {
+    return fs.readdirSync(d).filter(n => VIDEO_EXT.test(n) && !/_base\./i.test(n))
+      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true })).map(n => path.join(d, n));
+  } catch (e) { return []; }
+}
+// "all" | "1,3,5-8" -> sorted unique 1-based scene numbers within 1..n
+function parseSceneSelection(txt, n) {
+  const t = (txt || 'all').trim().toLowerCase();
+  if (t === 'all' || t === '') return Array.from({ length: n }, (_, i) => i + 1);
+  const set = new Set();
+  for (const part of t.split(',')) {
+    const m = part.trim().match(/^(\d+)(?:-(\d+))?$/);
+    if (!m) continue;
+    const a = parseInt(m[1], 10), b = m[2] ? parseInt(m[2], 10) : a;
+    for (let i = Math.min(a, b); i <= Math.max(a, b); i++) if (i >= 1 && i <= n) set.add(i);
+  }
+  return [...set].sort((x, y) => x - y);
+}
+// ffmpeg: CYBELE_FFMPEG, then PATH, then the WinGet install (the way this machine got it).
+let _ffmpeg;
+function ffmpegPath() {
+  if (_ffmpeg !== undefined) return _ffmpeg;
+  const os = require('os');
+  const tryRun = c => { try { return spawnSync(c, ['-version'], { windowsHide: true }).status === 0; } catch (e) { return false; } };
+  const cands = [process.env.CYBELE_FFMPEG, 'ffmpeg'].filter(Boolean);
+  try {
+    const pk = path.join(os.homedir(), 'AppData', 'Local', 'Microsoft', 'WinGet', 'Packages');
+    for (const d of fs.readdirSync(pk).filter(n => /^Gyan\.FFmpeg/i.test(n))) {
+      const root = path.join(pk, d);
+      for (const s of fs.readdirSync(root).filter(n => /^ffmpeg-/i.test(n))) cands.push(path.join(root, s, 'bin', 'ffmpeg.exe'));
+    }
+  } catch (e) {}
+  _ffmpeg = cands.find(tryRun) || '';
+  return _ffmpeg;
+}
+
 // ── Which Python ─────────────────────────────────────────────────────────────
 // Python is spawned for PDF work (thumbnails, page counts) and to run export_doc.py. WHICH
 // interpreter answers to `py` is per-machine, and a launcher default can point at a broken install:
@@ -822,6 +882,8 @@ function startQueuedRun(id) {
   if (!target) return { ok: false, error: 'nothing queued' };
   if (target.kind === 'base') job.status = 'running';
   else job.revisions.find(r => r.n === target.n).status = 'running';
+  job.runStartedAt = new Date().toISOString();   // the console shows elapsed time + progress from here
+  delete job.progress;
   job.updatedAt = new Date().toISOString();
   fs.writeFileSync(jf, JSON.stringify(job, null, 2));
 
@@ -836,7 +898,8 @@ function startQueuedRun(id) {
     'A request from the Cybele Project Console dashboard is queued — attend it now, fully autonomously, no questions.',
     `Job id: ${id}. Item: ${which} (version v${version}). Request: "${target.text}".`,
     ...(att.length ? [`The user attached ${att.length} file(s) to this change request: ${att.map(a => `jobs/${id}/${a}`).join(', ')}. READ or VIEW every one of them before doing the work — they are part of the request, not background material.`] : []),
-    `Follow CLAUDE.md and RUNBOOK.md: read jobs/${id}/job.json and any source file under jobs/${id}/, do the work, and put ALL output for this run in ${outDir}/ (create it; do NOT touch or overwrite any earlier jobs/${id}/output/v* folder). Render a PDF preview inside ${outDir}/ too. Then mark it done by POSTing to http://localhost:3491/jobs/${id} with resultPath and previewPath pointing inside ${outDir}/ (for the base: status/result/resultPath/previewPath; for a revision: update its entry inside the revisions array with status:"done", result, resultPath, previewPath).`,
+    `Follow CLAUDE.md and RUNBOOK.md: read jobs/${id}/job.json and any source file under jobs/${id}/, do the work, and put ALL output for this run in ${outDir}/ (create it; do NOT touch or overwrite any earlier jobs/${id}/output/v* folder). Render a PDF preview inside ${outDir}/ too (an Animated Video run instead leaves its playable preview.html; its PDF is only a contact sheet for the thumbnail). Then mark it done by POSTing to http://localhost:3491/jobs/${id} with resultPath and previewPath pointing inside ${outDir}/ (for the base: status/result/resultPath/previewPath; for a revision: update its entry inside the revisions array with status:"done", result, resultPath, previewPath).`,
+    `Report progress as you go (RUNBOOK §3.6): at each milestone POST http://localhost:3491/jobs/${id} with {"progress":{"done":N,"total":M,"label":"what you are doing now"}} (total 0 if you cannot know it). The console clears it when the run ends.`,
     'Make reasonable on-brand decisions (Cybele primary #0A74D6). When done, stop.',
   ].join(' ');
 
@@ -1103,10 +1166,32 @@ http.createServer(async (req, res) => {
         fs.writeFileSync(path.join(dir, sourceFile), b64, 'base64');
       }
 
+      // Animated Video: optional audio picked in the launcher (voice-over, music, sound effects). Saved under
+      // jobs/<id>/audio/{voice,music,sfx}/ and listed in options.video.audio so the run finds them.
+      let audioInfo = null;
+      if (parsed.audio && typeof parsed.audio === 'object') {
+        const put = (kind, f) => {
+          if (!f || !f.name || !f.dataBase64) return null;
+          const safe = path.basename(String(f.name)).replace(/[^\w.\- ()]/g, '_');
+          if (!/\.(wav|mp3|m4a|aac|ogg|flac|aif|aiff)$/i.test(safe)) return null;
+          const d = path.join(dir, 'audio', kind);
+          fs.mkdirSync(d, { recursive: true });
+          fs.writeFileSync(path.join(d, safe), String(f.dataBase64).replace(/^data:[^;]+;base64,/, ''), 'base64');
+          return 'audio/' + kind + '/' + safe;
+        };
+        const a = {};
+        const v = put('voice', parsed.audio.voice); if (v) a.voice = v;
+        const m = put('music', parsed.audio.music); if (m) a.music = m;
+        const fx = (Array.isArray(parsed.audio.sfx) ? parsed.audio.sfx : []).map(f => put('sfx', f)).filter(Boolean);
+        if (fx.length) { a.sfx = fx; a.sfxDir = 'audio/sfx'; }
+        if (Object.keys(a).length) audioInfo = a;
+      }
+
       // Per-pipeline knobs picked in the launcher (e.g. blog: { coverBrief, sectionImages, outputs }).
       // Stored as-is so the run can read them from job.json; the prompt states them too.
       const opts = parsed.options;
-      const options = (opts && typeof opts === 'object' && !Array.isArray(opts)) ? opts : null;
+      let options = (opts && typeof opts === 'object' && !Array.isArray(opts)) ? opts : null;
+      if (audioInfo) { options = Object.assign({}, options, { video: Object.assign({}, options && options.video, { audio: audioInfo }) }); }
 
       const job = {
         id, pipeline, title, prompt, sourceFile,
@@ -1691,13 +1776,15 @@ http.createServer(async (req, res) => {
       let files = []; try { files = fs.readdirSync(folder, { recursive: true }); } catch (e) {}
       const has = ext => abs.toLowerCase().endsWith('.' + ext) || files.some(f => f.toLowerCase().endsWith('.' + ext) && !/\.thumb\./i.test(f));
       const vecCount = listVectorSvgs(folder).length;
+      const hasVideo = !!findMasterVideo(abs);
+      const sceneCount = listSceneVideos(abs).length;
       const vector = vecCount > 0, hasPdf = has('pdf'), hasImg = has('png') || has('jpg') || has('jpeg');
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ svg: vector, pdf: vector || hasPdf, png: vector || hasPdf || hasImg,
-        jpg: vector || hasPdf || hasImg, pptx: vector || has('pptx'), vectorCount: vecCount }));
+        jpg: vector || hasPdf || hasImg, pptx: vector || has('pptx'), video: hasVideo, scenes: sceneCount, vectorCount: vecCount }));
     } catch (e) {
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ svg: false, pdf: false, png: false, jpg: false, pptx: false, vectorCount: 0 }));
+      res.end(JSON.stringify({ svg: false, pdf: false, png: false, jpg: false, pptx: false, video: false, vectorCount: 0 }));
     }
     return;
   }
@@ -1753,6 +1840,79 @@ http.createServer(async (req, res) => {
       const data = fs.readFileSync(out.file);
       res.writeHead(200, { 'Content-Type': MT[oext] || 'application/octet-stream', 'Content-Disposition': 'attachment; filename="' + out.name.replace(/"/g, '') + '"', 'Content-Length': data.length });
       res.end(data);
+    } catch (e) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ ok: false, error: e.message }));
+    } finally {
+      if (tmp) { try { fs.rmSync(tmp, { recursive: true, force: true }); } catch (e) {} }
+    }
+    return;
+  }
+
+  // GET /export-video?path=<rel>&fmt=mp4|webm|mov&quality=low|medium|high[&scope=scenes&scenes=1,3-5]
+  // The Animated Video deliverable is a video, so it downloads as a video: the master
+  // (output/v<N>/video.mp4, built at full quality by pipelines/video-animation/scripts/assemble_video.py)
+  // is transcoded with ffmpeg to the container and quality picked in the Download dialog. Quality is the
+  // rendition: low = 720p, medium = 1080p, high = the source's own size and the lowest compression.
+  // scope=scenes exports the per-scene clips in output/v<N>/scenes/ instead of the complete video: the
+  // chosen scenes ("all" or a list such as 1,3-5), one file each, zipped when there is more than one.
+  if (req.method === 'GET' && req.url.split('?')[0] === '/export-video') {
+    let tmp = null;
+    try {
+      const u = new URL(req.url, 'http://localhost');
+      const rel = decodeURIComponent(u.searchParams.get('path') || '').replace(/^\/+/, '');
+      const abs = path.normalize(path.join(BASE, rel));
+      if (!rel || !abs.startsWith(path.normalize(BASE))) throw new Error('bad path');
+      const fmt = ['mp4', 'webm', 'mov'].includes(u.searchParams.get('fmt')) ? u.searchParams.get('fmt') : 'mp4';
+      const q = ['low', 'medium', 'high'].includes(u.searchParams.get('quality')) ? u.searchParams.get('quality') : 'high';
+      const ff = ffmpegPath();
+      if (!ff) throw new Error('ffmpeg not found. Install it (winget install Gyan.FFmpeg) or set CYBELE_FFMPEG to its path.');
+      const byScenes = u.searchParams.get('scope') === 'scenes';
+      let sources = [];   // [{ src, name }]
+      if (byScenes) {
+        const all = listSceneVideos(abs);
+        if (!all.length) throw new Error('This deliverable has no per-scene videos (a scenes/ folder)');
+        const pick = parseSceneSelection(u.searchParams.get('scenes'), all.length);
+        if (!pick.length) throw new Error('No valid scenes selected');
+        sources = pick.map(i => ({ src: all[i - 1], name: 'scene-' + String(i).padStart(2, '0') + '.' + fmt }));
+      } else {
+        const master = findMasterVideo(abs);
+        if (!master) throw new Error('No video found in this deliverable');
+        sources = [{ src: master, name: 'animated-video-' + q + '.' + fmt }];
+      }
+      tmp = path.join(BASE, 'data', 'export-tmp', String(Date.now()) + '-' + Math.floor(Math.random() * 1e6));
+      fs.mkdirSync(tmp, { recursive: true });
+      const H = { low: 720, medium: 1080 }[q];
+      const vf = H ? ['-vf', "scale=-2:'min(" + H + ",ih)'"] : [];
+      const crf = { mp4: { low: 29, medium: 23, high: 18 }, mov: { low: 29, medium: 23, high: 18 }, webm: { low: 40, medium: 33, high: 28 } }[fmt][q];
+      const ab = { low: '96k', medium: '128k', high: '192k' }[q];
+      const codec = fmt === 'webm'
+        ? ['-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', String(crf), '-row-mt', '1', '-deadline', 'good', '-cpu-used', '4', '-c:a', 'libopus', '-b:a', ab]
+        : ['-c:v', 'libx264', '-crf', String(crf), '-preset', 'medium', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', ab, '-movflags', '+faststart'];
+      const transcode = (src, out) => new Promise(resolve => {
+        const p = spawn(ff, ['-y', '-loglevel', 'error', '-i', src].concat(vf, codec, [out]), { windowsHide: true });
+        let err = '';
+        const timer = setTimeout(() => { err += 'timed out'; p.kill(); }, 30 * 60 * 1000);
+        p.stderr.on('data', d => err += d);
+        p.on('close', code => { clearTimeout(timer); resolve({ code, err }); });
+        p.on('error', e => { clearTimeout(timer); resolve({ code: -1, err: e.message }); });
+      });
+      const outs = [];
+      for (const s of sources) {
+        const o = path.join(tmp, s.name);
+        const r = await transcode(s.src, o);
+        if (r.code !== 0 || !fs.existsSync(o)) throw new Error((r.err || 'ffmpeg failed').trim().slice(-300));
+        outs.push(o);
+      }
+      let sendFile = outs[0], sendName = path.basename(outs[0]), mime = { mp4: 'video/mp4', webm: 'video/webm', mov: 'video/quicktime' }[fmt];
+      if (outs.length > 1) {   // several scenes: one zip (videos are already compressed, so store them)
+        sendFile = path.join(tmp, 'scenes.zip'); sendName = 'animated-video-scenes-' + q + '.zip'; mime = 'application/zip';
+        const z = await runPy(['-c', "import sys,zipfile,os\nz=zipfile.ZipFile(sys.argv[1],'w',zipfile.ZIP_STORED)\nfor f in sys.argv[2:]: z.write(f,os.path.basename(f))\nz.close()", sendFile].concat(outs), { timeout: 120000 });
+        if (z.status !== 0 || !fs.existsSync(sendFile)) throw new Error(lastLine(z.stderr) || 'could not build the zip');
+      }
+      res.writeHead(200, { 'Content-Type': mime, 'Content-Length': fs.statSync(sendFile).size, 'Content-Disposition': 'attachment; filename="' + sendName + '"' });
+      const t0 = tmp; tmp = null;
+      fs.createReadStream(sendFile).pipe(res).on('close', () => { try { fs.rmSync(t0, { recursive: true, force: true }); } catch (e) {} });
     } catch (e) {
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ ok: false, error: e.message }));
@@ -1883,6 +2043,22 @@ http.createServer(async (req, res) => {
         const patch = JSON.parse(body);
         const job = readJSON(jf);
         ['status', 'result', 'resultPath', 'previewPath', 'revisions', 'title', 'prompt', 'pinned', 'marked', 'favorite'].forEach(k => { if (patch[k] !== undefined) job[k] = patch[k]; });
+        // Progress of the run in flight, reported by Claude at each milestone: { done, total, label }.
+        // total 0/absent = unknown (the bar is indeterminate). Sanitised, never trusted as-is.
+        if (patch.progress !== undefined) {
+          const pg = patch.progress;
+          if (pg && typeof pg === 'object') {
+            const num = v => Math.max(0, Math.min(100000, parseInt(v, 10) || 0));
+            // `steps` (optional, sent once, kept until replaced): the names of the stages of the run, so the
+            // console can draw one segment per stage and a checklist. total defaults to their count.
+            const prev = job.progress || {};
+            const steps = Array.isArray(pg.steps) ? pg.steps.slice(0, 60).map(x => String(x).slice(0, 80)).filter(Boolean) : (prev.steps || []);
+            const total = num(pg.total) || steps.length;
+            job.progress = { done: total ? Math.min(num(pg.done), total) : num(pg.done), total, label: String(pg.label || '').slice(0, 140), ...(steps.length ? { steps } : {}), at: new Date().toISOString() };
+          } else delete job.progress;
+        }
+        // A run that ended (nothing running any more) leaves no progress or start time behind.
+        if (!(job.status === 'running' || (job.revisions || []).some(r => r.status === 'running'))) { delete job.progress; delete job.runStartedAt; }
         job.updatedAt = new Date().toISOString();
         fs.writeFileSync(jf, JSON.stringify(job, null, 2));
         // Pre-warm preview thumbnails when output paths land, so History opens instantly later.
@@ -2149,6 +2325,22 @@ http.createServer(async (req, res) => {
   const ext = path.extname(filePath);
   const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
+  // Video: stream with Range support, so the preview's <video> can seek (readFile + res.end cannot).
+  if (VIDEO_EXT.test(ext) && fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+    const size = fs.statSync(filePath).size;
+    const m = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range || '');
+    let start = 0, end = size - 1, code = 200;
+    if (m && (m[1] || m[2])) {
+      if (m[1]) { start = parseInt(m[1], 10); if (m[2]) end = Math.min(end, parseInt(m[2], 10)); }
+      else { start = Math.max(0, size - parseInt(m[2], 10)); }
+      if (start > end) { res.writeHead(416, { 'Content-Range': 'bytes */' + size }); return res.end(); }
+      code = 206;
+    }
+    const h = { 'Content-Type': contentType, 'Accept-Ranges': 'bytes', 'Content-Length': end - start + 1 };
+    if (code === 206) h['Content-Range'] = 'bytes ' + start + '-' + end + '/' + size;
+    res.writeHead(code, h);
+    return fs.createReadStream(filePath, { start, end }).pipe(res);
+  }
   fs.readFile(filePath, (err, data) => {
     if (err) {
       res.writeHead(404);
